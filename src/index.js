@@ -1,147 +1,147 @@
-import { Container } from "@material-ui/core";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
+
 import ReactDOM from "react-dom";
 import "./styles.css";
-// import { LoginProvider } from "./contexts/LoginContext";
+import { LoginProvider } from "./contexts/LoginContext";
 
 // == INSCRIPTION IMPORT == //
 const HomePage = lazy(() => import("./pages/Inscription/HomePage"));
-const Inscription = lazy(() => import("./pages/Inscription/Inscription"));
-const Confirmation = lazy(() => import("./pages/Inscription/Confirmation"));
-const Connexion = lazy(() => import("./pages/Inscription/Connexion"));
-const Renseignement = lazy(() =>
-	import("./pages/Inscription/Step/Renseignement1")
+const Inscription = lazy(() => import("./pages/Inscription/Registration"));
+const Confirmation = lazy(() => import("./pages/Inscription/Confirm"));
+const Connexion = lazy(() => import("./pages/Inscription/Login"));
+const GeneralInformations = lazy(() =>
+  import("./pages/Inscription/Step/GeneralInformations")
 );
-const Renseignement2 = lazy(() =>
-	import("./pages/Inscription/Step/Renseignement2")
+const GeneralInformationsPlace = lazy(() =>
+  import("./pages/Inscription/Step/GeneralInformationsPlace")
 );
-const FinRensignement = lazy(() =>
-	import("./pages/Inscription/Step/FinRensignement")
+const GenralInformationsEnd = lazy(() =>
+  import("./pages/Inscription/Step/GenralInformationsEnd")
 );
-const SituationActuelle = lazy(() =>
-	import("./pages/Inscription/Step/SituationActuelle1")
+const CurrentSituation = lazy(() =>
+  import("./pages/Inscription/Step/CurrentSituation")
 );
-const SituationActuelle2 = lazy(() =>
-	import("./pages/Inscription/Step/SituationActuelle2")
+const CurrentSituationInstitution = lazy(() =>
+  import("./pages/Inscription/Step/CurrentSituationInstitution")
 );
-const SituationActuelleFin = lazy(() =>
-	import("./pages/Inscription/Step/SituationActuelleFin")
+const CurrentSituationEnd = lazy(() =>
+  import("./pages/Inscription/Step/CurrentSituationEnd")
 );
-const VoeuxFormation = lazy(() =>
-	import("./pages/Inscription/Step/VoeuxFormation")
+const FormationWishes = lazy(() =>
+  import("./pages/Inscription/Step/FormationWishes")
 );
-const VoeuxFormation2 = lazy(() =>
-	import("./pages/Inscription/Step/VoeuxFormation2")
+const FormationWishesInstitution = lazy(() =>
+  import("./pages/Inscription/Step/FormationWishesInstitution")
 );
-const VoeuxFormationFin = lazy(() =>
-	import("./pages/Inscription/Step/VoeuxFormationFin")
+const FormationWishesEnd = lazy(() =>
+  import("./pages/Inscription/Step/FormationWishesEnd")
 );
-const PieceSuplementaire = lazy(() =>
-	import("./pages/Inscription/Step/PieceSuplementaire")
+const AdditionalDocuments = lazy(() =>
+  import("./pages/Inscription/Step/AdditionalDocuments")
 );
-const ReinitalisationMotdepasse = lazy(() =>
-	import("./pages/Inscription/ReinitalisationMotdepasse")
-);
-const ReinitialisationIdentifiant = lazy(() =>
-	import("./pages/Inscription/ReinitialisationIdentifiant")
-);
-const Recapitulatif = lazy(() => import("./pages/Inscription/Recapitulatif"));
-const UnknownPage = lazy(() => import("./pages/Inscription/UnknownPage"));
+const PasswordReset = lazy(() => import("./pages/Inscription/PasswordReset"));
+const UserReset = lazy(() => import("./pages/Inscription/UserReset"));
+const Recap = lazy(() => import("./pages/Inscription/Recap"));
+const UnknownPage = lazy(() => import("./pages/Inscription/404.js"));
 
 // == DASHBOARD IMPORT == //
-const Todo = lazy(() => import("./pages/Dashboard-User/pages/Todo"));
+const Tasks = lazy(() => import("./pages/Dashboard-User/pages/Tasks"));
 const Dashboard = lazy(() => import("./pages/Dashboard-User/Dashboard"));
-const Resultats = lazy(() => import("./pages/Dashboard-User/pages/Charts"));
-const Tutoriels = lazy(() => import("./pages/Dashboard-User/pages/Tutoriels"));
+const ResultsGraph = lazy(() =>
+  import("./pages/Dashboard-User/pages/ResultsGraph")
+);
+const Tutorials = lazy(() => import("./pages/Dashboard-User/pages/Tutorial"));
 
 // == DASHBOARD ADMIN IMPORT == //
 const DashboardAdmin = lazy(() => import("./pages/Dashboard-Admin/Homepage"));
 
 function App() {
-	return (
-		<Container maxWidth="lg">
-			<Suspense
-				fallback={
-					<div className="loader">
-						<div className="outer" />
-						<div className="middle" />
-						<div className="inner" />
-					</div>
-				}
-			>
-				{/* <LoginProvider> */}
-				<Switch>
-					<Route exact path="/" component={HomePage} />
-					<Route exact path="/inscription" component={Inscription} />
-					<Route exact path="/confirmation" component={Confirmation} />
-					<Route exact path="/connexion" component={Connexion} />
-					<Route exact path="/renseignement" component={Renseignement} />
-					<Route
-						exact
-						path="/renseignement/informations-personnelles"
-						component={Renseignement2}
-					/>
-					<Route exact path="/renseignement/fin" component={FinRensignement} />
-					<Route
-						exact
-						path="/situation-actuelle"
-						component={SituationActuelle}
-					/>
-					<Route
-						exact
-						path="/situation-actuelle/etablissement"
-						component={SituationActuelle2}
-					/>
-					<Route
-						exact
-						path="/situation-actuelle/fin"
-						component={SituationActuelleFin}
-					/>
-					<Route exact path="/voeux-formation" component={VoeuxFormation} />
-					<Route
-						exact
-						path="/voeux-formation/campus"
-						component={VoeuxFormation2}
-					/>
-					<Route
-						exact
-						path="/voeux-formation/fin"
-						component={VoeuxFormationFin}
-					/>
-					<Route
-						exact
-						path="/pieces-complementaires"
-						component={PieceSuplementaire}
-					/>
-					<Route
-						exact
-						path="/reinitialisation-identifiant"
-						component={ReinitialisationIdentifiant}
-					/>
-					<Route
-						exact
-						path="/reinitialisation-mot-de-passe"
-						component={ReinitalisationMotdepasse}
-					/>
-					<Route exact path="/recapitulatif" component={Recapitulatif} />
-					<Route exact path="/dashboard" component={Dashboard} />
-					<Route exact path="/aide" component={Tutoriels} />
-					<Route exact path="/taches" component={Todo} />
-					<Route exact path="/resultats" component={Resultats} />
-					<Route exact path="/administration" component={DashboardAdmin} />
-					<Route path="*" component={UnknownPage} />
-				</Switch>
-				{/* </LoginProvider> */}
-			</Suspense>
-		</Container>
-	);
+  return (
+    <Suspense
+      fallback={
+        <div className="loader">
+          <div className="outer" />
+          <div className="middle" />
+          <div className="inner" />
+        </div>
+      }
+    >
+      <LoginProvider>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/inscription" component={Inscription} />
+          <Route exact path="/confirmation" component={Confirmation} />
+          <Route exact path="/connexion" component={Connexion} />
+          <Route exact path="/renseignement" component={GeneralInformations} />
+          <Route
+            exact
+            path="/renseignement/informations-personnelles"
+            component={GeneralInformationsPlace}
+          />
+          <Route
+            exact
+            path="/renseignement/fin"
+            component={GenralInformationsEnd}
+          />
+          <Route
+            exact
+            path="/situation-actuelle"
+            component={CurrentSituation}
+          />
+          <Route
+            exact
+            path="/situation-actuelle/etablissement"
+            component={CurrentSituationInstitution}
+          />
+          <Route
+            exact
+            path="/situation-actuelle/fin"
+            component={CurrentSituationEnd}
+          />
+          <Route exact path="/voeux-formation" component={FormationWishes} />
+          <Route
+            exact
+            path="/voeux-formation/campus"
+            component={FormationWishesInstitution}
+          />
+          <Route
+            exact
+            path="/voeux-formation/fin"
+            component={FormationWishesEnd}
+          />
+          <Route
+            exact
+            path="/pieces-complementaires"
+            component={AdditionalDocuments}
+          />
+          <Route
+            exact
+            path="/reinitialisation-identifiant"
+            component={UserReset}
+          />
+          <Route
+            exact
+            path="/reinitialisation-mot-de-passe"
+            component={PasswordReset}
+          />
+          <Route exact path="/recapitulatif" component={Recap} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/aide" component={Tutorials} />
+          <Route exact path="/taches" component={Tasks} />
+          <Route exact path="/resultats" component={ResultsGraph} />
+          <Route exact path="/administration" component={DashboardAdmin} />
+          <Route path="*" component={UnknownPage} />
+        </Switch>
+      </LoginProvider>
+    </Suspense>
+  );
 }
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
-	<BrowserRouter>
-		<App />
-	</BrowserRouter>,
-	rootElement
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  rootElement
 );

@@ -12,8 +12,12 @@ export const LoginProvider = props => {
     token: "",
     isLogged: true
   });
-  const handleLogin = data => {
-    console.log("Login...");
+  const handleLogin = async data => {
+    console.log("ok");
+    http
+      .post("https://pedis.serveo.net/auth/login", data)
+      .then(x => console.log(x))
+      .catch(ex => console.log(ex));
   };
 
   const checkAuth = () => {
@@ -32,7 +36,7 @@ export const LoginProvider = props => {
   };
 
   return (
-    <LoginContext.Provider value={loginState}>
+    <LoginContext.Provider value={{ loginState, handleLogin }}>
       {props.children}
     </LoginContext.Provider>
   );

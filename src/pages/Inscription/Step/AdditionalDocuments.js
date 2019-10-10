@@ -1,12 +1,12 @@
 import React from "react";
-import { Grid, Box, Typography, Button, Divider } from "@material-ui/core";
+import { Grid, Box, Typography, Button, Divider, Container } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
 
 export default props => {
 	return (
-		<>
+		<Container maxWidth="lg">
 			<RegistedUserNav />
 			<Grid container spacing={0}>
 				<Grid item lg={3} md={3}>
@@ -230,6 +230,6 @@ export default props => {
 					</Box>
 				</Grid>
 			</Grid>
-		</>
+		</Container>
 	);
 };

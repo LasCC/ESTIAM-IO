@@ -90,11 +90,9 @@ export default function TemporaryDrawer() {
           <ListItemText primary="Se déconnecter" />
         </ListItem>
 
-        <a
-          href="https://rw4ji.csb.app/"
+        <Link
+          to="/dashboard"
           style={{ textDecoration: "none", color: "black" }}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <ListItem button>
             <ListItemIcon>
@@ -102,7 +100,7 @@ export default function TemporaryDrawer() {
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
-        </a>
+        </Link>
 
         <Link
           to="/renseignement"
@@ -116,11 +114,9 @@ export default function TemporaryDrawer() {
           </ListItem>
         </Link>
 
-        <a
-          href="https://rw4ji.csb.app/resultats"
+        <Link
+          to="/resultats"
           style={{ textDecoration: "none", color: "black" }}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <ListItem button>
             <ListItemIcon>
@@ -128,7 +124,7 @@ export default function TemporaryDrawer() {
             </ListItemIcon>
             <ListItemText primary="Vos résultats" />
           </ListItem>
-        </a>
+        </Link>
       </List>
     </div>
   );

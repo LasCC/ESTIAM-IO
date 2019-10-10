@@ -75,7 +75,7 @@ export default props => {
     <div style={{ width: "100%" }}>
       <Box display="flex" p={4} alignItems="center">
         <Box p={1} flexGrow={1}>
-          <Link to="/">
+          <Link to="/dashboard">
             <img
               src="https://i.imgur.com/LbKnIx0.png"
               alt="estiamLogo"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
-import BlueCard from "./BlueCard";
-import Avancement from "./Avancement";
+import Progress from "./Progress";
+import FirstCard from "./FirstCard";
 
 export default props => {
   return (
@@ -14,10 +14,10 @@ export default props => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs sm="auto" lg={6}>
-          <BlueCard />
+          <FirstCard />
         </Grid>
         <Grid item xs>
-          <Avancement />
+          <Progress />
         </Grid>
       </Grid>
     </>

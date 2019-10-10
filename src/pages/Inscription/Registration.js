@@ -7,7 +7,8 @@ import {
   InputAdornment,
   IconButton,
   Box,
-  Divider
+  Divider,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
@@ -35,7 +36,7 @@ export default props => {
   });
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item xs sm="auto" lg={3} md={3}>
@@ -172,6 +173,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

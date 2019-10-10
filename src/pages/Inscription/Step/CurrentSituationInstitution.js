@@ -8,23 +8,32 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField
+  TextField,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
 
 export default props => {
+  const [values, setValues] = React.useState({
+    nom_etablissement: "",
+    pays_etablissement: "",
+    numero_rue_etablissement: "",
+    adresse_etablissement: "",
+    departement_etablissement: "",
+    ville_etablissement: ""
+  });
+  const pays = require("../../../data/pays.json");
+  const departement =
+    values.pays_etablissement === "France"
+      ? require("../../../data/departement.json")
+      : ["99-Autre"];
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  const [values, setValues] = React.useState({
-    choix: "",
-    nom_formation: "",
-    formation: ""
-  });
 
   const handleChangeTextField = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -37,7 +46,7 @@ export default props => {
   };
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -49,7 +58,7 @@ export default props => {
             }}
             style={{
               padding: 25,
-              height: "70vh",
+              height: "90%",
               backgroundColor: "#004080"
             }}
           >
@@ -65,7 +74,7 @@ export default props => {
           <Box
             display="flex"
             alignItems="center"
-            css={{ height: "70vh", marginTop: 25 }}
+            css={{ height: "90%", marginTop: 25 }}
           >
             <Box
               style={{
@@ -95,56 +104,19 @@ export default props => {
                     marginTop: 15
                   }}
                 >
-                  Votre situation
-                </Typography>
-
-                <FormControl
-                  variant="outlined"
-                  style={{ minWidth: 210, marginRight: 15 }}
-                  margin="normal"
-                >
-                  <InputLabel htmlFor="choix" required ref={inputLabel}>
-                    Faites un choix
-                  </InputLabel>
-                  <Select
-                    value={values.choix}
-                    onChange={handleChange}
-                    labelWidth={labelWidth}
-                    inputProps={{
-                      name: "choix",
-                      "aria-label": "Situation actuelle"
-                    }}
-                  >
-                    <MenuItem value={"Etudiant"}>Etudiant</MenuItem>
-                    <MenuItem value={"En emploi"}>En emploi</MenuItem>
-                    <MenuItem value={"En recherche d’emploi"}>
-                      En recherche d’emploi
-                    </MenuItem>
-                    <MenuItem value={"Autre"}>Autre</MenuItem>
-                  </Select>
-                </FormControl>
-
-                <Typography
-                  variant="h5"
-                  style={{
-                    color: "#004080",
-                    fontWeight: "bold",
-                    marginTop: 15
-                  }}
-                >
-                  Formation actuelle
+                  Etablissement
                 </Typography>
 
                 <form autoComplete="on">
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
-                    onChange={handleChangeTextField("nom_formation")}
-                    label="Nom de votre formation"
-                    placeholder="Bac S"
+                    onChange={handleChangeTextField("nom_etablissement")}
+                    label="Nom de l'établissement"
+                    placeholder="Gustave EIFFEL"
                     type="text"
                     margin="normal"
-                    inputProps={{ "aria-label": "Numéro de rue" }}
+                    inputProps={{ "aria-label": "Nom de votre établissement" }}
                   />
                   <FormControl
                     variant="outlined"
@@ -152,36 +124,93 @@ export default props => {
                     margin="normal"
                   >
                     <InputLabel
-                      htmlFor="nomformation"
+                      htmlFor="paysetablissement"
                       required
                       ref={inputLabel}
                     >
-                      Nom de votre formation
+                      Pays de l'établissement
                     </InputLabel>
                     <Select
-                      value={values.formation}
+                      value={values.pays_etablissement}
                       onChange={handleChange}
                       labelWidth={labelWidth}
                       inputProps={{
-                        name: "formation",
-                        "aria-label": "Formation"
+                        name: "pays_etablissement",
+                        "aria-label": "Pays de l'établissement"
                       }}
                     >
-                      <MenuItem value={"Terminal"}>Terminal</MenuItem>
-                      <MenuItem value={"Terminale-BAC"}>
-                        Terminale - J'ai déjà le BAC
-                      </MenuItem>
-                      <MenuItem value={"BAC+1"}>BAC +1</MenuItem>
-                      <MenuItem value={"BAC+2"}>BAC +2</MenuItem>
-                      <MenuItem value={"BAC+3"}>BAC +3</MenuItem>
-                      <MenuItem value={"BAC+4"}>BAC +4</MenuItem>
-                      <MenuItem value={"BAC+5"}>BAC +5</MenuItem>
+                      {pays.map(name => (
+                        <MenuItem key={name} value={name}>
+                          {name}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
+                  <TextField
+                    style={{ marginRight: 15, minWidth: 200 }}
+                    variant="outlined"
+                    onChange={handleChangeTextField("numero_rue_etablissement")}
+                    label="Numéro de rue"
+                    placeholder=""
+                    type="number"
+                    margin="normal"
+                    inputProps={{
+                      "aria-label": "Numéro de rue",
+                      min: 0,
+                      max: 500
+                    }}
+                  />
+                  <TextField
+                    style={{ marginRight: 15 }}
+                    variant="outlined"
+                    onChange={handleChangeTextField("adresse_etablissement")}
+                    label="Adresse"
+                    placeholder=""
+                    type="text"
+                    margin="normal"
+                    inputProps={{ "aria-label": "Adresse de l'etablissement" }}
+                  />
+                  <FormControl
+                    variant="outlined"
+                    style={{ minWidth: 210, marginRight: 15 }}
+                    margin="normal"
+                  >
+                    <InputLabel
+                      htmlFor="departementetablissement"
+                      required
+                      ref={inputLabel}
+                    >
+                      Département
+                    </InputLabel>
+                    <Select
+                      value={values.departement_etablissement}
+                      onChange={handleChange}
+                      labelWidth={labelWidth}
+                      inputProps={{
+                        name: "departement_etablissement",
+                        "aria-label": "Département"
+                      }}
+                    >
+                      {departement.map(name => (
+                        <MenuItem key={name} value={name}>
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    style={{ marginRight: 15 }}
+                    variant="outlined"
+                    onChange={handleChangeTextField("ville_etablissement")}
+                    label="Ville de l'établissement"
+                    type="text"
+                    margin="normal"
+                    inputProps={{ "aria-label": "Ville de l'établissement" }}
+                  />
                 </form>
                 <div>
                   <Link
-                    to="/renseignement/fin"
+                    to="/situation-actuelle"
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -196,7 +225,7 @@ export default props => {
                     </Button>
                   </Link>
                   <Link
-                    to="/situation-actuelle/etablissement"
+                    to="/situation-actuelle/fin"
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -217,6 +246,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

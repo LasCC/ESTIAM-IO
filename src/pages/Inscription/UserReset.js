@@ -6,7 +6,8 @@ import {
   TextField,
   Snackbar,
   IconButton,
-  Box
+  Box,
+  Container
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -38,11 +39,13 @@ export default props => {
     setValues({ ...values, [name]: event.target.value });
   };
   const [values, setValues] = React.useState({
-    code: ""
+    adresse_mail: "",
+    identifiant: "",
+    phone_number: ""
   });
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -89,72 +92,49 @@ export default props => {
                     marginBottom: 15
                   }}
                 >
-                  Confirmation
+                  Réinitialisation
                 </Typography>
                 <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
-                  Un code de confirmation vous a été envoyé dans votre boîte de
-                  réception
+                  Un email de réinitialisation vous a été envoyé dans votre
+                  boîte de réception
                 </Typography>
                 <Button
                   variant="outlined"
-                  onClick={handleClick}
                   fullWidth
-                  style={{
-                    marginTop: 10,
-                    color: "#004080",
-                    borderColor: "#004080"
-                  }}
+                  onClick={handleClick}
+                  style={{ color: "#004080", marginTop: 10 }}
                 >
-                  Renvoyer le code de confirmation
+                  Renvoyer le code de réinitialisation
                 </Button>
-                <Snackbar
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left"
-                  }}
-                  open={open}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-                  ContentProps={{
-                    "aria-describedby": "message-id"
-                  }}
-                  message={<span id="message-id">Code envoyé</span>}
-                  action={[
-                    <IconButton
-                      key="close"
-                      aria-label="close"
-                      color="inherit"
-                      className={classes.close}
-                      onClick={handleClose}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  ]}
-                />
-                <Typography
-                  variant="h5"
-                  style={{
-                    marginTop: 20,
-                    color: "#004080",
-                    fontWeight: "bold"
-                  }}
-                >
-                  Code de confirmation
-                </Typography>
                 <TextField
                   variant="outlined"
-                  label="Code de confirmation"
-                  onChange={handleChange("code")}
+                  label="Adresse email"
+                  onChange={handleChange("adresse_mail")}
                   fullWidth
-                  required
-                  width={800}
                   type="text"
-                  placeholder="OCB8s.Ztagl58BK83LyIV24Smd6Ken7in8f"
+                  style={{ marginTop: 20 }}
+                  autoComplete="current-password"
+                />
+                <TextField
+                  variant="outlined"
+                  label="Nom d'utilisateur"
+                  onChange={handleChange("identifiant")}
+                  fullWidth
+                  type="text"
+                  style={{ marginTop: 20 }}
+                  autoComplete="current-password"
+                />
+                <TextField
+                  variant="outlined"
+                  label="Numéro de téléphone"
+                  onChange={handleChange("phone_number")}
+                  fullWidth
+                  type="phone"
                   style={{ marginTop: 20 }}
                   autoComplete="current-password"
                 />
                 <div style={{ marginTop: 20 }}>
-                  <Link to="/inscription" style={{ textDecoration: "none" }}>
+                  <Link to="/connexion" style={{ textDecoration: "none" }}>
                     <Button
                       variant="outlined"
                       style={{
@@ -165,23 +145,50 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  <Link to="/renseignement" style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="outlined"
-                      style={{
-                        backgroundColor: "#004080",
-                        color: "white"
-                      }}
-                    >
-                      Confirmer l'inscription
-                    </Button>
-                  </Link>
+                  <Button
+                    variant="contained"
+                    onClick={handleClick}
+                    style={{
+                      color: "white",
+                      backgroundColor: "#004080"
+                    }}
+                  >
+                    Réinitialiser
+                  </Button>
+                  <Snackbar
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left"
+                    }}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    ContentProps={{
+                      "aria-describedby": "message-id"
+                    }}
+                    message={
+                      <span id="message-id">
+                        Email de réinitialisation envoyé
+                      </span>
+                    }
+                    action={[
+                      <IconButton
+                        key="close"
+                        aria-label="close"
+                        color="inherit"
+                        className={classes.close}
+                        onClick={handleClose}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    ]}
+                  />
                 </div>
               </div>
             </Box>
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

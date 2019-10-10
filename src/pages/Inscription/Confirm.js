@@ -4,16 +4,24 @@ import {
   Typography,
   Button,
   TextField,
-  Box,
   Snackbar,
-  IconButton
+  IconButton,
+  Box,
+  Container
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
+import CloseIcon from "@material-ui/icons/Close";
 import NavBar from "./components/NavBar";
 
+const useStyles = makeStyles(theme => ({
+  close: {
+    padding: theme.spacing(0.5)
+  }
+}));
 export default props => {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   function handleClick() {
@@ -31,12 +39,11 @@ export default props => {
     setValues({ ...values, [name]: event.target.value });
   };
   const [values, setValues] = React.useState({
-    adresse_mail: "",
-    phone_number: ""
+    code: ""
   });
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -83,42 +90,70 @@ export default props => {
                     marginBottom: 15
                   }}
                 >
-                  Réinitialisation
+                  Confirmation
                 </Typography>
                 <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
-                  Un code de réinitialisation vous a été envoyé dans votre boîte
-                  de réception
+                  Un code de confirmation vous a été envoyé dans votre boîte de
+                  réception
                 </Typography>
                 <Button
                   variant="outlined"
-                  fullWidth
                   onClick={handleClick}
-                  style={{ color: "#004080", marginTop: 10 }}
+                  fullWidth
+                  style={{
+                    marginTop: 10,
+                    color: "#004080",
+                    borderColor: "#004080"
+                  }}
                 >
-                  Renvoyer le code de réinitialisation
+                  Renvoyer le code de confirmation
                 </Button>
-                <TextField
-                  variant="outlined"
-                  label="Adresse email"
-                  onChange={handleChange("adresse_mail")}
-                  fullWidth
-                  required
-                  width={800}
-                  type="mail"
-                  style={{ marginTop: 20 }}
+                <Snackbar
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center"
+                  }}
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                  ContentProps={{
+                    "aria-describedby": "message-id"
+                  }}
+                  message={<span id="message-id">Code envoyé</span>}
+                  action={[
+                    <IconButton
+                      key="close"
+                      aria-label="close"
+                      color="inherit"
+                      className={classes.close}
+                      onClick={handleClose}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ]}
                 />
+                <Typography
+                  variant="h5"
+                  style={{
+                    marginTop: 20,
+                    color: "#004080",
+                    fontWeight: "bold"
+                  }}
+                >
+                  Code de confirmation
+                </Typography>
                 <TextField
                   variant="outlined"
-                  label="Numéro de téléphone"
-                  onChange={handleChange("phone_number")}
+                  label="Code de confirmation"
+                  onChange={handleChange("code")}
                   fullWidth
                   required
-                  width={800}
-                  type="phone"
+                  type="text"
+                  placeholder="OCB8s.Ztagl58BK83LyIV24Smd6Ken7in8f"
                   style={{ marginTop: 20 }}
                 />
                 <div style={{ marginTop: 20 }}>
-                  <Link to="/connexion" style={{ textDecoration: "none" }}>
+                  <Link to="/inscription" style={{ textDecoration: "none" }}>
                     <Button
                       variant="outlined"
                       style={{
@@ -129,49 +164,23 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  <Button
-                    variant="contained"
-                    onClick={handleClick}
-                    style={{
-                      color: "white",
-                      backgroundColor: "#004080"
-                    }}
-                  >
-                    Réinitialiser
-                  </Button>
-                  <Snackbar
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left"
-                    }}
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    ContentProps={{
-                      "aria-describedby": "message-id"
-                    }}
-                    message={
-                      <span id="message-id">
-                        Email de réinitialisation envoyé
-                      </span>
-                    }
-                    action={[
-                      <IconButton
-                        key="close"
-                        aria-label="close"
-                        color="inherit"
-                        onClick={handleClose}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                    ]}
-                  />
+                  <Link to="/renseignement" style={{ textDecoration: "none" }}>
+                    <Button
+                      variant="outlined"
+                      style={{
+                        backgroundColor: "#004080",
+                        color: "white"
+                      }}
+                    >
+                      Confirmer l'inscription
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Box>
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

@@ -81,7 +81,10 @@ export default function TemporaryDrawer() {
           <ListItemText primary="Se déconnecter" />
         </ListItem>
 
-        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+        <Link
+          to="/dashboard"
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <ListItem button>
             <ListItemIcon>
               <DashboardIcon />

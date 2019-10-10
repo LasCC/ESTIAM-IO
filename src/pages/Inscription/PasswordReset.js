@@ -4,23 +4,17 @@ import {
   Typography,
   Button,
   TextField,
+  Box,
   Snackbar,
   IconButton,
-  Box
+  Container
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
-import CloseIcon from "@material-ui/icons/Close";
 import NavBar from "./components/NavBar";
 
-const useStyles = makeStyles(theme => ({
-  close: {
-    padding: theme.spacing(0.5)
-  }
-}));
 export default props => {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   function handleClick() {
@@ -39,12 +33,11 @@ export default props => {
   };
   const [values, setValues] = React.useState({
     adresse_mail: "",
-    identifiant: "",
     phone_number: ""
   });
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -94,8 +87,8 @@ export default props => {
                   Réinitialisation
                 </Typography>
                 <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
-                  Un email de réinitialisation vous a été envoyé dans votre
-                  boîte de réception
+                  Un code de réinitialisation vous a été envoyé dans votre boîte
+                  de réception
                 </Typography>
                 <Button
                   variant="outlined"
@@ -110,27 +103,20 @@ export default props => {
                   label="Adresse email"
                   onChange={handleChange("adresse_mail")}
                   fullWidth
-                  type="text"
+                  required
+                  width={800}
+                  type="mail"
                   style={{ marginTop: 20 }}
-                  autoComplete="current-password"
-                />
-                <TextField
-                  variant="outlined"
-                  label="Nom d'utilisateur"
-                  onChange={handleChange("identifiant")}
-                  fullWidth
-                  type="text"
-                  style={{ marginTop: 20 }}
-                  autoComplete="current-password"
                 />
                 <TextField
                   variant="outlined"
                   label="Numéro de téléphone"
                   onChange={handleChange("phone_number")}
                   fullWidth
+                  required
+                  width={800}
                   type="phone"
                   style={{ marginTop: 20 }}
-                  autoComplete="current-password"
                 />
                 <div style={{ marginTop: 20 }}>
                   <Link to="/connexion" style={{ textDecoration: "none" }}>
@@ -175,7 +161,6 @@ export default props => {
                         key="close"
                         aria-label="close"
                         color="inherit"
-                        className={classes.close}
                         onClick={handleClose}
                       >
                         <CloseIcon />
@@ -188,6 +173,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

@@ -13,7 +13,7 @@ export default props => {
       }}
     >
       <Typography variant="h5" style={{ color: "white", fontWeight: "bold" }}>
-        Bravo Michel, vous avez terminer !
+        Bravo Michel, vous avez terminé votre inscription !
       </Typography>
       <Divider style={{ marginTop: 15, marginBottom: 15 }} />
       <Typography style={{ marginTop: 20, color: "white" }}>

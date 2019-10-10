@@ -5,38 +5,48 @@ import {
   Typography,
   Button,
   FormControl,
-  FormControlLabel,
-  Radio,
-  FormLabel,
-  RadioGroup,
   InputLabel,
-  MenuItem,
   Select,
-  TextField
+  MenuItem,
+  TextField,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+import moment from "moment";
+import "moment/locale/fr";
+moment.locale("fr");
 
 export default props => {
+  const [values, setValues] = React.useState({
+    date_naissance: "",
+    nationalite_naissance: "",
+    pays_naissance: "",
+    departement_naissance: "",
+    ville_naissance: "",
+    code_postale_naissance: ""
+  });
   const pays = require("../../../data/pays.json");
-	const departement = require("../../../data/departement.json");
+  const departement =
+    values.pays_naissance === "France"
+      ? require("../../../data/departement.json")
+      : ["99-Autre"];
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  const [values, setValues] = React.useState({
-    gender: "homme",
-    pays: "",
-    numero_rue: "",
-    adresse: "",
-    departement: "",
-    ville: "",
-    code_postale: "",
-    numero_tel: ""
-  });
-
+  const [selectedDate, setSelectedDate] = React.useState(moment());
+  const handleDateChange = date => {
+    setSelectedDate(date);
+    console.log(date);
+  };
   const handleChangeTextField = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
@@ -47,9 +57,8 @@ export default props => {
     }));
   };
   console.log(values);
-
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -99,28 +108,43 @@ export default props => {
                   Renseignements
                 </Typography>
 
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">Civilité</FormLabel>
-                  <RadioGroup
-                    aria-label="gender"
-                    name="gender"
-                    onChange={handleChange}
-                    value={values.gender}
-                  >
-                    <FormControlLabel
-                      value="homme"
-                      control={<Radio color="primary" />}
-                      label="Homme"
-                      labelPlacement="end"
-                    />
-                    <FormControlLabel
-                      value="femme"
-                      control={<Radio color="primary" />}
-                      label="Femme"
-                      labelPlacement="end"
-                    />
-                  </RadioGroup>
-                </FormControl>
+                <Typography
+                  variant="h5"
+                  style={{
+                    color: "#004080",
+                    fontWeight: "bold",
+                    marginTop: 15
+                  }}
+                >
+                  Informations personnelles
+                </Typography>
+
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    style={{ marginRight: 15 }}
+                    inputVariant="outlined"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Date de naissance"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "date de naissance"
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+                <TextField
+                  style={{ marginRight: 15 }}
+                  variant="outlined"
+                  onChange={handleChangeTextField("nationalite_naissance")}
+                  label="Nationalité"
+                  type="text"
+                  margin="normal"
+                  inputProps={{
+                    "aria-label": "Nationalité"
+                  }}
+                />
 
                 <Typography
                   variant="h5"
@@ -130,29 +154,29 @@ export default props => {
                     marginTop: 15
                   }}
                 >
-                  Adresse
+                  Lieu de naissance
                 </Typography>
 
                 <form autoComplete="on">
                   <FormControl
                     variant="outlined"
+                    style={{ minWidth: 210, marginRight: 15 }}
                     margin="normal"
-                    style={{ marginRight: 15, minWidth: 210 }}
                   >
                     <InputLabel
-                      ref={inputLabel}
-                      htmlFor="paysderesidence"
+                      htmlFor="paysdenaissance"
                       required
+                      ref={inputLabel}
                     >
-                      Pays de résidence
+                      Pays de naissance
                     </InputLabel>
                     <Select
-                      value={values.pays}
+                      value={values.pays_naissance}
                       onChange={handleChange}
                       labelWidth={labelWidth}
                       inputProps={{
-                        name: "pays",
-                        "aria-label": "Pays de résidence"
+                        name: "pays_naissance",
+                        "aria-label": "Pays de naissance"
                       }}
                     >
                       {pays.map(name => (
@@ -162,45 +186,20 @@ export default props => {
                       ))}
                     </Select>
                   </FormControl>
-                  <TextField
-                    style={{ minWidth: 200, marginRight: 15 }}
-                    variant="outlined"
-                    onChange={handleChangeTextField("numero_rue")}
-                    label="Numéro de rue"
-                    margin="normal"
-                    min="0"
-                    type="number"
-                    inputProps={{
-                      "aria-label": "Numéro de rue",
-                      min: 0,
-                      max: 500
-                    }}
-                  />
-
-                  <TextField
-                    style={{ width: "auto", marginRight: 15 }}
-                    variant="outlined"
-                    onChange={handleChangeTextField("adresse")}
-                    label="Adresse"
-                    type="text"
-                    margin="normal"
-                    inputProps={{ "aria-label": "Adresse de résidence" }}
-                  />
-
                   <FormControl
                     variant="outlined"
                     style={{ minWidth: 210, marginRight: 15 }}
                     margin="normal"
                   >
-                    <InputLabel htmlFor="departement" ref={inputLabel}>
-                      Département
+                    <InputLabel htmlFor="departement" required ref={inputLabel}>
+                      Département de naissance
                     </InputLabel>
                     <Select
-                      value={values.departement}
+                      value={values.departement_naissance}
                       onChange={handleChange}
                       labelWidth={labelWidth}
                       inputProps={{
-                        name: "departement",
+                        name: "departement_naissance",
                         "aria-label": "Département de résidence"
                       }}
                     >
@@ -211,11 +210,10 @@ export default props => {
                       ))}
                     </Select>
                   </FormControl>
-
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
-                    onChange={handleChangeTextField("ville")}
+                    onChange={handleChangeTextField("ville_naissance")}
                     label="Ville"
                     type="text"
                     margin="normal"
@@ -227,27 +225,16 @@ export default props => {
                     style={{ marginRight: 15 }}
                     variant="outlined"
                     label="Code postale"
-                    onChange={handleChangeTextField("code_postale")}
+                    onChange={handleChangeTextField("code_postale_naissance")}
                     type="text"
                     margin="normal"
                     inputProps={{
                       "aria-label": "Code postale"
                     }}
                   />
-                  <TextField
-                    style={{ width: "auto", marginRight: 15 }}
-                    variant="outlined"
-                    label="Numéro de téléphone"
-                    onChange={handleChangeTextField("numero_tel")}
-                    type="tel"
-                    margin="normal"
-                    inputProps={{
-                      "aria-label": "Numéro de téléphone"
-                    }}
-                  />
                 </form>
                 <div>
-                  <Link to="/confirmation" style={{ textDecoration: "none" }}>
+                  <Link to="/renseignement" style={{ textDecoration: "none" }}>
                     <Button
                       variant="outlined"
                       style={{
@@ -260,7 +247,7 @@ export default props => {
                     </Button>
                   </Link>
                   <Link
-                    to="/renseignement/informations-personnelles"
+                    to="/renseignement/fin"
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -281,6 +268,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

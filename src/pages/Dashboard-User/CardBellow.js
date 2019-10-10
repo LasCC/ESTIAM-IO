@@ -1,20 +1,20 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import Taches from "./Taches";
-import Resultat from "./Resultat";
-import Aide from "./Aide";
+import Todolist from "./Todolist";
+import Results from "./Results";
+import Help from "./Help";
 
 export default props => {
   return (
     <Grid container spacing={3}>
       <Grid item xs sm="auto" lg={4}>
-        <Taches />
+        <Todolist />
       </Grid>
       <Grid item xs sm="auto" lg={4}>
-        <Resultat />
+        <Results />
       </Grid>
       <Grid item xs sm="auto" lg={4}>
-        <Aide />
+        <Help />
       </Grid>
     </Grid>
   );

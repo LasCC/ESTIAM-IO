@@ -14,7 +14,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
@@ -35,7 +36,7 @@ export default props => {
     setOpen(false);
   };
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item xs sm="auto" lg={3} md={3}>
@@ -322,11 +323,7 @@ export default props => {
                       <Button onClick={handleClose} color="textSecondary">
                         Retour
                       </Button>
-                      <a
-                        href="https://rw4ji.csb.app/"
-                        rel="noopener noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
+                      <Link to="/dashboard" style={{ textDecoration: "none" }}>
                         <Button
                           onClick={handleClose}
                           autoFocus
@@ -334,7 +331,7 @@ export default props => {
                         >
                           Confirmer
                         </Button>
-                      </a>
+                      </Link>
                     </DialogActions>
                   </Dialog>
                 </Box>
@@ -343,6 +340,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

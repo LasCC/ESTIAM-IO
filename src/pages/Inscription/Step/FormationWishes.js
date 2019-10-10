@@ -8,7 +8,8 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  FormHelperText
+  FormHelperText,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
@@ -34,7 +35,7 @@ export default props => {
     values.annee_demandee === "3rd year" ||
     values.annee_demandee === "";
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -233,6 +234,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

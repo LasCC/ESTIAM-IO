@@ -8,41 +8,25 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  TextField
+  TextField,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import moment from "moment";
-import "moment/locale/fr";
-moment.locale("fr");
 
 export default props => {
-  const pays = require("../../../data/pays.json");
-	const departement = require("../../../data/departement.json");
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  const [selectedDate, setSelectedDate] = React.useState(moment());
-  const handleDateChange = date => {
-    setSelectedDate(date);
-    console.log(date);
-  };
   const [values, setValues] = React.useState({
-    date_naissance: "",
-    nationalite_naissance: "",
-    pays_naissance: "",
-    departement_naissance: "",
-    ville_naissance: "",
-    code_postale_naissance: ""
+    choix: "",
+    nom_formation: "",
+    formation: ""
   });
+
   const handleChangeTextField = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
@@ -54,7 +38,7 @@ export default props => {
   };
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -66,7 +50,7 @@ export default props => {
             }}
             style={{
               padding: 25,
-              height: "90%",
+              height: "70vh",
               backgroundColor: "#004080"
             }}
           >
@@ -82,7 +66,7 @@ export default props => {
           <Box
             display="flex"
             alignItems="center"
-            css={{ height: "90%", marginTop: 25 }}
+            css={{ height: "70vh", marginTop: 25 }}
           >
             <Box
               style={{
@@ -101,7 +85,7 @@ export default props => {
                     marginBottom: 15
                   }}
                 >
-                  Renseignements
+                  Situation actuelle
                 </Typography>
 
                 <Typography
@@ -112,35 +96,34 @@ export default props => {
                     marginTop: 15
                   }}
                 >
-                  Informations personnelles
+                  Votre situation
                 </Typography>
 
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    style={{ marginRight: 15 }}
-                    inputVariant="outlined"
-                    format="dd/MM/yyyy"
-                    margin="normal"
-                    id="date-picker-inline"
-                    label="Date de naissance"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    KeyboardButtonProps={{
-                      "aria-label": "date de naissance"
-                    }}
-                  />
-                </MuiPickersUtilsProvider>
-                <TextField
-                  style={{ marginRight: 15 }}
+                <FormControl
                   variant="outlined"
-                  onChange={handleChangeTextField("nationalite_naissance")}
-                  label="Nationalité"
-                  type="text"
+                  style={{ minWidth: 210, marginRight: 15 }}
                   margin="normal"
-                  inputProps={{
-                    "aria-label": "Nationalité"
-                  }}
-                />
+                >
+                  <InputLabel htmlFor="choix" required ref={inputLabel}>
+                    Faites un choix
+                  </InputLabel>
+                  <Select
+                    value={values.choix}
+                    onChange={handleChange}
+                    labelWidth={labelWidth}
+                    inputProps={{
+                      name: "choix",
+                      "aria-label": "Situation actuelle"
+                    }}
+                  >
+                    <MenuItem value={"Etudiant"}>Etudiant</MenuItem>
+                    <MenuItem value={"En emploi"}>En emploi</MenuItem>
+                    <MenuItem value={"En recherche d’emploi"}>
+                      En recherche d’emploi
+                    </MenuItem>
+                    <MenuItem value={"Autre"}>Autre</MenuItem>
+                  </Select>
+                </FormControl>
 
                 <Typography
                   variant="h5"
@@ -150,87 +133,58 @@ export default props => {
                     marginTop: 15
                   }}
                 >
-                  Lieu de naissance
+                  Formation actuelle
                 </Typography>
 
                 <form autoComplete="on">
+                  <TextField
+                    style={{ marginRight: 15 }}
+                    variant="outlined"
+                    onChange={handleChangeTextField("nom_formation")}
+                    label="Nom de votre formation"
+                    placeholder="Bac S"
+                    type="text"
+                    margin="normal"
+                    inputProps={{ "aria-label": "Numéro de rue" }}
+                  />
                   <FormControl
                     variant="outlined"
                     style={{ minWidth: 210, marginRight: 15 }}
                     margin="normal"
                   >
                     <InputLabel
-                      htmlFor="paysdenaissance"
+                      htmlFor="nomformation"
                       required
                       ref={inputLabel}
                     >
-                      Pays de naissance
+                      Nom de votre formation
                     </InputLabel>
                     <Select
-                      value={values.pays_naissance}
+                      value={values.formation}
                       onChange={handleChange}
                       labelWidth={labelWidth}
                       inputProps={{
-                        name: "pays_naissance",
-                        "aria-label": "Pays de naissance"
+                        name: "formation",
+                        "aria-label": "Formation"
                       }}
                     >
-                      {pays.map(name => (
-                        <MenuItem key={name} value={name}>
-                          {name}
-                        </MenuItem>
-                      ))}
+                      <MenuItem value={"Terminal"}>Terminal</MenuItem>
+                      <MenuItem value={"Terminale-BAC"}>
+                        Terminale - J'ai déjà le BAC
+                      </MenuItem>
+                      <MenuItem value={"BAC+1"}>BAC +1</MenuItem>
+                      <MenuItem value={"BAC+2"}>BAC +2</MenuItem>
+                      <MenuItem value={"BAC+3"}>BAC +3</MenuItem>
+                      <MenuItem value={"BAC+4"}>BAC +4</MenuItem>
+                      <MenuItem value={"BAC+5"}>BAC +5</MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl
-                    variant="outlined"
-                    style={{ minWidth: 210, marginRight: 15 }}
-                    margin="normal"
-                  >
-                    <InputLabel htmlFor="departement" required ref={inputLabel}>
-                      Département de naissance
-                    </InputLabel>
-                    <Select
-                      value={values.departement_naissance}
-                      onChange={handleChange}
-                      labelWidth={labelWidth}
-                      inputProps={{
-                        name: "departement_naissance",
-                        "aria-label": "Département de résidence"
-                      }}
-                    >
-                      {departement.map(name => (
-                        <MenuItem key={name} value={name}>
-                          {name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <TextField
-                    style={{ marginRight: 15 }}
-                    variant="outlined"
-                    onChange={handleChangeTextField("ville_naissance")}
-                    label="Ville"
-                    type="text"
-                    margin="normal"
-                    inputProps={{
-                      "aria-label": "Ville"
-                    }}
-                  />
-                  <TextField
-                    style={{ marginRight: 15 }}
-                    variant="outlined"
-                    label="Code postale"
-                    onChange={handleChangeTextField("code_postale_naissance")}
-                    type="text"
-                    margin="normal"
-                    inputProps={{
-                      "aria-label": "Code postale"
-                    }}
-                  />
                 </form>
                 <div>
-                  <Link to="/renseignement" style={{ textDecoration: "none" }}>
+                  <Link
+                    to="/renseignement/fin"
+                    style={{ textDecoration: "none" }}
+                  >
                     <Button
                       variant="outlined"
                       style={{
@@ -243,7 +197,7 @@ export default props => {
                     </Button>
                   </Link>
                   <Link
-                    to="/renseignement/fin"
+                    to="/situation-actuelle/etablissement"
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -264,6 +218,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

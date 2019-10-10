@@ -1,27 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Grid,
   Typography,
   Button,
   TextField,
   Box,
-  Divider
+  Divider,
+  Container
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
+import { LoginContext } from "../../contexts/LoginContext";
 import NavBar from "./components/NavBar";
 
 export default props => {
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
-  };
   const [values, setValues] = React.useState({
     identifiant: "",
     password: ""
   });
+  const { handleLogin } = useContext(LoginContext);
+  handleLogin(values);
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value });
+  };
   console.log(values);
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -137,12 +141,7 @@ export default props => {
                     </Typography>
                   </Link>
                 </div>
-                <a
-                  href="https://rw4ji.csb.app/"
-                  style={{ textDecoration: "none" }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link to="/dashboard">
                   <Button
                     variant="contained"
                     fullWidth
@@ -154,12 +153,12 @@ export default props => {
                   >
                     Continuer
                   </Button>
-                </a>
+                </Link>
               </div>
             </Box>
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

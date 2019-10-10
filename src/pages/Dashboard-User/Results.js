@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography, Paper, Box, Divider, Button } from "@material-ui/core";
-import ChartResultat from "./ChartResultat";
+import ChartResultat from "./ChartResult";
 import { Link } from "react-router-dom";
-document.body.style.backgroundColor = "white"
+document.body.style.backgroundColor = "white";
 
 export default props => {
   return (

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Grid, Typography, Button } from "@material-ui/core";
+import { Box, Grid, Typography, Button, Container } from "@material-ui/core";
 import NavBar from "./components/NavBar";
 
 export default props => {
   return (
-    <>
+    <Container maxWidth="lg">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item xs sm="auto" lg={6} md={6}>
@@ -97,6 +97,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

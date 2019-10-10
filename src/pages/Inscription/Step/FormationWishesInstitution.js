@@ -11,7 +11,8 @@ import {
   Select,
   MenuItem,
   RadioGroup,
-  FormHelperText
+  FormHelperText,
+  Container
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
@@ -38,8 +39,22 @@ export default props => {
   };
   console.log(values);
   console.log(props);
+  let campusList = [
+    <MenuItem value={"Paris"}>Paris 75 (Porte de Lilas)</MenuItem>,
+    <MenuItem value={"Saint-Denis"}>
+      Saint-Denis 93 (établissement J.B. de La Salle)
+    </MenuItem>,
+    <MenuItem value={"Bourges"}>
+      Bourges 18 (établissement J.B. de La Salle)
+    </MenuItem>,
+    <MenuItem value={"Lyon"}>Lyon 69 (av. Jean Jaurès, 7ᵉ)</MenuItem>,
+    <MenuItem value={"Metz"}>Metz 57 (établissement Jean XXIII)</MenuItem>,
+    <MenuItem value={"Trabes"}>
+      Tarbes 65 (établissement Pradeau-La Sède)
+    </MenuItem>
+  ];
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -155,24 +170,11 @@ export default props => {
                       "aria-label": "Campus choix"
                     }}
                   >
-                    <MenuItem value={"Paris"}>
-                      Paris 75 (Porte de Lilas)
-                    </MenuItem>
-                    <MenuItem value={"Saint-Denis"}>
-                      Saint-Denis 93 (établissement J.B. de La Salle)
-                    </MenuItem>
-                    <MenuItem value={"Bourges"}>
-                      Bourges 18 (établissement J.B. de La Salle)
-                    </MenuItem>
-                    <MenuItem value={"Lyon"}>
-                      Lyon 69 (av. Jean Jaurès, 7ᵉ)
-                    </MenuItem>
-                    <MenuItem value={"Metz"}>
-                      Metz 57 (établissement Jean XXIII)
-                    </MenuItem>
-                    <MenuItem value={"Trabes"}>
-                      Tarbes 65 (établissement Pradeau-La Sède)
-                    </MenuItem>
+                    {campusList.filter(
+                      x =>
+                        x.props.value !== values.campus_choix_2 &&
+                        x.props.value !== values.campus_choix_3
+                    )}
                   </Select>
                 </FormControl>
                 <FormControl
@@ -192,24 +194,11 @@ export default props => {
                       "aria-label": "Campus choix"
                     }}
                   >
-                    <MenuItem value={"Paris"}>
-                      Paris 75 (Porte de Lilas)
-                    </MenuItem>
-                    <MenuItem value={"Saint-Denis"}>
-                      Saint-Denis 93 (établissement J.B. de La Salle)
-                    </MenuItem>
-                    <MenuItem value={"Bourges"}>
-                      Bourges 18 (établissement J.B. de La Salle)
-                    </MenuItem>
-                    <MenuItem value={"Lyon"}>
-                      Lyon 69 (av. Jean Jaurès, 7ᵉ)
-                    </MenuItem>
-                    <MenuItem value={"Metz"}>
-                      Metz 57 (établissement Jean XXIII)
-                    </MenuItem>
-                    <MenuItem value={"Trabes"}>
-                      Tarbes 65 (établissement Pradeau-La Sède)
-                    </MenuItem>
+                    {campusList.filter(
+                      x =>
+                        x.props.value !== values.campus_choix_1 &&
+                        x.props.value !== values.campus_choix_3
+                    )}
                   </Select>
                 </FormControl>
                 <FormControl
@@ -229,24 +218,11 @@ export default props => {
                       "aria-label": "Campus choix"
                     }}
                   >
-                    <MenuItem value={"Paris"}>
-                      Paris 75 (Porte de Lilas)
-                    </MenuItem>
-                    <MenuItem value={"Saint-Denis"}>
-                      Saint-Denis 93 (établissement J.B. de La Salle)
-                    </MenuItem>
-                    <MenuItem value={"Bourges"}>
-                      Bourges 18 (établissement J.B. de La Salle)
-                    </MenuItem>
-                    <MenuItem value={"Lyon"}>
-                      Lyon 69 (av. Jean Jaurès, 7ᵉ)
-                    </MenuItem>
-                    <MenuItem value={"Metz"}>
-                      Metz 57 (établissement Jean XXIII)
-                    </MenuItem>
-                    <MenuItem value={"Trabes"}>
-                      Tarbes 65 (établissement Pradeau-La Sède)
-                    </MenuItem>
+                    {campusList.filter(
+                      x =>
+                        x.props.value !== values.campus_choix_1 &&
+                        x.props.value !== values.campus_choix_2
+                    )}
                   </Select>
                 </FormControl>
                 <FormHelperText>
@@ -289,6 +265,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Box, Typography, Button } from "@material-ui/core";
+import { Grid, Box, Typography, Button, Container } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
@@ -7,7 +7,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 export default props => {
   return (
-    <>
+    <Container maxWidth="lg">
       <RegistedUserNav />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -68,8 +68,8 @@ export default props => {
                   align="center"
                   style={{ color: "#004080", fontSize: 15 }}
                 >
-                  Bravo ! Vous venez de terminer l'étape n°3, <br />
-                  il ne vous reste plus qu'<strong>une</strong> étape pour
+                  Bravo ! Vous venez de terminer l'étape n°1, <br />
+                  il ne vous reste plus que <strong>trois</strong> étapes pour
                   terminer votre inscription !
                 </Typography>
                 <Box display="flex" justifyContent="center">
@@ -93,7 +93,7 @@ export default props => {
                     </Button>
                   </a>
                   <Link
-                    to="/pieces-complementaires"
+                    to="/situation-actuelle"
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -114,6 +114,6 @@ export default props => {
           </Box>
         </Grid>
       </Grid>
-    </>
+    </Container>
   );
 };
