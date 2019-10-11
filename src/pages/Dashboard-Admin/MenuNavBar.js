@@ -12,8 +12,11 @@ import {
   Avatar,
   Typography
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MenuIcon from "@material-ui/icons/Menu";
+import AssessmentIcon from "@material-ui/icons/Assessment";
+import DashboardIcon from "@material-ui/icons/Dashboard";
 
 const useStyles = makeStyles({
   list: {
@@ -69,12 +72,36 @@ export default function TemporaryDrawer() {
         </ListItem>
         <Divider />
 
+        <Link
+          to="/administration"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <ListItem button>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+        </Link>
+
         <ListItem button>
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
           <ListItemText primary="Se déconnecter" />
         </ListItem>
+
+        <Link
+          to="/administration/analytics"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <ListItem button>
+            <ListItemIcon>
+              <AssessmentIcon />
+            </ListItemIcon>
+            <ListItemText primary="Analytics" />
+          </ListItem>
+        </Link>
       </List>
     </div>
   );

@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar";
 
 export default props => {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" id="Homepage">
       <NavBar />
       <Grid container spacing={0}>
         <Grid item xs sm="auto" lg={6} md={6}>

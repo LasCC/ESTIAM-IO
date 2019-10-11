@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Grid,
   Typography,
@@ -14,14 +14,26 @@ import { LoginContext } from "../../contexts/LoginContext";
 import NavBar from "./components/NavBar";
 
 export default props => {
-  const [values, setValues] = React.useState({
-    identifiant: "",
+  const [values, setValues] = useState({
+    email: "",
     password: ""
   });
-  const { handleLogin } = useContext(LoginContext);
-  handleLogin(values);
+  const { handleLogin, loginState } = useContext(LoginContext);
+
+  console.log(loginState);
+
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
+  };
+  const handleReset = () => {
+    setValues({
+      email: "",
+      password: ""
+    });
+  };
+  const handleSubmit = () => {
+    handleLogin(values);
+    handleReset();
   };
   console.log(values);
   return (
@@ -53,7 +65,7 @@ export default props => {
           <Box
             display="flex"
             alignItems="center"
-            css={{ height: "70vh", marginTop: 25 }}
+            style={{ height: "70vh", marginTop: 25 }}
           >
             <Box
               style={{
@@ -71,6 +83,15 @@ export default props => {
                   Connexion
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                {loginState.loginError && (
+                  <Typography
+                    variant="subtitle2"
+                    color="error"
+                    className="shake-horizontal"
+                  >
+                    Identifiant ou mot de passe incorrect
+                  </Typography>
+                )}
                 <Typography
                   variant="h5"
                   style={{
@@ -84,10 +105,14 @@ export default props => {
                 <TextField
                   variant="outlined"
                   label="Identifiant"
-                  onChange={handleChange("identifiant")}
+                  value={values.email}
+                  onChange={handleChange("email")}
                   type="email"
                   fullWidth
-                  style={{ marginTop: 20 }}
+                  error={loginState.loginError ? "#f00" : ""}
+                  style={{
+                    marginTop: 20
+                  }}
                   autoComplete="current-password"
                 />
                 <Typography
@@ -104,9 +129,13 @@ export default props => {
                   variant="outlined"
                   label="Mot de passe"
                   onChange={handleChange("password")}
+                  value={values.password}
                   fullWidth
                   type="password"
-                  style={{ marginTop: 20 }}
+                  error={loginState.loginError ? "#f00" : ""}
+                  style={{
+                    marginTop: 20
+                  }}
                   autoComplete="current-password"
                 />
                 <div style={{ marginTop: 20 }}>
@@ -141,7 +170,7 @@ export default props => {
                     </Typography>
                   </Link>
                 </div>
-                <Link to="/dashboard">
+                <>
                   <Button
                     variant="contained"
                     fullWidth
@@ -150,10 +179,11 @@ export default props => {
                       backgroundColor: "#004080",
                       color: "white"
                     }}
+                    onClick={handleSubmit}
                   >
                     Continuer
                   </Button>
-                </Link>
+                </>
               </div>
             </Box>
           </Box>

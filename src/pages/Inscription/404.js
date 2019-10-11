@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Typography, Button, Container } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { LoginContext } from "../../contexts/LoginContext";
 
 export default props => {
+  const { checkAuth } = useContext(LoginContext);
   return (
     <Container maxWidth="lg">
       <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
-        p={1}
-        m={1}
-        css={{ height: "100vh" }}
+        style={{ height: "90vh" }}
       >
-        <Box p={1} className="fade-in-fwd">
+        <Box className="fade-in-fwd">
           <img
             src="https://i.imgur.com/EYIL6Yy.png"
             alt="404image"
             style={{ width: 350 }}
           />
-          <Box p={1}>
+          <Box>
             <Typography
               variant="subtitle2"
               style={{ color: "white", fontSize: 15 }}
@@ -31,7 +31,10 @@ export default props => {
               depuis. Ils paient 50% de votre loyer et vous "oubliez" de sortir
               les ordures toutes les deux semaines.
             </Typography>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link
+              to={checkAuth() ? "/dashboard" : "/"}
+              style={{ textDecoration: "none" }}
+            >
               <Button
                 style={{ color: "#FFEE00", fontWeight: "bold", padding: 0 }}
               >

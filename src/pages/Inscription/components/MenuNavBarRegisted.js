@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import {
@@ -19,7 +19,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
-
+import { LoginContext } from "./../../../contexts/LoginContext";
 const useStyles = makeStyles({
   list: {
     width: 250
@@ -30,6 +30,7 @@ const useStyles = makeStyles({
 });
 
 export default function TemporaryDrawer() {
+  const { handleLogout } = useContext(LoginContext);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false
@@ -87,7 +88,7 @@ export default function TemporaryDrawer() {
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary="Se déconnecter" />
+          <ListItemText primary="Se déconnecter" onClick={handleLogout} />
         </ListItem>
 
         <Link

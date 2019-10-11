@@ -1,9 +1,12 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
-
+import Routes from "./Routes";
+import LoginProvider from "./contexts/LoginContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import UnProtectedRoute from "./components/UnProtectedRoute";
 import ReactDOM from "react-dom";
+import GAListener from "./components/TrackerGA";
 import "./styles.css";
-import { LoginProvider } from "./contexts/LoginContext";
 
 // == INSCRIPTION IMPORT == //
 const HomePage = lazy(() => import("./pages/Inscription/HomePage"));
@@ -55,6 +58,9 @@ const Tutorials = lazy(() => import("./pages/Dashboard-User/pages/Tutorial"));
 
 // == DASHBOARD ADMIN IMPORT == //
 const DashboardAdmin = lazy(() => import("./pages/Dashboard-Admin/Homepage"));
+const AnalyticsAdmin = lazy(() =>
+  import("./pages/Dashboard-Admin/pages/Analytics")
+);
 
 function App() {
   return (
@@ -69,68 +75,107 @@ function App() {
     >
       <LoginProvider>
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/inscription" component={Inscription} />
-          <Route exact path="/confirmation" component={Confirmation} />
-          <Route exact path="/connexion" component={Connexion} />
-          <Route exact path="/renseignement" component={GeneralInformations} />
-          <Route
+          <UnProtectedRoute exact path={Routes.HOME} component={HomePage} />
+          <UnProtectedRoute
             exact
-            path="/renseignement/informations-personnelles"
+            path={Routes.REGISTER}
+            component={Inscription}
+          />
+          <UnProtectedRoute
+            exact
+            path={Routes.MAILCONFIRMATION}
+            component={Confirmation}
+          />
+          <UnProtectedRoute exact path={Routes.LOGIN} component={Connexion} />
+          {/* Access should be based on Candidature Contexte synced with cache-DB */}
+          <ProtectedRoute
+            exact
+            path={Routes.GENERAL_INFO}
+            component={GeneralInformations}
+          />
+          <ProtectedRoute
+            exact
+            path={Routes.PERSONAL_INFO}
             component={GeneralInformationsPlace}
           />
-          <Route
+          <ProtectedRoute
             exact
-            path="/renseignement/fin"
+            path={Routes.END_INFO}
             component={GenralInformationsEnd}
           />
-          <Route
+          <ProtectedRoute
             exact
-            path="/situation-actuelle"
+            path={Routes.CURRENT_SITUATION}
             component={CurrentSituation}
           />
-          <Route
+          <ProtectedRoute
             exact
-            path="/situation-actuelle/etablissement"
+            path={Routes.CURRENT_SITUATION_PREV_SCHOOL}
             component={CurrentSituationInstitution}
           />
-          <Route
+          <ProtectedRoute
             exact
-            path="/situation-actuelle/fin"
+            path={Routes.CURRENT_SITUATION_END}
             component={CurrentSituationEnd}
           />
-          <Route exact path="/voeux-formation" component={FormationWishes} />
-          <Route
+          <ProtectedRoute
             exact
-            path="/voeux-formation/campus"
+            path={Routes.WISHES_FORMATION}
+            component={FormationWishes}
+          />
+          <ProtectedRoute
+            exact
+            path={Routes.WISHES_CAMPUS}
             component={FormationWishesInstitution}
           />
-          <Route
+          <ProtectedRoute
             exact
-            path="/voeux-formation/fin"
+            path={Routes.WISHES_END}
             component={FormationWishesEnd}
           />
-          <Route
+          <ProtectedRoute
             exact
-            path="/pieces-complementaires"
+            path={Routes.UPLOAD_FILE}
             component={AdditionalDocuments}
           />
-          <Route
+          {/* Until here */}
+          <UnProtectedRoute
             exact
-            path="/reinitialisation-identifiant"
+            path={Routes.USER_RESET}
             component={UserReset}
           />
-          <Route
+          <UnProtectedRoute
             exact
-            path="/reinitialisation-mot-de-passe"
+            path={Routes.PASSWORD_RESET}
             component={PasswordReset}
           />
-          <Route exact path="/recapitulatif" component={Recap} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/aide" component={Tutorials} />
-          <Route exact path="/taches" component={Tasks} />
-          <Route exact path="/resultats" component={ResultsGraph} />
-          <Route exact path="/administration" component={DashboardAdmin} />
+          <ProtectedRoute
+            exact
+            path={Routes.RECAPITULATION}
+            component={Recap}
+          />
+          <ProtectedRoute exact path={Routes.DASHBOARD} component={Dashboard} />
+          <ProtectedRoute
+            exact
+            path={Routes.DASHBOARD_HELP}
+            component={Tutorials}
+          />
+          <ProtectedRoute
+            exact
+            path={Routes.DASHBOARD_TASKS}
+            component={Tasks}
+          />
+          <ProtectedRoute
+            exact
+            path={Routes.DASHBOARD_RESULTS}
+            component={ResultsGraph}
+          />
+          <Route exact path={Routes.ADMIN} component={DashboardAdmin} />
+          <Route
+            exact
+            path={Routes.ADMIN_ANALYTICS}
+            component={AnalyticsAdmin}
+          />
           <Route path="*" component={UnknownPage} />
         </Switch>
       </LoginProvider>
@@ -141,7 +186,9 @@ function App() {
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <GAListener trackingId="UA-149840700-1">
+      <App />
+    </GAListener>
   </BrowserRouter>,
   rootElement
 );
