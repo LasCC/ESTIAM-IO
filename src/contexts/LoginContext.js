@@ -13,16 +13,33 @@ const LoginProvider = props => {
     numero_dossier: "",
     token: "",
     isLogged: false,
-    loginError: false
+    loginError: false,
+    login_server_error: false
   });
   const handleLogin = async data => {
     console.log("login request ....", data);
     if (data.email === "admin" && data.password === "admin") {
-      setLoginState({ ...loginState, isLogged: true });
+      setLoginState({
+        name: "Michel",
+        lastname: "Platini",
+        email: "",
+        numero_dossier: "",
+        token: "",
+        isLogged: true,
+        loginError: false
+      });
       return props.history.push("/dashboard");
     } else {
       console.log("login failed bad credentials");
-      setLoginState({ ...loginState, loginError: true });
+      setLoginState({
+        name: "Michel",
+        lastname: "Platini",
+        email: "",
+        numero_dossier: "",
+        token: "",
+        isLogged: false,
+        loginError: true
+      });
     }
     // Test LOGIN
     /* http
@@ -36,11 +53,11 @@ const LoginProvider = props => {
           throw ex
         }
         localStorage.seItem("token", token); 
-        const {name , lastname , email } = token
-        setLoginState({name,lastname,email,isLogged : true, loginError : false})
+        setLoginState({name : tokendata.name,lastname : tokendata.lastname,email : tokendata.email,numero_dossier : tokendata.candidatureID,isLogged : true, loginError : false})
         if(tokendata.firstlogged) props.history.push("/renseignement");
         return props.history.push("/dashboard");
-       });
+       })
+       
     */
   };
 
@@ -83,7 +100,15 @@ const LoginProvider = props => {
   const handleLogout = () => {
     console.log("logged out .....");
     localStorage.removeItem("token");
-    setLoginState({ ...loginState, isLogged: false });
+    setLoginState({
+      name: "",
+      lastname: "",
+      email: "",
+      numero_dossier: "",
+      token: "",
+      isLogged: false,
+      loginError: false
+    });
     window.location.replace("/");
   };
   return (
