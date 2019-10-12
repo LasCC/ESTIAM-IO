@@ -1,6 +1,7 @@
 import React from "react";
 import { Paper, Typography, Divider, Button, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Routes from "../../Routes";
 
 export default props => {
   return (
@@ -27,7 +28,7 @@ export default props => {
           </Box>
           <Box p={1}>
             <Link
-              to="/taches"
+              to={Routes.DASHBOARD_TASKS}
               style={{ textDecoration: "none", color: "white" }}
             >
               <Button

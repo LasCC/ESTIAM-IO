@@ -1,4 +1,5 @@
 import React from "react";
+import Routes from "../../Routes";
 import {
   Typography,
   Box,
@@ -75,7 +76,7 @@ export default props => {
     <div style={{ width: "100%" }}>
       <Box display="flex" p={4} alignItems="center">
         <Box p={1} flexGrow={1}>
-          <Link to="/dashboard">
+          <Link to={Routes.DASHBOARD}>
             <img
               src="https://i.imgur.com/LbKnIx0.png"
               alt="estiamLogo"
@@ -102,7 +103,7 @@ export default props => {
               <Box flexGrow={1} style={{ marginRight: 15, padding: 10 }}>
                 <Typography variant="subtitle2">Notifications</Typography>
               </Box>
-              <Link to="/parametre-notification">
+              <Link to={Routes.PARAMETER_NOTIFICATION}>
                 <Box style={{ padding: 10, color: "gray" }}>
                   <SettingsIcon />
                 </Box>

@@ -13,15 +13,17 @@ const routes = {
   DASHBOARD_TASKS: "/dashboard/taches", // !  :  /taches
   DASHBOARD_RESULTS: "/dashboard/resulats", // ! current : resultats
   DASHBOARD_HELP: "/dashboard/aide", // ! current : aide
-  ADMIN: "/administration",
   WISHES_END: "/voeux-formation",
   UPLOAD_FILE: "/pieces-complementaires",
-  ADMIN_ANALYTICS: "/administration/analytics",
+  ADMIN_DASHBOARD: "/administration",
+  ADMIN_DASHBOARD_FILES: "/administration/dossiers",
+  ADMIN_DASHBOARD_GLOBALVISION: "/administration/vue-ensemble",
   WISHES_CAMPUS: "/voeux-formation/campus",
   WISHES_FORMATION: "/voeux-formation",
   CURRENT_SITUATION: "/situation-actuelle",
   CURRENT_SITUATION_PREV_SCHOOL: "/situation-actuelle/etablissement",
-  CURRENT_SITUATION_END: "/situation-actuelle/fin"
+  CURRENT_SITUATION_END: "/situation-actuelle/fin",
+  PARAMETER_NOTIFICATION: "/parametre-notification"
 };
 
 export default routes;

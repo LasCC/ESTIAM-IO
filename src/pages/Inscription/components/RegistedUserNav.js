@@ -3,7 +3,7 @@ import { Typography, Box, Avatar, Badge } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import MenuNavBarRegisted from "./MenuNavBarRegisted";
 import { Link } from "react-router-dom";
-
+import Routes from "../../../Routes";
 const StyledBadge2 = withStyles(theme => ({
   badge: {
     backgroundColor: "#44b700",
@@ -37,7 +37,7 @@ export default props => {
     <div style={{ width: "100%" }}>
       <Box display="flex" p={4} alignItems="center">
         <Box p={1} flexGrow={1}>
-          <Link to="/">
+          <Link to={Routes.HOME}>
             <img
               src="https://i.imgur.com/hsaZGPb.png"
               alt="estiamLogo"

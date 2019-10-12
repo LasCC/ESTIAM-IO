@@ -37,7 +37,7 @@ export default props => {
         Random datasets
       </Typography>
       <Divider style={{ marginTop: 15, marginBottom: 15 }} />
-      <Line data={data} height="100%" width="100%" />
+      <Line data={data} style={{ height: "100%", width: "100%" }} />
       <Typography
         variant="subtitle2"
         color="textSecondary"

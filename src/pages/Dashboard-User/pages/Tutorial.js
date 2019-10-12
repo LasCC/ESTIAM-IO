@@ -1,4 +1,5 @@
 import React from "react";
+import Routes from "../../../Routes";
 import NavBar from "../NavBar";
 import { Link as Links } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -58,7 +59,7 @@ export default props => {
             </Box>
             <Box p={1}>
               <Links
-                to="/dashboard"
+                to={Routes.DASHBOARD}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Button
@@ -127,7 +128,7 @@ export default props => {
                   Si vous avez oublier votre mot de passe, pas de panique
                   rendez-vous sur
                   <Link
-                    href="/reinitialisation-mot-de-passe"
+                    href={Routes.PASSWORD_RESET}
                     style={{ marginRight: 5, marginLeft: 5 }}
                   >
                     cette page
@@ -160,7 +161,7 @@ export default props => {
                   Si vous avez oublier votre identifiant, pas de panique
                   rendez-vous sur
                   <Link
-                    href="/reinitialisation-identifiant"
+                    href={Routes.USER_RESET}
                     style={{ marginRight: 5, marginLeft: 5 }}
                   >
                     cette page
@@ -197,7 +198,7 @@ export default props => {
                   Pour compléter les tâches, veuillez cliquer sur le bouton mis
                   à disposition, pour voir tous les différentes tâches que vous
                   devez accomplir veuillez vous rendre sur
-                  <Link href="/taches" style={{ marginLeft: 5 }}>
+                  <Link href={Routes.DASHBOARD_TASKS} style={{ marginLeft: 5 }}>
                     cette page.
                   </Link>
                 </Typography>

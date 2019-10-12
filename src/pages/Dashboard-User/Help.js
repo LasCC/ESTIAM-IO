@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Paper, Box, Divider, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Routes from "../../Routes";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 export default props => {
   return (
@@ -26,7 +27,7 @@ export default props => {
             </Box>
             <Box p={1}>
               <Link
-                to="/aide"
+                to={Routes.DASHBOARD_HELP}
                 style={{ textDecoration: "none", color: "white" }}
               >
                 <Button

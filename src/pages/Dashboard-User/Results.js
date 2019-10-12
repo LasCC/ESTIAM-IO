@@ -1,4 +1,5 @@
 import React from "react";
+import Routes from "../../Routes";
 import { Typography, Paper, Box, Divider, Button } from "@material-ui/core";
 import ChartResultat from "./ChartResult";
 import { Link } from "react-router-dom";
@@ -27,7 +28,7 @@ export default props => {
           </Box>
           <Box p={1}>
             <Link
-              to="/resultats"
+              to={Routes.DASHBOARD_RESULTS}
               style={{ textDecoration: "none", color: "white" }}
             >
               <Button

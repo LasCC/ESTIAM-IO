@@ -59,9 +59,18 @@ const ResultsGraph = lazy(() =>
 const Tutorials = lazy(() => import("./pages/Dashboard-User/pages/Tutorial"));
 
 // == DASHBOARD ADMIN IMPORT == //
-const DashboardAdmin = lazy(() => import("./pages/Dashboard-Admin/Homepage"));
-const AnalyticsAdmin = lazy(() =>
-  import("./pages/Dashboard-Admin/pages/Analytics")
+// const DashboardAdmin = lazy(() => import("./pages/Dashboard-Admin/Homepage"));
+// const AnalyticsAdmin = lazy(() =>
+//   import("./pages/Dashboard-Admin/pages/Analytics")
+// );
+const AdminDashboard = lazy(() =>
+  import("./pages/Dashboard-Admin/AdminDashboard")
+);
+const AdminDashboardFiles = lazy(() =>
+  import("./pages/Dashboard-Admin/pages/Files")
+);
+const AdminDashboardGlobalVision = lazy(() =>
+  import("./pages/Dashboard-Admin/pages/GlobalVision")
 );
 
 function App() {
@@ -180,11 +189,20 @@ function App() {
               component={ResultsGraph}
             />
             <AdminDashboardProvider>
-              <Route exact path={Routes.ADMIN} component={DashboardAdmin} />
               <Route
                 exact
-                path={Routes.ADMIN_ANALYTICS}
-                component={AnalyticsAdmin}
+                path={Routes.ADMIN_DASHBOARD}
+                component={AdminDashboard}
+              />
+              <Route
+                exact
+                path={Routes.ADMIN_DASHBOARD_FILES}
+                component={AdminDashboardFiles}
+              />
+              <Route
+                exact
+                path={Routes.ADMIN_DASHBOARD_GLOBALVISION}
+                component={AdminDashboardGlobalVision}
               />
             </AdminDashboardProvider>
             <Route path="*" component={UnknownPage} />

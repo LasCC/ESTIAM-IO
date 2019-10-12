@@ -1,4 +1,5 @@
 import React from "react";
+import Routes from "../../../Routes";
 import NavBar from "../NavBar";
 import { Link } from "react-router-dom";
 import { HorizontalBar, Bar } from "react-chartjs-2";
@@ -30,7 +31,7 @@ const data = {
     }
   ]
 };
-document.body.style.backgroundColor = "white"
+document.body.style.backgroundColor = "white";
 
 export default props => {
   return (
@@ -51,7 +52,10 @@ export default props => {
               </Typography>
             </Box>
             <Box p={1}>
-              <Link to="/dashboard" style={{ textDecoration: "none", color: "white" }}>
+              <Link
+                to={Routes.DASHBOARD}
+                style={{ textDecoration: "none", color: "white" }}
+              >
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "#1875F0", color: "white" }}

@@ -1,143 +1,145 @@
 import React from "react";
 import NavBar from "../NavBar";
+import Routes from "../../../Routes";
 import {
-	Box,
-	Paper,
-	Typography,
-	Container,
-	Button,
-	Divider
+  Box,
+  Paper,
+  Typography,
+  Container,
+  Button,
+  Divider
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+
 document.body.style.backgroundColor = "white";
 
 export default props => {
-	return (
-		<>
-			<NavBar />
-			<Container maxWidth="lg">
-				<Paper
-					style={{
-						padding: 15,
-						boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)",
-						borderRadius: 10
-					}}
-				>
-					<Box display="flex" alignItems="center">
-						<Box flexGrow={1}>
-							<Typography variant="h5" style={{ fontWeight: "bold" }}>
-								Formulaires à compléter
-							</Typography>
-						</Box>
-						<Box p={1}>
-							<Link
-								to="/dashboard"
-								style={{ textDecoration: "none", color: "white" }}
-							>
-								<Button
-									variant="contained"
-									style={{ backgroundColor: "#1875F0", color: "white" }}
-								>
-									Retour
-								</Button>
-							</Link>
-						</Box>
-					</Box>
+  return (
+    <>
+      <NavBar />
+      <Container maxWidth="lg">
+        <Paper
+          style={{
+            padding: 15,
+            boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)",
+            borderRadius: 10
+          }}
+        >
+          <Box display="flex" alignItems="center">
+            <Box flexGrow={1}>
+              <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                Formulaires à compléter
+              </Typography>
+            </Box>
+            <Box p={1}>
+              <Link
+                to={Routes.DASHBOARD}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Button
+                  variant="contained"
+                  style={{ backgroundColor: "#1875F0", color: "white" }}
+                >
+                  Retour
+                </Button>
+              </Link>
+            </Box>
+          </Box>
 
-					<Divider style={{ marginTop: 10, marginBottom: 10 }} />
+          <Divider style={{ marginTop: 10, marginBottom: 10 }} />
 
-					<Paper
-						style={{
-							borderRadius: 10,
-							backgroundColor: "#508CC9",
-							padding: 20,
-							margin: 10
-						}}
-					>
-						<Typography
-							variant="h5"
-							style={{
-								color: "white",
-								fontWeight: "bold"
-							}}
-						>
-							Terminer "path"
-						</Typography>
-						<Typography variant="subtitle2" style={{ color: "white" }}>
-							Généralement, on utilise un texte en faux latin (le texte ne veut
-							rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-							donc de faire office de texte d'attente.
-						</Typography>
-						<Button
-							fullWidth
-							variant="outlined"
-							style={{ color: "white", marginTop: 10, borderColor: "white" }}
-						>
-							Remplir le formulaire
-						</Button>
-					</Paper>
-					<Paper
-						style={{
-							borderRadius: 10,
-							backgroundColor: "#508CC9",
-							padding: 20,
-							margin: 10
-						}}
-					>
-						<Typography
-							variant="h5"
-							style={{
-								color: "white",
-								fontWeight: "bold"
-							}}
-						>
-							Terminer "path"
-						</Typography>
-						<Typography variant="subtitle2" style={{ color: "white" }}>
-							Généralement, on utilise un texte en faux latin (le texte ne veut
-							rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-							donc de faire office de texte d'attente.
-						</Typography>
-						<Button
-							fullWidth
-							variant="outlined"
-							style={{ color: "white", marginTop: 10, borderColor: "white" }}
-						>
-							Remplir le formulaire
-						</Button>
-					</Paper>
-					<Paper
-						style={{
-							borderRadius: 10,
-							backgroundColor: "#508CC9",
-							padding: 20,
-							margin: 10
-						}}
-					>
-						<Typography
-							variant="h5"
-							style={{
-								color: "white",
-								fontWeight: "bold"
-							}}
-						>
-							Terminer "path"
-						</Typography>
-						<Typography variant="subtitle2" style={{ color: "white" }}>
-							Généralement, on utilise un texte en faux latin (le texte ne veut
-							rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-							donc de faire office de texte d'attente.
-						</Typography>
-						<Button
-							fullWidth
-							variant="outlined"
-							style={{ color: "white", marginTop: 10, borderColor: "white" }}
-						>
-							Remplir le formulaire
-						</Button>
-					</Paper>
+          <Paper
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#508CC9",
+              padding: 20,
+              margin: 10
+            }}
+          >
+            <Typography
+              variant="h5"
+              style={{
+                color: "white",
+                fontWeight: "bold"
+              }}
+            >
+              Terminer "path"
+            </Typography>
+            <Typography variant="subtitle2" style={{ color: "white" }}>
+              Généralement, on utilise un texte en faux latin (le texte ne veut
+              rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
+              donc de faire office de texte d'attente.
+            </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              style={{ color: "white", marginTop: 10, borderColor: "white" }}
+            >
+              Remplir le formulaire
+            </Button>
+          </Paper>
+          <Paper
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#508CC9",
+              padding: 20,
+              margin: 10
+            }}
+          >
+            <Typography
+              variant="h5"
+              style={{
+                color: "white",
+                fontWeight: "bold"
+              }}
+            >
+              Terminer "path"
+            </Typography>
+            <Typography variant="subtitle2" style={{ color: "white" }}>
+              Généralement, on utilise un texte en faux latin (le texte ne veut
+              rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
+              donc de faire office de texte d'attente.
+            </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              style={{ color: "white", marginTop: 10, borderColor: "white" }}
+            >
+              Remplir le formulaire
+            </Button>
+          </Paper>
+          <Paper
+            style={{
+              borderRadius: 10,
+              backgroundColor: "#508CC9",
+              padding: 20,
+              margin: 10
+            }}
+          >
+            <Typography
+              variant="h5"
+              style={{
+                color: "white",
+                fontWeight: "bold"
+              }}
+            >
+              Terminer "path"
+            </Typography>
+            <Typography variant="subtitle2" style={{ color: "white" }}>
+              Généralement, on utilise un texte en faux latin (le texte ne veut
+              rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
+              donc de faire office de texte d'attente.
+            </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              style={{ color: "white", marginTop: 10, borderColor: "white" }}
+            >
+              Remplir le formulaire
+            </Button>
+          </Paper>
 
-					{/* <Typography
+          {/* <Typography
             variant="h5"
             style={{ fontWeight: "bold", marginTop: 25 }}
           >
@@ -259,8 +261,8 @@ export default props => {
               Envoyer
             </Button>
           </Box> */}
-				</Paper>
-			</Container>
-		</>
-	);
+        </Paper>
+      </Container>
+    </>
+  );
 };

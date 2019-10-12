@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
+import Routes from "../../../Routes";
 import {
   List,
   ListItem,
@@ -75,7 +76,10 @@ export default function TemporaryDrawer() {
         </ListItem>
         <Divider />
 
-        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+        <Link
+          to={Routes.HOME}
+          style={{ textDecoration: "none", color: "black" }}
+        >
           <ListItem button>
             <ListItemIcon>
               <HomeIcon />
@@ -92,7 +96,7 @@ export default function TemporaryDrawer() {
         </ListItem>
 
         <Link
-          to="/dashboard"
+          to={Routes.DASHBOARD}
           style={{ textDecoration: "none", color: "black" }}
         >
           <ListItem button>
@@ -104,7 +108,7 @@ export default function TemporaryDrawer() {
         </Link>
 
         <Link
-          to="/renseignement"
+          to={Routes.GENERAL_INFO}
           style={{ textDecoration: "none", color: "black" }}
         >
           <ListItem button>
@@ -116,7 +120,7 @@ export default function TemporaryDrawer() {
         </Link>
 
         <Link
-          to="/resultats"
+          to={Routes.DASHBOARD_RESULTS}
           style={{ textDecoration: "none", color: "black" }}
         >
           <ListItem button>
