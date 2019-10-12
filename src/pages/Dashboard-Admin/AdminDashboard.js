@@ -17,10 +17,12 @@ import {
   Box,
   Paper,
   Avatar,
-  Badge
+  Badge,
+  Tooltip
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import TimelineIcon from "@material-ui/icons/Timeline";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -71,7 +73,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    backgroundColor: "#004080"
+    backgroundColor: "#1976d2"
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -177,6 +179,15 @@ export default props => {
           <Box p={2} display={{ xs: "none", lg: "block", sm: "block" }}>
             <Typography>Michel Platini</Typography>
           </Box>
+          <Box display={{ xs: "none", lg: "block", sm: "block" }}>
+            <Link to="/administration/connexion">
+              <Tooltip title="Déconnexion">
+                <IconButton>
+                  <PowerSettingsNewIcon style={{ color: "white" }} />
+                </IconButton>
+              </Tooltip>
+            </Link>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -260,7 +271,7 @@ export default props => {
             >
               <iframe
                 title="nombreUtilisateur"
-                width="600"
+                width="100%"
                 height="371"
                 seamless
                 frameBorder="0"
@@ -280,7 +291,7 @@ export default props => {
             >
               <iframe
                 title="payscarte"
-                width="600"
+                width="100%"
                 height="371"
                 seamless
                 frameborder="0"
@@ -361,7 +372,7 @@ export default props => {
             >
               <iframe
                 title="devices"
-                width="600"
+                width="100%"
                 height="371"
                 seamless
                 frameborder="0"
@@ -382,7 +393,7 @@ export default props => {
             >
               <iframe
                 title="devices"
-                width="600"
+                width="100%"
                 height="371"
                 seamless
                 frameborder="0"

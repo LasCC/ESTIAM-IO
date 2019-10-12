@@ -31,8 +31,9 @@ const useStyles = makeStyles({
 });
 
 export default function TemporaryDrawer() {
-  const { handleLogout } = useContext(LoginContext);
-
+  const { handleLogout, loginState } = useContext(LoginContext);
+  const { name, lastname, email } = loginState;
+  console.log(name, lastname);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false
@@ -61,7 +62,7 @@ export default function TemporaryDrawer() {
             <Avatar alt="avatarLogo" src="https://picsum.photos/200/300" />
           </ListItemAvatar>
           <ListItemText
-            primary="Michel Pantini"
+            primary={`${name} ${lastname}`}
             secondary={
               <React.Fragment>
                 <Typography
@@ -69,7 +70,7 @@ export default function TemporaryDrawer() {
                   variant="body2"
                   color="textPrimary"
                 >
-                  michel.platini@gmail.com
+                  {`${email}`}
                 </Typography>
               </React.Fragment>
             }

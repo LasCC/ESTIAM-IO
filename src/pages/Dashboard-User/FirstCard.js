@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { LoginContext } from "../../contexts/LoginContext";
 import { Typography, Paper, Divider } from "@material-ui/core";
 
 export default props => {
+  const { loginState } = useContext(LoginContext);
+  const { name } = loginState;
+  console.log("dashboard", loginState);
   return (
     <Paper
       style={{
@@ -13,7 +17,7 @@ export default props => {
       }}
     >
       <Typography variant="h5" style={{ color: "white", fontWeight: "bold" }}>
-        Bravo Michel, vous avez terminé votre inscription !
+        Bravo {`${name}`}, vous avez terminé votre inscription !
       </Typography>
       <Divider style={{ marginTop: 15, marginBottom: 15 }} />
       <Typography style={{ marginTop: 20, color: "white" }}>

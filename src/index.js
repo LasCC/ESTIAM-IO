@@ -63,6 +63,12 @@ const Tutorials = lazy(() => import("./pages/Dashboard-User/pages/Tutorial"));
 // const AnalyticsAdmin = lazy(() =>
 //   import("./pages/Dashboard-Admin/pages/Analytics")
 // );
+const AdminDashboardLogin = lazy(() =>
+  import("./pages/Dashboard-Admin/LoginAdmin")
+);
+const AdminDashboardForgotPassword = lazy(() =>
+  import("./pages/Dashboard-Admin/ForgotPasswordAdmin")
+);
 const AdminDashboard = lazy(() =>
   import("./pages/Dashboard-Admin/AdminDashboard")
 );
@@ -189,6 +195,16 @@ function App() {
               component={ResultsGraph}
             />
             <AdminDashboardProvider>
+              <Route
+                exact
+                path={Routes.ADMIN_DASHBOARD_LOGIN}
+                component={AdminDashboardLogin}
+              />
+              <Route
+                exact
+                path={Routes.ADMIN_DASHBOARD_FORGOT_PASSWORD}
+                component={AdminDashboardForgotPassword}
+              />
               <Route
                 exact
                 path={Routes.ADMIN_DASHBOARD}

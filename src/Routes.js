@@ -15,6 +15,8 @@ const routes = {
   DASHBOARD_HELP: "/dashboard/aide", // ! current : aide
   WISHES_END: "/voeux-formation",
   UPLOAD_FILE: "/pieces-complementaires",
+  ADMIN_DASHBOARD_LOGIN: "/administration/connexion",
+  ADMIN_DASHBOARD_FORGOT_PASSWORD: "/administration/mot-de-passe-oublie",
   ADMIN_DASHBOARD: "/administration",
   ADMIN_DASHBOARD_FILES: "/administration/dossiers",
   ADMIN_DASHBOARD_GLOBALVISION: "/administration/vue-ensemble",

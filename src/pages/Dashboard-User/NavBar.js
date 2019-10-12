@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { LoginContext } from "../../contexts/LoginContext";
 import Routes from "../../Routes";
 import {
   Typography,
@@ -50,6 +51,10 @@ const StyledBadge2 = withStyles(theme => ({
 }))(Badge);
 
 export default props => {
+  const { loginState } = useContext(LoginContext);
+  const { name, lastname } = loginState;
+  console.log("dashboard", loginState);
+
   const time = moment()
     .startOf("hour")
     .fromNow();
@@ -140,7 +145,7 @@ export default props => {
           </StyledBadge2>
         </Box>
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
-          <Typography>Michel Platini</Typography>
+          <Typography>{`${name} ${lastname}`}</Typography>
         </Box>
         <Box p={1}>
           <MenuNavBar />
