@@ -1,5 +1,5 @@
 # ESTIAM-IO
-School Project - Full stack app created build with React
+School Project - Full stack app created with React
 
 If you want to try this in your local environment please use the following command `npm install` or `yarn install` then use `npm start` or `yarn start` 
 
