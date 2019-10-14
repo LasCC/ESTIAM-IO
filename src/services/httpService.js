@@ -6,7 +6,7 @@ axios.interceptors.response.use(null, error => {
     error.response.status < 500;
   if (expectedError) console.log("Expected Client Error", error);
   if (!expectedError) {
-    console.log("Unexpected Logging The Error", error);
+    console.log("Unexpected error : Logging The Error", error);
     // alert("An unexpected Error occurred !");
   }
   return Promise.reject(error);

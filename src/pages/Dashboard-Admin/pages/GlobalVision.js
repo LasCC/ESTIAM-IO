@@ -264,6 +264,13 @@ export default props => {
         </Typography>
         <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
         <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+        <Typography color="textSecondary">Données en temps réel</Typography>
+        <Typography
+          variant="h4"
+          style={{ fontWeight: "bold", marginBottom: 15 }}
+        >
+          Vue d'ensemble des utilisateurs inscrits
+        </Typography>
         <Grid container spacing={3} direction="row" justify="center">
           <Grid item xs sm="auto" lg={3} md={3}>
             <Box

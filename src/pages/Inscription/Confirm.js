@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import Joi from "joi-browser";
+import { LoginContext } from "../../contexts/LoginContext";
 import {
   Grid,
   Typography,
@@ -10,7 +12,7 @@ import {
   Container
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import CloseIcon from "@material-ui/icons/Close";
 import NavBar from "./components/NavBar";
@@ -20,7 +22,26 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0.5)
   }
 }));
-export default props => {
+const Confirm = props => {
+  const schema = {
+    code: Joi.string()
+      .min(35)
+      .max(35)
+      .required()
+  };
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  const { loginState, mailChecking } = useContext(LoginContext);
+  // if (!loginState.hasRegistred) props.history.push('/')
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -41,6 +62,9 @@ export default props => {
   const [values, setValues] = React.useState({
     code: ""
   });
+  const handleSubmit = () => {
+    console.log("submitted ...");
+  };
   console.log(values);
   return (
     <Container maxWidth="lg">
@@ -94,7 +118,7 @@ export default props => {
                 </Typography>
                 <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
                   Un code de confirmation vous a été envoyé dans votre boîte de
-                  réception
+                  réception {loginState.email}
                 </Typography>
                 <Button
                   variant="outlined"
@@ -133,6 +157,7 @@ export default props => {
                   ]}
                 />
                 <Typography
+                  value={values.code}
                   variant="h5"
                   style={{
                     marginTop: 20,
@@ -184,3 +209,5 @@ export default props => {
     </Container>
   );
 };
+
+export default withRouter(Confirm);

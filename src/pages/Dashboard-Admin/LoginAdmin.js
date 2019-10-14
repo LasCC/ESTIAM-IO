@@ -6,13 +6,24 @@ import {
   Container,
   TextField,
   Grid,
-  Avatar
+  Avatar,
+  InputAdornment,
+  IconButton
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 document.body.style.backgroundColor = "#fafafa";
 
 export default props => {
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
   const [values, setValues] = useState({
     email: "",
     password: ""
@@ -41,10 +52,10 @@ export default props => {
           }}
         >
           <Grid container justify="center" alignItems="center">
-            <Avatar
-              style={{ width: 70, height: 70, backgroundColor: "#1976d2" }}
-            >
-              <SupervisedUserCircleIcon style={{ width: 60, height: 60 }} />
+            <Avatar style={{ width: 70, height: 70, backgroundColor: "white" }}>
+              <SupervisedUserCircleIcon
+                style={{ width: 60, height: 60, color: "#1976d2" }}
+              />
             </Avatar>
           </Grid>
           <Grid container justify="center" alignItems="center">
@@ -67,19 +78,31 @@ export default props => {
             style={{
               marginTop: 20
             }}
-            autoComplete="current-password"
           />
           <TextField
             variant="outlined"
             label="Mot de passe"
             value={values.password}
+            type={values.showPassword ? "text" : "password"}
             onChange={handleChange("password")}
-            type="password"
             fullWidth
             style={{
               marginTop: 20
             }}
-            autoComplete="current-password"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    edge="end"
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
           />
           <Link to="/administration" style={{ textDecoration: "none" }}>
             <Button

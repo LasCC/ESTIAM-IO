@@ -21,6 +21,8 @@ import {
   Tooltip
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import TabsAnalytics from "./components/TabsAnalytics";
+import RoboChart from "@postlight/react-google-sheet-to-chart";
 import TimelineIcon from "@material-ui/icons/Timeline";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
@@ -153,6 +155,7 @@ export default props => {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
+            style={{ height: "100%", width: "" }}
             className={clsx(classes.menuButton, {
               [classes.hide]: open
             })}
@@ -259,6 +262,15 @@ export default props => {
         </Typography>
         <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
         <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+        <Typography color="textSecondary">
+          Mise à jour des données toutes les heures
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{ fontWeight: "bold", marginBottom: 15 }}
+        >
+          Données Google Analytics
+        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={6} md={6} sm={12}>
             <Paper
@@ -294,7 +306,7 @@ export default props => {
                 width="100%"
                 height="371"
                 seamless
-                frameborder="0"
+                frameBorder="0"
                 scrolling="no"
                 src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=1256073064&amp;format=interactive"
               />
@@ -309,15 +321,36 @@ export default props => {
                 height: "auto"
               }}
             >
-              <iframe
-                title="dataJour"
-                width="100%"
-                height="371"
-                seamless
-                frameborder="0"
-                scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=2052018947&amp;format=interactive"
-              />
+              <Box
+                display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
+              >
+                <RoboChart
+                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+                  start="B3"
+                  end="C16"
+                  type="semi-doughnut"
+                  title="Rapport du jour"
+                  sheet="Résultats"
+                  colors={[
+                    "#e3f2fd",
+                    "#bbdefb",
+                    "#90caf9",
+                    "#64b5f6",
+                    "#42a5f5",
+                    "#2196f3",
+                    "#1e88e5",
+                    "#1976d2",
+                    "#1565c0",
+                    "#0d47a1"
+                  ]}
+                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                />
+              </Box>
+              <Box
+                display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}
+              >
+                Merci de vous rendre sur un écran plus adapté
+              </Box>
             </Paper>
           </Grid>
           <Grid item xs={12} lg={4} md={4}>
@@ -329,15 +362,36 @@ export default props => {
                 height: "auto"
               }}
             >
-              <iframe
-                title="dataSemaine"
-                width="100%"
-                height="371"
-                seamless
-                frameborder="0"
-                scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=1519287802&amp;format=interactive"
-              />
+              <Box
+                display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
+              >
+                <RoboChart
+                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+                  start="B15"
+                  end="C40"
+                  type="semi-doughnut"
+                  title="Source des utilisateurs"
+                  sheet="Source des utilisateurs"
+                  colors={[
+                    "#90caf9",
+                    "#2196f3",
+                    "#e3f2fd",
+                    "#bbdefb",
+                    "#64b5f6",
+                    "#42a5f5",
+                    "#1e88e5",
+                    "#1976d2",
+                    "#1565c0",
+                    "#0d47a1"
+                  ]}
+                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                />
+              </Box>
+              <Box
+                display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}
+              >
+                Merci de vous rendre sur un écran plus adapté
+              </Box>
             </Paper>
           </Grid>
           <Grid item xs={12} lg={4} md={4}>
@@ -349,58 +403,81 @@ export default props => {
                 height: "auto"
               }}
             >
-              <iframe
-                title="dataSemaine"
-                width="100%"
-                height="371"
-                seamless
-                frameborder="0"
-                scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=768430570&amp;format=interactive"
-              />
+              <Box
+                display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
+              >
+                <RoboChart
+                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+                  start="B107"
+                  end="C113"
+                  type="semi-doughnut"
+                  title="Devices"
+                  sheet="Résultats"
+                  colors={[
+                    "#1976d2",
+                    "#90caf9",
+                    "#e3f2fd",
+                    "#bbdefb",
+                    "#64b5f6",
+                    "#42a5f5",
+                    "#2196f3",
+                    "#1e88e5",
+                    "#1565c0",
+                    "#0d47a1"
+                  ]}
+                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                />
+              </Box>
+              <Box
+                display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}
+              >
+                Merci de vous rendre sur un écran plus adapté
+              </Box>
             </Paper>
           </Grid>
           <Grid item xs={12} lg={6} md={6}>
-            <Box
-              display="flex"
+            <Paper
               style={{
-                height: "40vh",
+                padding: 20,
                 boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)",
                 borderRadius: 10,
-                backgroundColor: "white"
+                height: "auto"
               }}
             >
-              <iframe
-                title="devices"
-                width="100%"
-                height="371"
-                seamless
-                frameborder="0"
-                scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=1773108436&amp;format=interactive"
-              />
-            </Box>
+              <Box
+                display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
+              >
+                <RoboChart
+                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+                  start="A15"
+                  end="B65"
+                  type="line"
+                  title="Utilisateurs fidèles"
+                  sheet="Utilisateurs fidèles"
+                  colors={[
+                    "#64b5f6",
+                    "#1976d2",
+                    "#e3f2fd",
+                    "#42a5f5",
+                    "#bbdefb",
+                    "#90caf9",
+                    "#2196f3",
+                    "#1e88e5",
+                    "#1565c0",
+                    "#0d47a1"
+                  ]}
+                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                />
+              </Box>
+              <Box
+                display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}
+              >
+                Merci de vous rendre sur un écran plus adapté
+              </Box>
+            </Paper>
           </Grid>
           <Grid item xs={12} lg={6} md={6}>
-            <Box
-              display="flex"
-              style={{
-                height: "40vh",
-                boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)",
-                borderRadius: 10,
-                backgroundColor: "white"
-              }}
-            >
-              <iframe
-                title="devices"
-                width="100%"
-                height="371"
-                seamless
-                frameborder="0"
-                scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=1773108436&amp;format=interactive"
-              />
-            </Box>
+            <TabsAnalytics />
           </Grid>
         </Grid>
       </main>

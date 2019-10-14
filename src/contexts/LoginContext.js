@@ -12,6 +12,7 @@ const LoginProvider = props => {
     email: "",
     numero_dossier: "",
     token: "",
+    hasRegistred: false,
     isLogged: false,
     loginError: false,
     login_server_error: false
@@ -67,12 +68,17 @@ const LoginProvider = props => {
           isLogged: false,
           loginError: true
         });
-        console.log(ex);
+        console.log("errrreuuuuuur");
         throw ex;
       }
     });
   };
-
+  const handleRegistration = async data => {
+    console.log("register request ...");
+  };
+  const mailChecking = async data => {
+    console.log("mail verification + login request ");
+  };
   const checkAuth = () => {
     console.log("checking...");
 
@@ -129,7 +135,8 @@ const LoginProvider = props => {
         loginState,
         handleLogin,
         checkAuth,
-        handleLogout
+        handleLogout,
+        handleRegistration
       }}
     >
       {props.children}

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import Joi from "joi-browser";
+import { LoginContext } from "../../contexts/LoginContext";
 import {
   Grid,
   Typography,
@@ -17,7 +19,10 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import NavBar from "./components/NavBar";
 
 export default props => {
+  const [errors, setErrors] = useState({ err: "" });
   const handleChange = name => event => {
+    setErrors(validate() || {});
+    console.log(errors);
     setValues({ ...values, [name]: event.target.value });
   };
   const handleClickShowPassword = () => {
@@ -27,14 +32,53 @@ export default props => {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
-  const [values, setValues] = React.useState({
-    identifiant: "",
-    nom_famille: "",
-    prenom: "",
+  const [values, setValues] = useState({
+    lastname: "",
+    firstname: "",
     email: "",
-    password: ""
+    password: "",
+    submitted: false
   });
-  console.log(values);
+
+  const { handleRegistration } = useContext(LoginContext);
+  console.log(values, handleRegistration);
+
+  const schema = {
+    lastname: Joi.string()
+      .max(50)
+      .required(),
+    firstname: Joi.string()
+      .max(50)
+      .required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2 })
+      .required(),
+    password: Joi.string()
+      .min(5)
+      .max(255)
+      .required(),
+    submitted: Joi.boolean()
+  };
+
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  console.log(errors);
+  const handleSubmit = () => {
+    const errors = validate();
+    console.log(errors);
+    setErrors(errors || {});
+    if (errors) return;
+
+    console.log("submitted");
+  };
   return (
     <Container maxWidth="lg">
       <NavBar />
@@ -86,20 +130,12 @@ export default props => {
                   Inscription
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                <TextField
-                  variant="outlined"
-                  label="Identifiant"
-                  onChange={handleChange("identifiant")}
-                  required
-                  fullWidth
-                  type="text"
-                  margin="normal"
-                  style={{ marginTop: 20 }}
-                />
+
                 <TextField
                   variant="outlined"
                   label="Nom"
-                  onChange={handleChange("nom_famille")}
+                  value={values.lastname}
+                  onChange={handleChange("lastname")}
                   required
                   fullWidth
                   type="text"
@@ -109,14 +145,19 @@ export default props => {
                 <TextField
                   variant="outlined"
                   label="Prénom"
-                  onChange={handleChange("prenom")}
+                  value={values.firstname}
+                  onChange={handleChange("firstname")}
                   required
-                  fullWidth
                   type="text"
-                  style={{ marginTop: 20 }}
+                  margin="normal"
+                  fullWidth
+                  tystyle={{ marginTop: 20 }}
+                  pe="text"
+                  tyle={{ marginTop: 20 }}
                 />
                 <TextField
                   variant="outlined"
+                  value={values.email}
                   label="Email"
                   onChange={handleChange("email")}
                   required
@@ -128,6 +169,7 @@ export default props => {
                   id="outlined-adornment-password"
                   variant="outlined"
                   fullWidth
+                  required
                   type={values.showPassword ? "text" : "password"}
                   label="Mot de passe"
                   style={{ marginTop: 20 }}
@@ -152,10 +194,18 @@ export default props => {
                     )
                   }}
                 />
-                <Link to="/confirmation" style={{ textDecoration: "none" }}>
+                <Link
+                  to={
+                    Object.keys(errors).length
+                      ? "/inscription"
+                      : "/confirmation"
+                  }
+                  style={{ textDecoration: "none" }}
+                >
                   <Button
                     variant="contained"
                     fullWidth
+                    onClick={handleSubmit}
                     type="submit"
                     style={{
                       display: "block",

@@ -5,7 +5,10 @@ export const Candidature = createContext();
 
 const CandidatureProvider = props => {
   const [dossier, setDossier] = useState({});
-
+  const fetchDossier = id => {
+    console.log("fetching the candidature", id);
+    // http.post()
+  };
   return (
     <Candidature.Provider candidature={{ dossier }}>
       {props.children}
