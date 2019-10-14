@@ -1,49 +1,70 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import Joi from "joi-browser";
+import { LoginContext } from "../../contexts/LoginContext";
 import {
   Grid,
   Typography,
   Button,
   TextField,
-  Snackbar,
-  IconButton,
   Box,
   Container
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { store } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import "animate.css";
+import { Link, withRouter } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
-import CloseIcon from "@material-ui/icons/Close";
 import NavBar from "./components/NavBar";
 
-const useStyles = makeStyles(theme => ({
-  close: {
-    padding: theme.spacing(0.5)
-  }
-}));
-export default props => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  function handleClick() {
-    setOpen(true);
-  }
-
-  function handleClose(event, reason) {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  }
-  const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+const Confirm = props => {
+  const schema = {
+    secretCode: Joi.string()
+      .min(35)
+      .max(35)
+      .required(),
+    submitted: Joi.boolean()
   };
-  const [values, setValues] = React.useState({
-    code: ""
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  const { loginState, mailChecking, checkAuth } = useContext(LoginContext);
+  // if ((loginState.isActive && loginState.isLogged) || !loginState.hasRegistred)
+  //   return props.history.push("/");
+  console.log(checkAuth());
+  const InvalidCodeErrorComponent = (
+    <Typography variant="subtitle1" color="error" className="shake-horizontal">
+      Code invalide
+    </Typography>
+  );
+  const handleChange = name => event => {
+    setValues({ ...values, [name]: event.target.value.trim() });
+  };
+  const [values, setValues] = useState({
+    secretCode: ""
   });
+  const [errors, setErrors] = useState({});
+  const handleSubmit = () => {
+    console.log("submitted ...");
+    const error = validate();
+    setErrors(error || {});
+    setValues({ ...values, submitted: true });
+    console.log(error);
+    if (error) return;
+    mailChecking({ secretCode: values.secretCode });
+  };
   console.log(values);
   return (
-    <Container maxWidth="lg">
+    <Container
+      maxWidth="lg"
+      className="BlueContainer"
+      style={{ backgroundColor: "#0099E6" }}
+    >
       <NavBar />
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
@@ -94,12 +115,25 @@ export default props => {
                 </Typography>
                 <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
                   Un code de confirmation vous a été envoyé dans votre boîte de
-                  réception
+                  réception {loginState.email}
                 </Typography>
                 <Button
                   variant="outlined"
-                  onClick={handleClick}
                   fullWidth
+                  onClick={() => {
+                    store.addNotification({
+                      title: "Code de confirmation",
+                      showIcon: true,
+                      message: "Votre code de confirmation à bien été envoyé",
+                      type: "default", // 'default', 'success', 'info', 'warning'
+                      container: "bottom-left", // where to position the notifications
+                      animationIn: ["animated", "fadeIn"], // animate.css classes that's applied
+                      animationOut: ["animated", "fadeOut"], // animate.css classes that's applied
+                      dismiss: {
+                        duration: 5000
+                      }
+                    });
+                  }}
                   style={{
                     marginTop: 10,
                     color: "#004080",
@@ -108,31 +142,8 @@ export default props => {
                 >
                   Renvoyer le code de confirmation
                 </Button>
-                <Snackbar
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "center"
-                  }}
-                  open={open}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-                  ContentProps={{
-                    "aria-describedby": "message-id"
-                  }}
-                  message={<span id="message-id">Code envoyé</span>}
-                  action={[
-                    <IconButton
-                      key="close"
-                      aria-label="close"
-                      color="inherit"
-                      className={classes.close}
-                      onClick={handleClose}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  ]}
-                />
                 <Typography
+                  value={values.secretCodef}
                   variant="h5"
                   style={{
                     marginTop: 20,
@@ -145,36 +156,43 @@ export default props => {
                 <TextField
                   variant="outlined"
                   label="Code de confirmation"
-                  onChange={handleChange("code")}
+                  onChange={handleChange("secretCode")}
                   fullWidth
+                  value={values.code}
                   required
+                  error={
+                    errors.hasOwnProperty("secretCode") && values.submitted
+                  }
                   type="text"
                   placeholder="OCB8s.Ztagl58BK83LyIV24Smd6Ken7in8f"
                   style={{ marginTop: 20 }}
                 />
+                {errors.hasOwnProperty("secretCode") &&
+                  InvalidCodeErrorComponent}
                 <div style={{ marginTop: 20 }}>
-                  <Link to="/inscription" style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="outlined"
-                      style={{
-                        marginRight: 15,
-                        color: "#004080"
-                      }}
-                    >
-                      Retour
-                    </Button>
-                  </Link>
-                  <Link to="/renseignement" style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="outlined"
-                      style={{
-                        backgroundColor: "#004080",
-                        color: "white"
-                      }}
-                    >
-                      Confirmer l'inscription
-                    </Button>
-                  </Link>
+                  {!loginState.isLogged && (
+                    <Link to="/inscription" style={{ textDecoration: "none" }}>
+                      <Button
+                        variant="outlined"
+                        style={{
+                          marginRight: 15,
+                          color: "#004080"
+                        }}
+                      >
+                        Retour
+                      </Button>
+                    </Link>
+                  )}
+                  <Button
+                    variant="outlined"
+                    onClick={handleSubmit}
+                    style={{
+                      backgroundColor: "#004080",
+                      color: "white"
+                    }}
+                  >
+                    Confirmer l'inscription
+                  </Button>
                 </div>
               </div>
             </Box>
@@ -184,3 +202,5 @@ export default props => {
     </Container>
   );
 };
+
+export default withRouter(Confirm);

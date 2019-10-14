@@ -16,14 +16,10 @@ import {
   Box,
   Avatar,
   Badge,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
   Tooltip
 } from "@material-ui/core";
+import MaterialTable from "material-table";
+
 import { Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -130,47 +126,122 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
-  function createData(name, pays, voeux, campus, telephone) {
-    return { name, pays, voeux, campus, telephone };
-  }
-
-  const data = [
-    createData(
-      "Michel Platini",
-      "France",
-      "Premère année",
-      "Paris 75e",
-      "0606060606"
-    ),
-    createData(
-      "Bernard Tapie",
-      "France",
-      "Premère année",
-      "Paris 75e",
-      "0606060606"
-    ),
-    createData(
-      "Michel Ternier",
-      "France",
-      "Premère année",
-      "Paris 75e",
-      "0606060606"
-    ),
-    createData(
-      "Jean-Marc Delarue",
-      "France",
-      "Premère année",
-      "Paris 75e",
-      "0606060606"
-    ),
-    createData(
-      "Boubakar ZKOUDAKE",
-      "Afrique",
-      "Troisième année",
-      "Saint-Denis 93",
-      "0606060606"
-    )
-  ];
+  const [state, setState] = React.useState({
+    columns: [
+      { title: "Nom", field: "firstname" },
+      { title: "Prénom", field: "lastname" },
+      { title: "Campus", field: "campus" },
+      {
+        title: "Pays",
+        field: "city",
+        lookup: { 75: "France", 93: "Afrique" }
+      }
+    ],
+    data: [
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Michel",
+        lastname: "Platini",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Mehmet",
+        lastname: "Baran",
+        campus: "Paris",
+        city: 75
+      },
+      {
+        firstname: "Zerya Betül",
+        lastname: "Baran",
+        campus: "Saint-Denis",
+        city: 93
+      }
+    ]
+  });
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -304,36 +375,134 @@ export default props => {
         </Typography>
         <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
         <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-        <Typography>
-          C'est un exemple commence pas a me casser les couilles tu va finir
-          dans le mur
+        <Typography color="textSecondary">
+          Vous pouvez exporter la liste des utilisateurs
         </Typography>
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Nom</TableCell>
-                <TableCell align="right">Pays</TableCell>
-                <TableCell align="right">Voeux</TableCell>
-                <TableCell align="right">Campus</TableCell>
-                <TableCell align="right">Téléphone</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map(row => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.pays}</TableCell>
-                  <TableCell align="right">{row.voeux}</TableCell>
-                  <TableCell align="right">{row.campus}</TableCell>
-                  <TableCell align="right">{row.telephone}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
+        <Typography
+          variant="h4"
+          style={{ fontWeight: "bold", marginBottom: 15 }}
+        >
+          Liste des utilisateurs inscrits
+        </Typography>
+        <MaterialTable
+          title="Dossiers des utilisateurs inscrits"
+          columns={state.columns}
+          data={state.data}
+          editable={{
+            onRowUpdate: (newData, oldData) =>
+              new Promise(resolve => {
+                setTimeout(() => {
+                  resolve();
+                  const data = [...state.data];
+                  data[data.indexOf(oldData)] = newData;
+                  setState({ ...state, data });
+                }, 600);
+              }),
+            onRowDelete: oldData =>
+              new Promise(resolve => {
+                setTimeout(() => {
+                  resolve();
+                  const data = [...state.data];
+                  data.splice(data.indexOf(oldData), 1);
+                  setState({ ...state, data });
+                }, 600);
+              })
+          }}
+          detailPanel={rowData => {
+            return (
+              <div style={{ padding: 50 }}>
+                <Typography variant="h6">
+                  Etat Civil de {state.data[0].firstname}{" "}
+                  {state.data[0].lastname}
+                </Typography>
+                <Typography>Michel Platini</Typography>
+                <Typography>Pays de naissance : France</Typography>
+                <Typography>
+                  Adresse : 12 rue des fleures 75001 Paris
+                </Typography>
+                <Typography>N° de téléphone : 0603109750</Typography>
+
+                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
+
+                <Typography variant="h6">
+                  Situation actuelle de {state.data[0].firstname}{" "}
+                  {state.data[0].lastname}
+                </Typography>
+                <Typography>Intitulé de votre formation : Etudiant</Typography>
+                <Typography>Nom de votre formation : BAC S</Typography>
+                <Typography>Nom de votre formation : Terminale</Typography>
+
+                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
+
+                <Typography variant="h6">
+                  Etablissement de {state.data[0].firstname}{" "}
+                  {state.data[0].lastname}
+                </Typography>
+                <Typography>Nom de l'établissement : Gustave Eiffel</Typography>
+                <Typography>Pays de l'établissement : Paris</Typography>
+                <Typography>N° de rue : 34</Typography>
+                <Typography>Adresse : Rue du maine</Typography>
+                <Typography>Département : Seine-Saint-denis</Typography>
+                <Typography>Ville : Sevran</Typography>
+
+                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
+
+                <Typography variant="h6">
+                  Voeux de formation de {state.data[0].firstname}{" "}
+                  {state.data[0].lastname}
+                </Typography>
+                <Typography>Classe demandée : 1ère année</Typography>
+                <Typography>Spécialisation : Pas disponible</Typography>
+                <Typography>Cursus : Pas disponible</Typography>
+                <Typography>Choix campus n°1 : Paris 75</Typography>
+                <Typography>Choix campus n°2 : Saint-Denis 93</Typography>
+                <Typography>Choix campus n°3 : Lyon 69</Typography>
+              </div>
+            );
+          }}
+          onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          localization={{
+            body: {
+              deleteTooltip: "Supprimer",
+              editTooltip: "Edit",
+              emptyDataSourceMessage: "Oh ! Une erreur est survenue.",
+              editRow: {
+                deleteText: "Êtes-vous sur de bien vouloirs faire ça ?",
+                cancelTooltip: "Annuler",
+                saveTooltip: "Confirmer"
+              }
+            },
+            toolbar: {
+              exportTitle: "Exporter la liste",
+              searchTooltip: "Rechercher un utilisateur",
+              exportName: "Exporter au format CSV",
+              searchPlaceholder: "Rechercher un utilisateur"
+            },
+            pagination: {
+              labelRowsSelect: "rangées",
+              labelDisplayedRows: "{from}-{to} of {count}",
+              firstTooltip: "Première page",
+              previousTooltip: "Précédent",
+              nextTooltip: "Suivant",
+              lastTooltip: "Dernière page",
+              toolbarExportTitle: "Exporter"
+            }
+          }}
+          options={{
+            exportButton: true,
+            exportFileName: "export_user_dashboard",
+            exportCsv: (columns, data) => {
+              // alert(
+              //   "Faut export tout le bordel y'a" + data.length + " rangées"
+              // Actuellement il export que les lignes qui il y a sur la page, mais il faut trouver un moyen de tout export d'un coup avec data.lenght
+              // );
+            },
+            headerStyle: {
+              backgroundColor: "#1976d2",
+              color: "white"
+            }
+          }}
+        />
       </main>
     </div>
   );

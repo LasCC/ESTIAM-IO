@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import Joi from "joi-browser";
+import Routes from "../../Routes";
 import {
   Grid,
   Typography,
@@ -6,24 +8,62 @@ import {
   TextField,
   Box,
   Divider,
-  Container
+  Container,
+  InputAdornment,
+  IconButton
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { LoginContext } from "../../contexts/LoginContext";
 import NavBar from "./components/NavBar";
 
 export default props => {
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
   const [values, setValues] = useState({
     email: "",
-    password: ""
+    emailTouched: false,
+    password: "",
+    passwordTouched: false,
+    submitted: false,
+    showPassword: false
   });
+  const [errors, setErrors] = useState({});
   const { handleLogin, loginState } = useContext(LoginContext);
-
+  const schema = {
+    email: Joi.string()
+      .email({ minDomainSegments: 2 })
+      .required(),
+    password: Joi.string()
+      .max(255)
+      .required(),
+    submitted: Joi.boolean(),
+    emailTouched: Joi.boolean(),
+    passwordTouched: Joi.boolean(),
+    showPassword: Joi.boolean()
+  };
   console.log(loginState);
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+    let eventTouched = [name].toString() + "Touched";
+    setValues({ ...values, [name]: event.target.value, [eventTouched]: true });
   };
   const handleReset = () => {
     setValues({
@@ -32,10 +72,31 @@ export default props => {
     });
   };
   const handleSubmit = () => {
-    handleLogin(values);
+    const errors = validate();
+    setValues({ ...values, submitted: true });
+    setErrors(errors || {});
+    console.log(errors);
+    if (errors) return;
+    handleLogin({ email: values.email, password: values.password });
     handleReset();
   };
   console.log(values);
+  const emailerror =
+    loginState.loginError ||
+    (errors.hasOwnProperty("email") && values.submitted)
+      ? "#f00"
+      : "";
+  const passworderror =
+    loginState.loginError ||
+    (errors.hasOwnProperty("password") && values.submitted)
+      ? "#f00"
+      : "";
+  const LoginErrorComponent = (
+    <Typography variant="subtitle2" color="error" className="shake-horizontal">
+      Identifiant ou mot de passe incorrect
+    </Typography>
+  );
+
   return (
     <Container maxWidth="lg">
       <NavBar />
@@ -53,7 +114,7 @@ export default props => {
               backgroundColor: "#004080"
             }}
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button style={{ color: "white" }}>
                 <ArrowBackIosIcon />
                 Accueil
@@ -83,15 +144,10 @@ export default props => {
                   Connexion
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                {loginState.loginError && (
-                  <Typography
-                    variant="subtitle2"
-                    color="error"
-                    className="shake-horizontal"
-                  >
-                    Identifiant ou mot de passe incorrect
-                  </Typography>
-                )}
+                {!errors && loginState.loginError && LoginErrorComponent}
+                {values.submitted &&
+                  (emailerror || passworderror) &&
+                  LoginErrorComponent}
                 <Typography
                   variant="h5"
                   style={{
@@ -104,16 +160,15 @@ export default props => {
                 </Typography>
                 <TextField
                   variant="outlined"
-                  label="Identifiant"
+                  label="Identifiant ou email"
                   value={values.email}
                   onChange={handleChange("email")}
                   type="email"
                   fullWidth
-                  error={loginState.loginError ? "#f00" : ""}
+                  error={emailerror}
                   style={{
                     marginTop: 20
                   }}
-                  autoComplete="current-password"
                 />
                 <Typography
                   variant="h5"
@@ -131,12 +186,27 @@ export default props => {
                   onChange={handleChange("password")}
                   value={values.password}
                   fullWidth
-                  type="password"
-                  error={loginState.loginError ? "#f00" : ""}
-                  style={{
-                    marginTop: 20
+                  type={values.showPassword ? "text" : "password"}
+                  error={passworderror}
+                  style={{ marginTop: 20 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {values.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    )
                   }}
-                  autoComplete="current-password"
                 />
                 <div style={{ marginTop: 20 }}>
                   <Link

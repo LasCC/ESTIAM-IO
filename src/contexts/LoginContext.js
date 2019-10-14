@@ -9,13 +9,18 @@ const LoginProvider = props => {
   const [loginState, setLoginState] = useState({
     name: "",
     lastname: "",
-    email: "",
+    email: "test@test.com",
     numero_dossier: "",
     token: "",
+    hasRegistred: false,
     isLogged: false,
-    loginError: false,
-    login_server_error: false
+    isActive: false
   });
+  const [httpError, setHttpError] = useState({
+    clientError: false,
+    serverError: false
+  });
+  const endpoint = "https://rogo.serveo.net";
   const handleLogin = async data => {
     console.log("login request ....", data);
     // if (data.email === "admin" && data.password === "admin") {
@@ -42,42 +47,72 @@ const LoginProvider = props => {
     //   });
     // }
     // Test LOGIN
-    http.post("https://rogo.serveo.net/auth/login", data).then(res => {
-      const token = res.data.token;
-      try {
-        const tokendata = jwtdecode(token);
-        console.log(tokendata);
-        localStorage.setItem("token", token);
-        setLoginState({
-          name: tokendata.firstName,
-          lastname: tokendata.lastName,
-          email: tokendata.email,
-          numero_dossier: tokendata.candidatureID,
-          isLogged: true,
-          loginError: false
-        });
-        if (tokendata.firstlogged) props.history.push("/renseignement");
-        return props.history.push("/dashboard");
-      } catch (ex) {
-        setLoginState({
-          name: "",
-          lastname: "",
-          email: "",
-          numero_dossier: "",
-          isLogged: false,
-          loginError: true
-        });
-        console.log(ex);
-        throw ex;
-      }
-    });
-  };
+    let res;
+    try {
+      console.log("login try ");
+      res = await http.post(endpoint + "/auth/login", data);
+      console.log(res);
+    } catch (ex) {
+      console.log("*****************", ex);
+      console.log("ERR DATA*****************", ex.response);
+      // if(ex.response)
+      const expectedError =
+        ex.response && ex.response.status >= 400 && ex.response.status < 500;
+      return setHttpError({
+        serverError: expectedError,
+        clientError: expectedError
+      });
+    }
 
+    const { token } = res.data;
+    try {
+      const tokendata = await jwtdecode(token);
+      console.log(tokendata);
+      localStorage.setItem("token", token);
+      await setLoginState({
+        name: tokendata.firstName,
+        lastname: tokendata.lastName,
+        email: tokendata.email,
+        numero_dossier: tokendata.candidatureID,
+        hasRegistred: true,
+        isLogged: true,
+        isActive: tokendata.isActive
+      });
+      setHttpError({ serverError: false, clientError: false });
+      if (!tokendata.isActive) return props.history.push("/confirmation");
+      if (tokendata.firstlogged) return props.history.push("/renseignement");
+      return props.history.push("/dashboard");
+    } catch (ex) {
+      console.log("invalid Token", ex);
+      throw ex;
+    }
+  };
+  const handleRegistration = async data => {
+    console.log("register request ...");
+    return props.history.push("/confirmation");
+  };
+  const mailChecking = async data => {
+    console.log("mail verification + login request ", data);
+    let res;
+    try {
+      res = await http.post(endpoint + "/auth/verifymail", data);
+    } catch (ex) {
+      console.log(res);
+      const expectedError =
+        ex.response && ex.response.status >= 400 && ex.response.status < 500;
+      return setHttpError({
+        serverError: expectedError,
+        clientError: expectedError
+      });
+    }
+
+    // props.history.push("/dashboard");
+  };
   const checkAuth = () => {
     console.log("checking...");
 
     const token = localStorage.getItem("token");
-    // in prod
+    // in proddatadatadata
     if (!token || !loginState.isLogged) {
       return false;
     }
@@ -86,8 +121,8 @@ const LoginProvider = props => {
     // return loginState.isLogged;
 
     try {
-      const { exp } = jwtdecode(token);
-
+      const { exp, isActive } = jwtdecode(token);
+      if (!isActive) return false;
       const now = new Date().getTime() / 1000;
       const dateExp = new Date(exp * 1000);
       const dateNow = new Date(now * 1000);
@@ -115,11 +150,12 @@ const LoginProvider = props => {
     setLoginState({
       name: "",
       lastname: "",
-      email: "",
+      email: "test@test.com",
       numero_dossier: "",
       token: "",
+      hasRegistred: false,
       isLogged: false,
-      loginError: false
+      isActive: false
     });
     window.location.replace("/");
   };
@@ -129,7 +165,9 @@ const LoginProvider = props => {
         loginState,
         handleLogin,
         checkAuth,
-        handleLogout
+        handleLogout,
+        handleRegistration,
+        mailChecking
       }}
     >
       {props.children}

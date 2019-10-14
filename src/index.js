@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React, { Suspense, lazy } from "react";
 import Routes from "./Routes";
 import LoginProvider from "./contexts/LoginContext";
+import ReactNotifications from "react-notifications-component";
 import CandidatureProvider from "./contexts/CandidatureContext";
 import AdminDashboardProvider from "./contexts/AdminDashboardContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -92,6 +93,7 @@ function App() {
     >
       <LoginProvider>
         <CandidatureProvider>
+          <ReactNotifications />
           <Switch>
             <UnProtectedRoute exact path={Routes.HOME} component={HomePage} />
             <UnProtectedRoute
@@ -99,7 +101,7 @@ function App() {
               path={Routes.REGISTER}
               component={Inscription}
             />
-            <UnProtectedRoute
+            <Route
               exact
               path={Routes.MAILCONFIRMATION}
               component={Confirmation}
