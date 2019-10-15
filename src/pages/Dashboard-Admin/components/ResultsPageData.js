@@ -85,8 +85,8 @@ export default function FullWidthTabs() {
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
               id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
-              start="B15"
-              end="C80"
+              start="A15"
+              end="B150"
               type="line"
               title="Rapport de la semaine"
               sheet="Résultat sous 7 jours"
@@ -102,8 +102,8 @@ export default function FullWidthTabs() {
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
               id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
-              start="B15"
-              end="C80"
+              start="A15"
+              end="B150"
               type="line"
               title="Rapport sous 14 jours"
               sheet="Résultat sous 14 jours"
@@ -119,8 +119,8 @@ export default function FullWidthTabs() {
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
               id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
-              start="B15"
-              end="C80"
+              start="A15"
+              end="B150"
               type="line"
               title="Rapport du mois"
               sheet="Résultat sous 30 jours"

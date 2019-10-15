@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 import jwtdecode from "jwt-decode";
 import http from "../services/httpService";
 import { withRouter } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const LoginContext = createContext();
 
@@ -9,7 +10,7 @@ const LoginProvider = props => {
   const [loginState, setLoginState] = useState({
     name: "",
     lastname: "",
-    email: "test@test.com",
+    email: "",
     numero_dossier: "",
     token: "",
     hasRegistred: false,
@@ -23,30 +24,7 @@ const LoginProvider = props => {
   const endpoint = "https://rogo.serveo.net";
   const handleLogin = async data => {
     console.log("login request ....", data);
-    // if (data.email === "admin" && data.password === "admin") {
-    //   setLoginState({
-    //     name: "Michel",
-    //     lastname: "Platini",
-    //     email: "",
-    //     numero_dossier: "",
-    //     token: "",
-    //     isLogged: true,
-    //     loginError: false
-    //   });
-    //   return props.history.push("/dashboard");
-    // } else {
-    //   console.log("login failed bad credentials");
-    //   setLoginState({
-    //     name: "Michel",
-    //     lastname: "Platini",
-    //     email: "",
-    //     numero_dossier: "",
-    //     token: "",
-    //     isLogged: false,
-    //     loginError: true
-    //   });
-    // }
-    // Test LOGIN
+
     let res;
     try {
       console.log("login try ");
@@ -60,7 +38,7 @@ const LoginProvider = props => {
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
         serverError: expectedError,
-        clientError: expectedError
+        clientError: !httpError.serverError
       });
     }
 
@@ -73,6 +51,7 @@ const LoginProvider = props => {
         name: tokendata.firstName,
         lastname: tokendata.lastName,
         email: tokendata.email,
+        token: token,
         numero_dossier: tokendata.candidatureID,
         hasRegistred: true,
         isLogged: true,
@@ -80,15 +59,40 @@ const LoginProvider = props => {
       });
       setHttpError({ serverError: false, clientError: false });
       if (!tokendata.isActive) return props.history.push("/confirmation");
-      if (tokendata.firstlogged) return props.history.push("/renseignement");
+      if (tokendata.firstLogged) return props.history.push("/renseignement");
       return props.history.push("/dashboard");
     } catch (ex) {
+      toast.error("Error Notification !");
       console.log("invalid Token", ex);
       throw ex;
     }
   };
   const handleRegistration = async data => {
-    console.log("register request ...");
+    console.log("register request ...", data);
+    let res;
+    try {
+      res = await http.post(endpoint + "/auth/register", data);
+    } catch (ex) {
+      console.log(res);
+      const expectedError =
+        ex.response && ex.response.status >= 400 && ex.response.status < 500;
+      return setHttpError({
+        serverError: expectedError,
+        clientError: !httpError.serverError
+      });
+    }
+
+    setLoginState({
+      name: data.firstName,
+      lastname: data.lastName,
+      email: data.email,
+      token: "",
+      numero_dossier: "",
+      hasRegistred: true,
+      isLogged: false,
+      isActive: false
+    });
+    setHttpError({ serverError: false, clientError: false });
     return props.history.push("/confirmation");
   };
   const mailChecking = async data => {
@@ -102,8 +106,32 @@ const LoginProvider = props => {
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
         serverError: expectedError,
-        clientError: expectedError
+        clientError: !httpError.serverError
       });
+    }
+
+    const { token } = res.data;
+    try {
+      const tokendata = await jwtdecode(token);
+      console.log(tokendata);
+      localStorage.setItem("token", token);
+      await setLoginState({
+        name: tokendata.firstName,
+        lastname: tokendata.lastName,
+        email: tokendata.email,
+        token: token,
+        numero_dossier: tokendata.candidatureID,
+        hasRegistred: true,
+        isLogged: true,
+        isActive: tokendata.isActive
+      });
+      setHttpError({ serverError: false, clientError: false });
+      if (tokendata.firstLogged) return props.history.push("/renseignement");
+      return props.history.push("/dashboard");
+    } catch (ex) {
+      toast.error("Error Notification !");
+      console.log("invalid Token", ex);
+      throw ex;
     }
 
     // props.history.push("/dashboard");
@@ -113,7 +141,7 @@ const LoginProvider = props => {
 
     const token = localStorage.getItem("token");
     // in proddatadatadata
-    if (!token || !loginState.isLogged) {
+    if (!token) {
       return false;
     }
 
@@ -137,8 +165,8 @@ const LoginProvider = props => {
         console.log("TOKEN expired !");
         return false;
       }
-    } catch (e) {
-      console.log(e);
+    } catch (ex) {
+      console.log(ex);
       return false;
     }
 
@@ -150,7 +178,7 @@ const LoginProvider = props => {
     setLoginState({
       name: "",
       lastname: "",
-      email: "test@test.com",
+      email: "",
       numero_dossier: "",
       token: "",
       hasRegistred: false,
@@ -167,7 +195,8 @@ const LoginProvider = props => {
         checkAuth,
         handleLogout,
         handleRegistration,
-        mailChecking
+        mailChecking,
+        httpError
       }}
     >
       {props.children}
@@ -176,9 +205,3 @@ const LoginProvider = props => {
 };
 
 export default withRouter(LoginProvider);
-/*
- --> JWT shoould have : 
-  name , lastname , dossier_number , step   
-
-
-*/

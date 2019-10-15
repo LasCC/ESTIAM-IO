@@ -84,7 +84,12 @@ export default props => {
     setErrors(errors || {});
     setValues({ ...values, submitted: true });
     if (errors) return;
-    handleRegistration();
+    handleRegistration({
+      lastName: values.lastname,
+      firstName: values.firstname,
+      email: values.email,
+      password: values.password
+    });
   };
   const lastNameError =
     loginState.loginError ||

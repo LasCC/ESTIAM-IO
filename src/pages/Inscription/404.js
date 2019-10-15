@@ -11,7 +11,7 @@ export default props => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        style={{ height: "90vh" }}
+        style={{ height: "90vh", backgroundColor: "#0099E6" }}
       >
         <Box className="fade-in-fwd">
           <img

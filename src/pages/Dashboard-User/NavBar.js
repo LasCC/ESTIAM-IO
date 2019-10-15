@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
+import jwtdecode from "jwt-decode";
 import Routes from "../../Routes";
 import {
   Typography,
@@ -52,7 +53,7 @@ const StyledBadge2 = withStyles(theme => ({
 
 export default props => {
   const { loginState } = useContext(LoginContext);
-  const { name, lastname } = loginState;
+  const { firstName, lastName } = jwtdecode(localStorage.getItem("token"));
   console.log("dashboard", loginState);
 
   const time = moment()
@@ -145,7 +146,7 @@ export default props => {
           </StyledBadge2>
         </Box>
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
-          <Typography>{`${name} ${lastname}`}</Typography>
+          <Typography>{`${firstName} ${lastName}`}</Typography>
         </Box>
         <Box p={1}>
           <MenuNavBar />

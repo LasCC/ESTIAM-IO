@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import jwtdecode from "jwt-decode";
 import PieChartIcon from "@material-ui/icons/PieChart";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -32,8 +33,10 @@ const useStyles = makeStyles({
 
 export default function TemporaryDrawer() {
   const { handleLogout, loginState } = useContext(LoginContext);
-  const { name, lastname, email } = loginState;
-  console.log(name, lastname);
+  const { firstName, lastName, email } = jwtdecode(
+    localStorage.getItem("token")
+  );
+  console.log(firstName, lastName);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false
@@ -62,7 +65,7 @@ export default function TemporaryDrawer() {
             <Avatar alt="avatarLogo" src="https://picsum.photos/200/300" />
           </ListItemAvatar>
           <ListItemText
-            primary={`${name} ${lastname}`}
+            primary={`${firstName} ${lastName}`}
             secondary={
               <React.Fragment>
                 <Typography

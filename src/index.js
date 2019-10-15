@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import React, { Suspense, lazy } from "react";
 import Routes from "./Routes";
 import LoginProvider from "./contexts/LoginContext";
@@ -93,7 +95,18 @@ function App() {
     >
       <LoginProvider>
         <CandidatureProvider>
-          <ReactNotifications />
+          {/* <ReactNotifications /> */}
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
           <Switch>
             <UnProtectedRoute exact path={Routes.HOME} component={HomePage} />
             <UnProtectedRoute
@@ -222,6 +235,7 @@ function App() {
                 path={Routes.ADMIN_DASHBOARD_GLOBALVISION}
                 component={AdminDashboardGlobalVision}
               />
+              <Route path="*" component={UnknownPage} />
             </AdminDashboardProvider>
             <Route path="*" component={UnknownPage} />
           </Switch>
