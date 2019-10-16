@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import NavBar from "../NavBar";
 import Routes from "../../../Routes";
 import {
@@ -10,10 +10,12 @@ import {
   Divider
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
+import { Candidature } from "../../../contexts/CandidatureContext";
 document.body.style.backgroundColor = "white";
 
 export default props => {
+  const { dossier } = useContext(Candidature);
+  const { step } = dossier;
   return (
     <>
       <NavBar />

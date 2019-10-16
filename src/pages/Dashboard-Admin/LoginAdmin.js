@@ -10,6 +10,7 @@ import {
   InputAdornment,
   IconButton
 } from "@material-ui/core";
+import Routes from "../../Routes";
 import { Link } from "react-router-dom";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import Visibility from "@material-ui/icons/Visibility";
@@ -104,7 +105,7 @@ export default props => {
               )
             }}
           />
-          <Link to="/administration" style={{ textDecoration: "none" }}>
+          <Link to={Routes.ADMIN_DASHBOARD} style={{ textDecoration: "none" }}>
             <Button
               fullWidth
               style={{
@@ -117,7 +118,7 @@ export default props => {
             </Button>
           </Link>
           <Link
-            to="/administration/mot-de-passe-oublie"
+            to={Routes.ADMIN_DASHBOARD_FORGOT_PASSWORD}
             style={{ textDecoration: "none" }}
           >
             <Button

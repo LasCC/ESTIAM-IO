@@ -23,13 +23,16 @@ export default props => {
   const [errors, setErrors] = useState({ err: "" });
   const handleChange = name => event => {
     if (name === "lastname" || name === "firstname") {
-      const pattern = new RegExp("^[a-zA-Z]*$");
-      const isWellFormated = pattern.test(event.target.value);
+      const pattern = new RegExp(/^[a-zA-Z ]+$/);
+      const emptypattern = new RegExp(/^$/);
+      const isWellFormated =
+        pattern.test(event.target.value) ||
+        emptypattern.test(event.target.value);
       if (!isWellFormated) return;
     }
     setErrors(validate() || {});
     console.log(errors);
-    setValues({ ...values, [name]: event.target.value.trim() });
+    setValues({ ...values, [name]: event.target.value });
   };
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -85,9 +88,9 @@ export default props => {
     setValues({ ...values, submitted: true });
     if (errors) return;
     handleRegistration({
-      lastName: values.lastname,
-      firstName: values.firstname,
-      email: values.email,
+      lastName: values.lastname.trim(),
+      firstName: values.firstname.trim(),
+      email: values.email.trim(),
       password: values.password
     });
   };
@@ -135,8 +138,10 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "90%",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
             <Link to={Routes.HOME} style={{ textDecoration: "none" }}>

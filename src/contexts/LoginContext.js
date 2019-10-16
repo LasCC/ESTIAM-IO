@@ -17,11 +17,29 @@ const LoginProvider = props => {
     isLogged: false,
     isActive: false
   });
+  // (function reloadState() {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     const tokendata = jwtdecode(token);
+  //     return setLoginState({
+  //       name: tokendata.firstName,
+  //       lastname: tokendata.lastName,
+  //       email: tokendata.email,
+  //       token: token,
+  //       numero_dossier: tokendata.candidatureID,
+  //       hasRegistred: true,
+  //       isLogged: true,
+  //       isActive: tokendata.isActive
+  //     });
+  //   }
+  //   return;
+  // })();
+
   const [httpError, setHttpError] = useState({
     clientError: false,
     serverError: false
   });
-  const endpoint = "https://rogo.serveo.net";
+  const endpoint = "https://coerceo.serveo.net";
   const handleLogin = async data => {
     console.log("login request ....", data);
 
@@ -58,8 +76,10 @@ const LoginProvider = props => {
         isActive: tokendata.isActive
       });
       setHttpError({ serverError: false, clientError: false });
+      console.log("######firsttime logged : ", tokendata.firstLogged);
       if (!tokendata.isActive) return props.history.push("/confirmation");
-      if (tokendata.firstLogged) return props.history.push("/renseignement");
+      if (tokendata.firstLogged)
+        return window.location.replace("/renseignement");
       return props.history.push("/dashboard");
     } catch (ex) {
       toast.error("Error Notification !");
@@ -78,7 +98,7 @@ const LoginProvider = props => {
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
         serverError: expectedError,
-        clientError: !httpError.serverError
+        clientError: !expectedError
       });
     }
 
@@ -106,35 +126,42 @@ const LoginProvider = props => {
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
         serverError: expectedError,
-        clientError: !httpError.serverError
+        clientError: !expectedError
       });
     }
 
-    const { token } = res.data;
     try {
-      const tokendata = await jwtdecode(token);
-      console.log(tokendata);
-      localStorage.setItem("token", token);
-      await setLoginState({
-        name: tokendata.firstName,
-        lastname: tokendata.lastName,
-        email: tokendata.email,
-        token: token,
-        numero_dossier: tokendata.candidatureID,
-        hasRegistred: true,
-        isLogged: true,
-        isActive: tokendata.isActive
-      });
       setHttpError({ serverError: false, clientError: false });
-      if (tokendata.firstLogged) return props.history.push("/renseignement");
-      return props.history.push("/dashboard");
+      return props.history.push("/connexion");
     } catch (ex) {
-      toast.error("Error Notification !");
+      // toast.error("Error Notification !");
       console.log("invalid Token", ex);
       throw ex;
     }
 
     // props.history.push("/dashboard");
+  };
+  const resendMail = async () => {
+    console.log("Envoi de mail....");
+    const res = await http.post(endpoint + "/auth/mailresent", {
+      email: loginState.email
+    });
+    console.log(res);
+  };
+  const handleLogout = () => {
+    console.log("logged out .....");
+    localStorage.removeItem("token");
+    setLoginState({
+      name: "",
+      lastname: "",
+      email: "",
+      numero_dossier: "",
+      token: "",
+      hasRegistred: false,
+      isLogged: false,
+      isActive: false
+    });
+    window.location.replace("/");
   };
   const checkAuth = () => {
     console.log("checking...");
@@ -164,6 +191,7 @@ const LoginProvider = props => {
       if (exp < now) {
         console.log("TOKEN expired !");
         return false;
+        handleLogout();
       }
     } catch (ex) {
       console.log(ex);
@@ -172,21 +200,7 @@ const LoginProvider = props => {
 
     return true;
   };
-  const handleLogout = () => {
-    console.log("logged out .....");
-    localStorage.removeItem("token");
-    setLoginState({
-      name: "",
-      lastname: "",
-      email: "",
-      numero_dossier: "",
-      token: "",
-      hasRegistred: false,
-      isLogged: false,
-      isActive: false
-    });
-    window.location.replace("/");
-  };
+
   return (
     <LoginContext.Provider
       value={{
@@ -196,7 +210,9 @@ const LoginProvider = props => {
         handleLogout,
         handleRegistration,
         mailChecking,
-        httpError
+        resendMail,
+        httpError,
+        endpoint
       }}
     >
       {props.children}

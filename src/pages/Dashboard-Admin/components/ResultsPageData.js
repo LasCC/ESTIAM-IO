@@ -84,14 +84,14 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
-              id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+              id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
               end="B150"
               type="line"
               title="Rapport de la semaine"
-              sheet="Résultat sous 7 jours"
+              sheet="Résultats sous 7 jours"
               colors={["#1e88e5", "#1e88e5"]}
-              token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+              token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
             />
           </Box>
           <Box display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}>
@@ -101,14 +101,14 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
-              id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+              id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
               end="B150"
               type="line"
               title="Rapport sous 14 jours"
-              sheet="Résultat sous 14 jours"
+              sheet="Résultats sous 14 jours"
               colors={["#42a5f5", "#90caf9"]}
-              token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+              token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
             />
           </Box>
           <Box display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}>
@@ -118,14 +118,14 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={2} dir={theme.direction}>
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
-              id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+              id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
               end="B150"
               type="line"
               title="Rapport du mois"
-              sheet="Résultat sous 30 jours"
+              sheet="Résultats sous 30 jours"
               colors={["#90caf9", "#90caf9"]}
-              token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+              token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
             />
           </Box>
           <Box display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}>

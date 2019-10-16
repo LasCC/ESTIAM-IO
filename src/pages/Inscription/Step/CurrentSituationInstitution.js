@@ -14,6 +14,7 @@ import {
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
+import Routes from "../../../Routes";
 
 export default props => {
   const [values, setValues] = React.useState({
@@ -58,11 +59,13 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "90%",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button style={{ color: "white" }}>
                 <ArrowBackIosIcon />
                 Accueil
@@ -210,7 +213,7 @@ export default props => {
                 </form>
                 <div>
                   <Link
-                    to="/situation-actuelle"
+                    to={Routes.CURRENT_SITUATION}
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -225,7 +228,7 @@ export default props => {
                     </Button>
                   </Link>
                   <Link
-                    to="/situation-actuelle/fin"
+                    to={Routes.CURRENT_SITUATION_END}
                     style={{ textDecoration: "none" }}
                   >
                     <Button

@@ -1,16 +1,32 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
+import { LoginContext } from "./LoginContext";
 import http from "../services/httpService";
-
+import jwtdecode from "jwt-decode";
 export const Candidature = createContext();
 
 const CandidatureProvider = props => {
-  const [dossier, setDossier] = useState({});
-  const fetchDossier = id => {
-    console.log("fetching the candidature", id);
-    // http.post()
+  const [dossier, setDossier] = useState({ administrationStep: 0, step: "3" });
+  // const [actualdossier, setActualInformations] = useState({});
+  const { endpoint } = useContext(LoginContext);
+  const tokendata = localStorage.getItem("token")
+    ? jwtdecode(localStorage.getItem("token"))
+    : "";
+
+  const fetchDossier = async () => {
+    console.log("fetching the candidature", tokendata.dossierID);
+    console.log(tokendata);
+    const res = await http.get(
+      endpoint + `/api/candidature/${tokendata.candidatureID}`
+    );
+    console.log(res.data);
+    return;
+    // setting it in the state
+  };
+  const updateDossier = async () => {
+    console.log("update the candidature with actual dossier");
   };
   return (
-    <Candidature.Provider candidature={{ dossier }}>
+    <Candidature.Provider value={{ dossier, fetchDossier }}>
       {props.children}
     </Candidature.Provider>
   );
@@ -29,3 +45,14 @@ export default CandidatureProvider;
 
    // dashboard reactif par rapport au step
 */
+
+/**
+ * etapes d'avancement du dosier --> stepper coté administration 
+stepper etapes d'avancement renseignment --> stepper coté client
+resultat ??
+
+
+*appel de la candidature ->  Candidature.fetchDossier() dans useEffect() dans Dashboard 
+( la data se trouve a presente dans le contexte)
+*recupertion du Candidature.dossier et des etapes  dans le CandidatureCOntext -> dashboard dynamique 
+ */

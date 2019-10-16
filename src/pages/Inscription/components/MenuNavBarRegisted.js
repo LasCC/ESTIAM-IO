@@ -14,10 +14,7 @@ import {
   Typography
 } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
-import PieChartIcon from "@material-ui/icons/PieChart";
 import MenuIcon from "@material-ui/icons/Menu";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
 import { LoginContext } from "./../../../contexts/LoginContext";
@@ -94,42 +91,6 @@ export default function TemporaryDrawer() {
           </ListItemIcon>
           <ListItemText primary="Se déconnecter" onClick={handleLogout} />
         </ListItem>
-
-        <Link
-          to={Routes.DASHBOARD}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItem button>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-        </Link>
-
-        <Link
-          to={Routes.GENERAL_INFO}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItem button>
-            <ListItemIcon>
-              <FormatListBulletedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Renseignement" />
-          </ListItem>
-        </Link>
-
-        <Link
-          to={Routes.DASHBOARD_RESULTS}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItem button>
-            <ListItemIcon>
-              <PieChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Vos résultats" />
-          </ListItem>
-        </Link>
       </List>
     </div>
   );

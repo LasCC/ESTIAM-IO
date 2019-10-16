@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 
+import { Candidature } from "../../contexts/CandidatureContext";
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
@@ -19,8 +20,8 @@ const useStyles = makeStyles(theme => ({
 
 function getSteps() {
   return [
-    "En cours de traitement",
     "Dossier incomplet",
+    "En cours de traitement",
     "Rendez-vous planifié",
     "Dossier rejeté",
     "Dossier validé"
@@ -46,12 +47,13 @@ function getSteps() {
 
 export default function HorizontalLinearStepper() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const { dossier } = useContext(Candidature);
+  const [activeStep, setActiveStep] = useState(2);
   const steps = getSteps();
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={activeStep} alternativeLabel>
+      <Stepper activeStep={dossier.administrationStep} alternativeLabel>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};

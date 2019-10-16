@@ -10,6 +10,7 @@ import {
   Container
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import DoneIcon from "@material-ui/icons/Done";
 import { Link } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import NavBar from "./components/NavBar";
@@ -49,8 +50,10 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "70vh",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -75,29 +78,64 @@ export default props => {
                 height: "100%"
               }}
             >
+              <Typography
+                variant="h4"
+                style={{
+                  color: "#004080",
+                  fontWeight: "bold",
+                  marginBottom: 15
+                }}
+              >
+                Réinitialisation
+              </Typography>
+              <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
+                Un code de réinitialisation vous a été envoyé dans votre boîte
+                de réception
+              </Typography>
+              <Button
+                variant="outlined"
+                fullWidth
+                onClick={handleClick}
+                style={{ color: "#004080", marginTop: 10 }}
+              >
+                Renvoyer le code de réinitialisation
+              </Button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left"
+                }}
+                open={open}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                ContentProps={{
+                  "aria-describedby": "message-id"
+                }}
+                message={
+                  <span id="message-id">
+                    <Box display="flex" alignContent="center">
+                      <DoneIcon />
+                      <Typography
+                        variant="subtitle2"
+                        style={{ marginLeft: 10 }}
+                      >
+                        Email de réinitialisation envoyé
+                      </Typography>
+                    </Box>
+                  </span>
+                }
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={handleClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ]}
+              />
               <div className="fade-in-fwd">
-                <Typography
-                  variant="h4"
-                  style={{
-                    color: "#004080",
-                    fontWeight: "bold",
-                    marginBottom: 15
-                  }}
-                >
-                  Réinitialisation
-                </Typography>
-                <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
-                  Un code de réinitialisation vous a été envoyé dans votre boîte
-                  de réception
-                </Typography>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  onClick={handleClick}
-                  style={{ color: "#004080", marginTop: 10 }}
-                >
-                  Renvoyer le code de réinitialisation
-                </Button>
                 <TextField
                   variant="outlined"
                   label="Adresse email"
@@ -132,7 +170,6 @@ export default props => {
                   </Link>
                   <Button
                     variant="contained"
-                    onClick={handleClick}
                     style={{
                       color: "white",
                       backgroundColor: "#004080"
@@ -140,33 +177,6 @@ export default props => {
                   >
                     Réinitialiser
                   </Button>
-                  <Snackbar
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left"
-                    }}
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    ContentProps={{
-                      "aria-describedby": "message-id"
-                    }}
-                    message={
-                      <span id="message-id">
-                        Email de réinitialisation envoyé
-                      </span>
-                    }
-                    action={[
-                      <IconButton
-                        key="close"
-                        aria-label="close"
-                        color="inherit"
-                        onClick={handleClose}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                    ]}
-                  />
                 </div>
               </div>
             </Box>

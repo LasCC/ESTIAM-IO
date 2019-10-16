@@ -7,16 +7,31 @@ import {
   Button,
   TextField,
   Box,
-  Container
+  Container,
+  Snackbar,
+  IconButton
 } from "@material-ui/core";
-import { store } from "react-notifications-component";
-import "react-notifications-component/dist/theme.css";
-import "animate.css";
+import CloseIcon from "@material-ui/icons/Close";
+import DoneIcon from "@material-ui/icons/Done";
 import { Link, withRouter } from "react-router-dom";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import NavBar from "./components/NavBar";
 
 const Confirm = props => {
+  const [open, setOpen] = React.useState(false);
+
+  function handleClick() {
+    resendMail();
+    setOpen(true);
+  }
+
+  function handleClose(event, reason) {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  }
   const schema = {
     secretCode: Joi.string()
       .min(35)
@@ -33,7 +48,9 @@ const Confirm = props => {
     }
     return errors;
   };
-  const { loginState, mailChecking, checkAuth } = useContext(LoginContext);
+  const { loginState, mailChecking, checkAuth, resendMail } = useContext(
+    LoginContext
+  );
   // if ((loginState.isActive && loginState.isLogged) || !loginState.hasRegistred)
   //   return props.history.push("/");
   console.log(checkAuth());
@@ -76,8 +93,10 @@ const Confirm = props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "70vh",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -102,46 +121,68 @@ const Confirm = props => {
                 height: "100%"
               }}
             >
+              <Typography
+                variant="h4"
+                style={{
+                  color: "#004080",
+                  fontWeight: "bold",
+                  marginBottom: 15
+                }}
+              >
+                Confirmation
+              </Typography>
+              <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
+                Un code de confirmation vous a été envoyé dans votre boîte de
+                réception {loginState.email || ""}
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={handleClick}
+                fullWidth
+                style={{
+                  marginTop: 10,
+                  color: "#004080",
+                  borderColor: "#004080"
+                }}
+              >
+                Renvoyer le code de confirmation
+              </Button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left"
+                }}
+                open={open}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                ContentProps={{
+                  "aria-describedby": "message-id"
+                }}
+                message={
+                  <span id="message-id">
+                    <Box display="flex" alignContent="center">
+                      <DoneIcon />
+                      <Typography
+                        variant="subtitle2"
+                        style={{ marginLeft: 10 }}
+                      >
+                        Code envoyé
+                      </Typography>
+                    </Box>
+                  </span>
+                }
+                action={[
+                  <IconButton
+                    key="close"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={handleClose}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                ]}
+              />
               <div className="fade-in-fwd">
-                <Typography
-                  variant="h4"
-                  style={{
-                    color: "#004080",
-                    fontWeight: "bold",
-                    marginBottom: 15
-                  }}
-                >
-                  Confirmation
-                </Typography>
-                <Typography style={{ color: "#02B875", fontWeight: "bold" }}>
-                  Un code de confirmation vous a été envoyé dans votre boîte de
-                  réception {loginState.email}
-                </Typography>
-                <Button
-                  variant="outlined"
-                  fullWidth
-                  onClick={() => {
-                    store.addNotification({
-                      title: "Code de confirmation",
-                      showIcon: true,
-                      message: "Votre code de confirmation à bien été envoyé",
-                      type: "default", // 'default', 'success', 'info', 'warning'
-                      container: "bottom-left", // where to position the notifications
-                      animationIn: ["animated", "fadeIn"], // animate.css classes that's applied
-                      animationOut: ["animated", "fadeOut"], // animate.css classes that's applied
-                      dismiss: {
-                        duration: 5000
-                      }
-                    });
-                  }}
-                  style={{
-                    marginTop: 10,
-                    color: "#004080",
-                    borderColor: "#004080"
-                  }}
-                >
-                  Renvoyer le code de confirmation
-                </Button>
                 <Typography
                   value={values.secretCodef}
                   variant="h5"

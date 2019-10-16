@@ -16,7 +16,6 @@ import {
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import jwtdecode from "jwt-decode";
-import PieChartIcon from "@material-ui/icons/PieChart";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import MenuIcon from "@material-ui/icons/Menu";
 import DashboardIcon from "@material-ui/icons/Dashboard";
@@ -81,13 +80,6 @@ export default function TemporaryDrawer() {
         </ListItem>
         <Divider />
 
-        <ListItem button>
-          <ListItemIcon>
-            <ExitToAppIcon />
-          </ListItemIcon>
-          <ListItemText primary="Se déconnecter" onClick={handleLogout} />
-        </ListItem>
-
         <Link
           to={Routes.DASHBOARD}
           style={{ textDecoration: "none", color: "black" }}
@@ -113,18 +105,6 @@ export default function TemporaryDrawer() {
         </Link>
 
         <Link
-          to={Routes.DASHBOARD_RESULTS}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItem button>
-            <ListItemIcon>
-              <PieChartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Vos résultats" />
-          </ListItem>
-        </Link>
-
-        <Link
           to={Routes.DASHBOARD_HELP}
           style={{ textDecoration: "none", color: "black" }}
         >
@@ -135,6 +115,13 @@ export default function TemporaryDrawer() {
             <ListItemText primary="Tutoriels" />
           </ListItem>
         </Link>
+        <Divider />
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Se déconnecter" onClick={handleLogout} />
+        </ListItem>
       </List>
     </div>
   );

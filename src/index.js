@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import React, { Suspense, lazy } from "react";
 import Routes from "./Routes";
 import LoginProvider from "./contexts/LoginContext";
-import ReactNotifications from "react-notifications-component";
 import CandidatureProvider from "./contexts/CandidatureContext";
 import AdminDashboardProvider from "./contexts/AdminDashboardContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -56,16 +55,9 @@ const UnknownPage = lazy(() => import("./pages/Inscription/404.js"));
 // == DASHBOARD IMPORT == //
 const Tasks = lazy(() => import("./pages/Dashboard-User/pages/Tasks"));
 const Dashboard = lazy(() => import("./pages/Dashboard-User/Dashboard"));
-const ResultsGraph = lazy(() =>
-  import("./pages/Dashboard-User/pages/ResultsGraph")
-);
 const Tutorials = lazy(() => import("./pages/Dashboard-User/pages/Tutorial"));
 
 // == DASHBOARD ADMIN IMPORT == //
-// const DashboardAdmin = lazy(() => import("./pages/Dashboard-Admin/Homepage"));
-// const AnalyticsAdmin = lazy(() =>
-//   import("./pages/Dashboard-Admin/pages/Analytics")
-// );
 const AdminDashboardLogin = lazy(() =>
   import("./pages/Dashboard-Admin/LoginAdmin")
 );
@@ -95,7 +87,6 @@ function App() {
     >
       <LoginProvider>
         <CandidatureProvider>
-          {/* <ReactNotifications /> */}
           <ToastContainer
             position="top-right"
             autoClose={5000}
@@ -114,7 +105,7 @@ function App() {
               path={Routes.REGISTER}
               component={Inscription}
             />
-            <Route
+            <UnProtectedRoute
               exact
               path={Routes.MAILCONFIRMATION}
               component={Confirmation}
@@ -204,11 +195,6 @@ function App() {
               path={Routes.DASHBOARD_TASKS}
               component={Tasks}
             />
-            <ProtectedRoute
-              exact
-              path={Routes.DASHBOARD_RESULTS}
-              component={ResultsGraph}
-            />
             <AdminDashboardProvider>
               <Route
                 exact
@@ -248,7 +234,7 @@ function App() {
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <BrowserRouter>
-    <GAListener trackingId="UA-149840700-1">
+    <GAListener trackingId="UA-150243069-1">
       <App />
     </GAListener>
   </BrowserRouter>,

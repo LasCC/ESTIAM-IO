@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
+import Routes from "../../../Routes";
 import RegistedUserNav from "../components/RegistedUserNav";
 
 export default props => {
@@ -50,11 +51,13 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "70vh",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button style={{ color: "white" }}>
                 <ArrowBackIosIcon />
                 Accueil
@@ -181,10 +184,7 @@ export default props => {
                   </FormControl>
                 </form>
                 <div>
-                  <Link
-                    to="/renseignement/fin"
-                    style={{ textDecoration: "none" }}
-                  >
+                  <Link to={Routes.END_INFO} style={{ textDecoration: "none" }}>
                     <Button
                       variant="outlined"
                       style={{
@@ -197,7 +197,7 @@ export default props => {
                     </Button>
                   </Link>
                   <Link
-                    to="/situation-actuelle/etablissement"
+                    to={Routes.CURRENT_SITUATION_PREV_SCHOOL}
                     style={{ textDecoration: "none" }}
                   >
                     <Button

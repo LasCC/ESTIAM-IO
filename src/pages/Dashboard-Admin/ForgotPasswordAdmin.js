@@ -8,6 +8,7 @@ import {
   Grid,
   Avatar
 } from "@material-ui/core";
+import Routes from "../../Routes";
 import { Link } from "react-router-dom";
 import SendIcon from "@material-ui/icons/Send";
 document.body.style.backgroundColor = "#fafafa";
@@ -70,7 +71,7 @@ export default props => {
             autoComplete="current-password"
           />
           <Link
-            to="/administration/connexion"
+            to={Routes.ADMIN_DASHBOARD_LOGIN}
             style={{ textDecoration: "none" }}
           >
             <Button

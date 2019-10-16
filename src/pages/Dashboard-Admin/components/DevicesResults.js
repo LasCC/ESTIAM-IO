@@ -83,12 +83,12 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
-              id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+              id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
-              end="C50"
+              end="C5000"
               type="line"
               title="Plateforme des utilisateurs"
-              sheet="User traffic"
+              sheet="Traffic des utilisateurs"
               colors={[
                 "#0d47a1",
                 "#e3f2fd",
@@ -101,7 +101,7 @@ export default function FullWidthTabs() {
                 "#1976d2",
                 "#1565c0"
               ]}
-              token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+              token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
             />
           </Box>
           <Box display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}>
@@ -111,12 +111,12 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={1} dir={theme.direction}>
           <Box display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}>
             <RoboChart
-              id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+              id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
-              end="E50"
+              end="E5000"
               type="line"
               title="Utilisateurs mobile"
-              sheet="Mobile Taffic"
+              sheet="Traffic des utilisateurs mobile"
               colors={[
                 "#0d47a1",
                 "#e3f2fd",
@@ -129,7 +129,7 @@ export default function FullWidthTabs() {
                 "#1976d2",
                 "#1565c0"
               ]}
-              token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+              token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
             />
           </Box>
           <Box display={{ sm: "block", xs: "block", lg: "none", xl: "none" }}>

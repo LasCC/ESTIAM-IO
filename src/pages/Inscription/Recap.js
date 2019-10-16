@@ -48,8 +48,11 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
+              backgroundSize: "cover",
               height: "90%",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
             <Link to="/" style={{ textDecoration: "none" }}>

@@ -19,7 +19,7 @@ import {
   Tooltip
 } from "@material-ui/core";
 import MaterialTable from "material-table";
-
+import Routes from "../../../Routes";
 import { Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -296,7 +296,7 @@ export default props => {
             <Typography>Michel Platini</Typography>
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
-            <Link to="/administration/connexion">
+            <Link to={Routes.ADMIN_DASHBOARD_LOGIN}>
               <Tooltip title="Déconnexion">
                 <IconButton>
                   <PowerSettingsNewIcon style={{ color: "white" }} />
@@ -332,58 +332,59 @@ export default props => {
         <Divider />
         <List component="nav" aria-labelledby="navbar">
           <Link
-            to="/administration"
+            to={Routes.ADMIN_DASHBOARD}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Accueil" />
-            </ListItem>
+            <Tooltip title="Accueil">
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Accueil" />
+              </ListItem>
+            </Tooltip>
           </Link>
 
           <Link
-            to="/administration/dossiers"
+            to={Routes.ADMIN_DASHBOARD_FILES}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <SupervisedUserCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dossiers" />
-            </ListItem>
+            <Tooltip title="Dossiers">
+              <ListItem button>
+                <ListItemIcon>
+                  <SupervisedUserCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dossiers" />
+              </ListItem>
+            </Tooltip>
           </Link>
 
           <Link
-            to="/administration/vue-ensemble"
+            to={Routes.ADMIN_DASHBOARD_GLOBALVISION}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <TimelineIcon />
-              </ListItemIcon>
-              <ListItemText primary="Vue d'ensemble" />
-            </ListItem>
+            <Tooltip title="Vue d'ensemble">
+              <ListItem button>
+                <ListItemIcon>
+                  <TimelineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Vue d'ensemble" />
+              </ListItem>
+            </Tooltip>
           </Link>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography variant="h4" style={{ fontWeight: "bold" }}>
-          Bonjour Michel Platini !
-        </Typography>
-        <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
-        <Divider style={{ marginTop: 20, marginBottom: 20 }} />
         <Typography color="textSecondary">
           Vous pouvez exporter la liste des utilisateurs
         </Typography>
-        <Typography
-          variant="h4"
-          style={{ fontWeight: "bold", marginBottom: 15 }}
-        >
+        <Typography variant="h4" style={{ fontWeight: "bold" }}>
           Liste des utilisateurs inscrits
         </Typography>
+        <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
+        <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+
         <MaterialTable
           title="Dossiers des utilisateurs inscrits"
           columns={state.columns}
@@ -465,7 +466,7 @@ export default props => {
             body: {
               deleteTooltip: "Supprimer",
               editTooltip: "Edit",
-              emptyDataSourceMessage: "Oh ! Une erreur est survenue.",
+              emptyDataSourceMessage: "Aucun utilisateurs trouvé",
               editRow: {
                 deleteText: "Êtes-vous sur de bien vouloirs faire ça ?",
                 cancelTooltip: "Annuler",
@@ -491,12 +492,12 @@ export default props => {
           options={{
             exportButton: true,
             exportFileName: "export_user_dashboard",
-            exportCsv: (columns, data) => {
-              // alert(
-              //   "Faut export tout le bordel y'a" + data.length + " rangées"
-              // Actuellement il export que les lignes qui il y a sur la page, mais il faut trouver un moyen de tout export d'un coup avec data.lenght
-              // );
-            },
+            // exportCsv: (columns, data) => {
+            //   // alert(
+            //   //   "Faut export tout le bordel y'a" + data.length + " rangées"
+            //   // Actuellement il export que les lignes qui il y a sur la page, mais il faut trouver un moyen de tout export d'un coup avec data.lenght
+            //   // );
+            // },
             headerStyle: {
               backgroundColor: "#1976d2",
               color: "white"

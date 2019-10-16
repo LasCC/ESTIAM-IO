@@ -19,6 +19,7 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import Routes from "../../../Routes";
 import moment from "moment";
 import "moment/locale/fr";
 moment.locale("fr");
@@ -70,11 +71,13 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "90%",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button style={{ color: "white" }}>
                 <ArrowBackIosIcon />
                 Accueil
@@ -234,7 +237,10 @@ export default props => {
                   />
                 </form>
                 <div>
-                  <Link to="/renseignement" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={Routes.GENERAL_INFO}
+                    style={{ textDecoration: "none" }}
+                  >
                     <Button
                       variant="outlined"
                       style={{
@@ -246,10 +252,7 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  <Link
-                    to="/renseignement/fin"
-                    style={{ textDecoration: "none" }}
-                  >
+                  <Link to={Routes.END_INFO} style={{ textDecoration: "none" }}>
                     <Button
                       variant="contained"
                       color="primary"

@@ -4,6 +4,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import Routes from "../../../Routes";
 
 export default props => {
   return (
@@ -19,11 +20,13 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "70vh",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button style={{ color: "white" }}>
                 <ArrowBackIosIcon />
                 Accueil
@@ -68,7 +71,7 @@ export default props => {
                   align="center"
                   style={{ color: "#004080", fontSize: 15 }}
                 >
-                  Bravo ! Vous venez de terminer l'étape n°3, <br />
+                  Bravo ! Vous venez de terminé l'étape n°3, <br />
                   il ne vous reste plus qu'<strong>une</strong> étape pour
                   terminer votre inscription !
                 </Typography>
@@ -93,7 +96,7 @@ export default props => {
                     </Button>
                   </a>
                   <Link
-                    to="/pieces-complementaires"
+                    to={Routes.UPLOAD_FILE}
                     style={{ textDecoration: "none" }}
                   >
                     <Button

@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Paper, Typography, Divider, Button, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Routes from "../../Routes";
-
+import { Candidature } from "../../contexts/CandidatureContext";
 export default props => {
+  const { dossier } = useContext(Candidature);
+
+  const getFormulaire = () => {
+    switch (dossier.step) {
+      case "1":
+        return "Renseignement généraux";
+      case "2":
+        return "Situation actuelle";
+      case "3":
+        return "Voeux de formation";
+      case "4":
+        return "Pièces complementaires";
+      default:
+    }
+  };
+  console.log("okokokokokok", getFormulaire());
   return (
     <div style={{ height: "100%" }}>
       <Typography style={{ color: "gray", marginBottom: 10 }}>
@@ -23,7 +39,7 @@ export default props => {
         <Box display="flex" alignItems="center">
           <Box flexGrow={1}>
             <Typography variant="h5" style={{ fontWeight: "bold" }}>
-              Toto list
+              Formulaires a completer
             </Typography>
           </Box>
           <Box p={1}>
@@ -52,23 +68,28 @@ export default props => {
               color: "white"
             }}
           >
-            Terminer "path"
+            {4 - dossier.step} dossier{4 - dossier.step > 1 ? "s" : ""} manquant
           </Typography>
           <Typography style={{ color: "white" }}>
             Généralement, on utilise un texte en faux latin (le texte ne veut
             rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
             donc de faire office de texte d'attente.
           </Typography>
-          <Button
-            variant="outlined"
-            fullWidth
-            style={{
-              color: "white",
-              marginTop: 15
-            }}
+          <Link
+            to={Routes.DASHBOARD_TASKS}
+            style={{ textDecoration: "none", color: "white" }}
           >
-            Remplir
-          </Button>
+            <Button
+              variant="outlined"
+              fullWidth
+              style={{
+                color: "white",
+                marginTop: 15
+              }}
+            >
+              Remplir
+            </Button>
+          </Link>
         </Paper>
       </Paper>
     </div>

@@ -11,12 +11,11 @@ const routes = {
   RECAPITULATION: "/recapitulatif",
   DASHBOARD: "/dashboard",
   DASHBOARD_TASKS: "/dashboard/taches", // !  :  /taches
-  DASHBOARD_RESULTS: "/dashboard/resulats", // ! current : resultats
   DASHBOARD_HELP: "/dashboard/aide", // ! current : aide
-  WISHES_END: "/voeux-formation",
+  WISHES_END: "/voeux-formation/fin", // incorrect route !
   UPLOAD_FILE: "/pieces-complementaires",
-  ADMIN_DASHBOARD_LOGIN: "/administration/connexion",
-  ADMIN_DASHBOARD_FORGOT_PASSWORD: "/administration/mot-de-passe-oublie",
+  ADMIN_DASHBOARD_LOGIN: "/connexion/administration",
+  ADMIN_DASHBOARD_FORGOT_PASSWORD: "/mot-de-passe-oublie/administration",
   ADMIN_DASHBOARD: "/administration",
   ADMIN_DASHBOARD_FILES: "/administration/dossiers",
   ADMIN_DASHBOARD_GLOBALVISION: "/administration/vue-ensemble",

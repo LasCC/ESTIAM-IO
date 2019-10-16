@@ -14,6 +14,7 @@ import {
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
+import Routes from "../../../Routes";
 
 export default props => {
   const [values, setValues] = React.useState({
@@ -40,10 +41,16 @@ export default props => {
       <Grid container spacing={0}>
         <Grid item lg={3} md={3}>
           <Box
-            style={{ padding: 25, backgroundColor: "#004080", height: "100%" }}
+            style={{
+              padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
+              height: "100%",
+              backgroundColor: "white"
+            }}
             display={{ xs: "none", md: "block", lg: "block" }}
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button style={{ color: "white" }}>
                 <ArrowBackIosIcon />
                 Accueil
@@ -199,7 +206,7 @@ export default props => {
               </FormControl>
               <div>
                 <Link
-                  to="/situation-actuelle/fin"
+                  to={Routes.CURRENT_SITUATION_END}
                   style={{ textDecoration: "none" }}
                 >
                   <Button
@@ -214,7 +221,7 @@ export default props => {
                   </Button>
                 </Link>
                 <Link
-                  to="/voeux-formation/campus"
+                  to={Routes.WISHES_CAMPUS}
                   style={{ textDecoration: "none" }}
                 >
                   <Button

@@ -20,6 +20,7 @@ import {
   Tooltip
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Routes from "../../../Routes";
 import OtherData1 from "../OtherData1";
 import OtherData2 from "../OtherData2";
 import OtherData3 from "../OtherData3";
@@ -165,7 +166,7 @@ export default props => {
             <MenuIcon />
           </IconButton>
           <Box flexGrow={1}>
-            <Typography variant="h6" noWrap style={{ fontWeight: "bold" }}>
+            <Typography variant="h5" noWrap style={{ fontWeight: "bold" }}>
               Administration Dashboard
             </Typography>
           </Box>
@@ -185,7 +186,7 @@ export default props => {
             <Typography>Michel Platini</Typography>
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
-            <Link to="/administration/connexion">
+            <Link to={Routes.ADMIN_DASHBOARD_LOGIN}>
               <Tooltip title="Déconnexion">
                 <IconButton>
                   <PowerSettingsNewIcon style={{ color: "white" }} />
@@ -221,56 +222,56 @@ export default props => {
         <Divider />
         <List component="nav" aria-labelledby="navbar">
           <Link
-            to="/administration"
+            to={Routes.ADMIN_DASHBOARD}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Accueil" />
-            </ListItem>
+            <Tooltip title="Accueil">
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Accueil" />
+              </ListItem>
+            </Tooltip>
           </Link>
 
           <Link
-            to="/administration/dossiers"
+            to={Routes.ADMIN_DASHBOARD_FILES}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <SupervisedUserCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dossiers" />
-            </ListItem>
+            <Tooltip title="Dossiers">
+              <ListItem button>
+                <ListItemIcon>
+                  <SupervisedUserCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dossiers" />
+              </ListItem>
+            </Tooltip>
           </Link>
 
           <Link
-            to="/administration/vue-ensembre"
+            to={Routes.ADMIN_DASHBOARD_GLOBALVISION}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <TimelineIcon />
-              </ListItemIcon>
-              <ListItemText primary="Vue d'ensemble" />
-            </ListItem>
+            <Tooltip title="Vue d'ensemble">
+              <ListItem button>
+                <ListItemIcon>
+                  <TimelineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Vue d'ensemble" />
+              </ListItem>
+            </Tooltip>
           </Link>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Typography color="textSecondary">Données en temps réel</Typography>
         <Typography variant="h4" style={{ fontWeight: "bold" }}>
-          Bonjour Michel Platini !
+          Vue d'ensemble des utilisateurs inscrits
         </Typography>
         <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
         <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-        <Typography color="textSecondary">Données en temps réel</Typography>
-        <Typography
-          variant="h4"
-          style={{ fontWeight: "bold", marginBottom: 15 }}
-        >
-          Vue d'ensemble des utilisateurs inscrits
-        </Typography>
         <Grid container spacing={3} direction="row" justify="center">
           <Grid item xs sm="auto" lg={3} md={3}>
             <Box
@@ -299,20 +300,12 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="subtitle2"
-                  style={{ fontSize: 15, color: "white" }}
+                  variant="h5"
+                  style={{ color: "white", fontWeight: "bold" }}
                 >
                   7541
                 </Typography>
               </Box>
-              <Typography
-                variant="subtitle2"
-                style={{ marginTop: 10, color: "lightgray" }}
-              >
-                Généralement, on utilise un texte en faux latin (le texte ne
-                veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui
-                permet donc de faire office de texte d'attente.
-              </Typography>
             </Box>
           </Grid>
           <Grid item xs sm="auto" lg={3} md={3}>
@@ -345,20 +338,12 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="subtitle2"
-                  style={{ fontSize: 15, color: "white" }}
+                  variant="h5"
+                  style={{ color: "white", fontWeight: "bold" }}
                 >
                   7541
                 </Typography>
               </Box>
-              <Typography
-                variant="subtitle2"
-                style={{ marginTop: 10, color: "lightgray" }}
-              >
-                Généralement, on utilise un texte en faux latin (le texte ne
-                veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui
-                permet donc de faire office de texte d'attente.
-              </Typography>
             </Box>
           </Grid>
           <Grid item xs sm="auto" lg={3} md={3}>
@@ -386,20 +371,12 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="subtitle2"
-                  style={{ fontSize: 15, color: "white" }}
+                  variant="h5"
+                  style={{ color: "white", fontWeight: "bold" }}
                 >
                   7541
                 </Typography>
               </Box>
-              <Typography
-                variant="subtitle2"
-                style={{ marginTop: 10, color: "lightgray" }}
-              >
-                Généralement, on utilise un texte en faux latin (le texte ne
-                veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui
-                permet donc de faire office de texte d'attente.
-              </Typography>
             </Box>
           </Grid>
           <Grid item xs sm="auto" lg={3} md={3}>
@@ -427,20 +404,12 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="subtitle2"
-                  style={{ fontSize: 15, color: "white" }}
+                  variant="h5"
+                  style={{ color: "white", fontWeight: "bold" }}
                 >
                   7541
                 </Typography>
               </Box>
-              <Typography
-                variant="subtitle2"
-                style={{ marginTop: 10, color: "lightgray" }}
-              >
-                Généralement, on utilise un texte en faux latin (le texte ne
-                veut rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui
-                permet donc de faire office de texte d'attente.
-              </Typography>
             </Box>
           </Grid>
         </Grid>

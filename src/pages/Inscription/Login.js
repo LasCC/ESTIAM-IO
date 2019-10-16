@@ -36,7 +36,7 @@ export default props => {
     showPassword: false
   });
   const [errors, setErrors] = useState({});
-  const { handleLogin, loginState } = useContext(LoginContext);
+  const { handleLogin, loginState, httpError } = useContext(LoginContext);
   const schema = {
     email: Joi.string()
       .email({ minDomainSegments: 2 })
@@ -83,11 +83,13 @@ export default props => {
   console.log(values);
   const emailerror =
     loginState.loginError ||
+    httpError.clientError ||
     (errors.hasOwnProperty("email") && values.submitted)
       ? "#f00"
       : "";
   const passworderror =
     loginState.loginError ||
+    httpError.clientError ||
     (errors.hasOwnProperty("password") && values.submitted)
       ? "#f00"
       : "";
@@ -110,8 +112,10 @@ export default props => {
             }}
             style={{
               padding: 25,
+              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+              backgroundPosition: "right",
               height: "70vh",
-              backgroundColor: "#004080"
+              backgroundColor: "white"
             }}
           >
             <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
@@ -148,6 +152,7 @@ export default props => {
                 {values.submitted &&
                   (emailerror || passworderror) &&
                   LoginErrorComponent}
+                {httpError.clientError && LoginErrorComponent}
                 <Typography
                   variant="h5"
                   style={{

@@ -21,6 +21,7 @@ import {
   Tooltip
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Routes from "../../Routes";
 import ResultsPageData from "./components/ResultsPageData";
 import DevicesResults from "./components/DevicesResults";
 import RoboChart from "@postlight/react-google-sheet-to-chart";
@@ -184,7 +185,7 @@ export default props => {
             <Typography>Michel Platini</Typography>
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
-            <Link to="/administration/connexion">
+            <Link to={Routes.ADMIN_DASHBOARD_LOGIN}>
               <Tooltip title="Déconnexion">
                 <IconButton>
                   <PowerSettingsNewIcon style={{ color: "white" }} />
@@ -220,58 +221,58 @@ export default props => {
         <Divider />
         <List component="nav" aria-labelledby="navbar">
           <Link
-            to="/administration"
+            to={Routes.ADMIN_DASHBOARD}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary="Accueil" />
-            </ListItem>
+            <Tooltip title="Accueil">
+              <ListItem button>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Accueil" />
+              </ListItem>
+            </Tooltip>
           </Link>
 
           <Link
-            to="/administration/dossiers"
+            to={Routes.ADMIN_DASHBOARD_FILES}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <SupervisedUserCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dossiers" />
-            </ListItem>
+            <Tooltip title="Dossiers">
+              <ListItem button>
+                <ListItemIcon>
+                  <SupervisedUserCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dossiers" />
+              </ListItem>
+            </Tooltip>
           </Link>
 
           <Link
-            to="/administration/vue-ensemble"
+            to={Routes.ADMIN_DASHBOARD_GLOBALVISION}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <ListItem button>
-              <ListItemIcon>
-                <TimelineIcon />
-              </ListItemIcon>
-              <ListItemText primary="Vue d'ensemble" />
-            </ListItem>
+            <Tooltip title="Vue d'ensemble">
+              <ListItem button>
+                <ListItemIcon>
+                  <TimelineIcon />
+                </ListItemIcon>
+                <ListItemText primary="Vue d'ensemble" />
+              </ListItem>
+            </Tooltip>
           </Link>
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography variant="h4" style={{ fontWeight: "bold" }}>
-          Bonjour Michel Platini !
-        </Typography>
-        <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
-        <Divider style={{ marginTop: 20, marginBottom: 20 }} />
         <Typography color="textSecondary">
           Mise à jour des données toutes les heures
         </Typography>
-        <Typography
-          variant="h4"
-          style={{ fontWeight: "bold", marginBottom: 15 }}
-        >
+        <Typography variant="h4" style={{ fontWeight: "bold" }}>
           Données Google Analytics
         </Typography>
+        <Typography variant="subtitle1">{moment().format("LLLL")}</Typography>
+        <Divider style={{ marginTop: 20, marginBottom: 20 }} />
         <Grid container spacing={2}>
           <Grid item xs={12} lg={6} md={6} sm={12}>
             <Paper
@@ -289,7 +290,7 @@ export default props => {
                 seamless
                 frameBorder="0"
                 scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=1693536829&amp;format=interactive"
+                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6opVYsc7yeWQJY-Ik8zJQ2IQZS5kCc09XEkE-v0Z2n4hTCTPqyEYbYol5XC8NanpTmYV1e7pd18DB/pubchart?oid=238319360&format=interactive"
               />
             </Paper>
           </Grid>
@@ -309,7 +310,7 @@ export default props => {
                 seamless
                 frameBorder="0"
                 scrolling="no"
-                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRsOxbDG8Pi3ChUwZlNPP2nQD8D0WrFGX4VDB34msFZKl-NRNIFoe6eD5DBu8t4ymecOkR0YbE9wlW5/pubchart?oid=1256073064&amp;format=interactive"
+                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6opVYsc7yeWQJY-Ik8zJQ2IQZS5kCc09XEkE-v0Z2n4hTCTPqyEYbYol5XC8NanpTmYV1e7pd18DB/pubchart?oid=671500211&amp;format=interactive"
               />
             </Paper>
           </Grid>
@@ -326,12 +327,12 @@ export default props => {
                 display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
               >
                 <RoboChart
-                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
-                  start="B3"
-                  end="C16"
+                  id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
+                  start="A15"
+                  end="C5000"
                   type="semi-doughnut"
                   title="Rapport du jour"
-                  sheet="Résultats"
+                  sheet="Résultat de la journée"
                   colors={[
                     "#e3f2fd",
                     "#bbdefb",
@@ -350,7 +351,7 @@ export default props => {
                     "#80d8ff",
                     "#0091ea"
                   ]}
-                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                  token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
                 />
               </Box>
               <Box
@@ -373,9 +374,9 @@ export default props => {
                 display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
               >
                 <RoboChart
-                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+                  id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
                   start="A15"
-                  end="D50"
+                  end="D5000"
                   type="semi-doughnut"
                   title="Source des utilisateurs"
                   sheet="Source des utilisateurs"
@@ -391,7 +392,7 @@ export default props => {
                     "#1565c0",
                     "#0d47a1"
                   ]}
-                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                  token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
                 />
               </Box>
               <Box
@@ -414,12 +415,12 @@ export default props => {
                 display={{ sm: "none", xs: "none", lg: "block", xl: "block" }}
               >
                 <RoboChart
-                  id="1vo45XAHzUQMWBAWsjKWh-zNUioiI-UWQ8xUKqhZ_bL4"
+                  id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
                   start="A15"
-                  end="B65"
+                  end="B5000"
                   type="line"
                   title="Utilisateurs inscrits par jour"
-                  sheet="Utilisateurs fidèles"
+                  sheet="Utilisateurs inscrits par jour"
                   colors={[
                     "#64b5f6",
                     "#1976d2",
@@ -432,7 +433,7 @@ export default props => {
                     "#1565c0",
                     "#0d47a1"
                   ]}
-                  token="AIzaSyC2uP91RwdPbnApm4wx_cH9rQnho9a9NlQ"
+                  token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
                 />
               </Box>
               <Box
