@@ -6,20 +6,6 @@ import { Candidature } from "../../contexts/CandidatureContext";
 export default props => {
   const { dossier } = useContext(Candidature);
 
-  const getFormulaire = () => {
-    switch (dossier.step) {
-      case "1":
-        return "Renseignement généraux";
-      case "2":
-        return "Situation actuelle";
-      case "3":
-        return "Voeux de formation";
-      case "4":
-        return "Pièces complementaires";
-      default:
-    }
-  };
-  console.log("okokokokokok", getFormulaire());
   return (
     <div style={{ height: "100%" }}>
       <Typography style={{ color: "gray", marginBottom: 10 }}>

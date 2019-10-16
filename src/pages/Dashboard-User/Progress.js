@@ -20,18 +20,10 @@ export default props => {
         <Steppers />
       </Box>
       <Box display={{ xs: "block", md: "none", lg: "none" }}>
-        <Typography component={"p"}>
+        <Typography variant="subtitle2">
           Cette feature a été pensé pour les plus grands écran, pour y accéder
           merci d'utiliser sur un écran plus adapté.
         </Typography>
-        <Button
-          variant="outlined"
-          color="primary"
-          style={{ marginTop: 10 }}
-          href="mailto: ?subject=Rappel : Dashboard ESTIAM-IO&body=Voici le lien du site: dashboard.estiam.io"
-        >
-          S'envoyer un mail
-        </Button>
       </Box>
     </Paper>
   );

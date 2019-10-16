@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import NavBar from "../NavBar";
 import Routes from "../../../Routes";
 import {
@@ -10,12 +10,29 @@ import {
   Divider
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Candidature } from "../../../contexts/CandidatureContext";
+import { Candidature } from ".  ./../../contexts/CandidatureContext";
 document.body.style.backgroundColor = "white";
 
 export default props => {
+  const [component, setComponent] = useState(1);
+  // forceReload()
+  useEffect(() => setComponent(0), []);
   const { dossier } = useContext(Candidature);
   const { step } = dossier;
+  const getFormulaire = () => {
+    switch (step) {
+      case 1:
+        return "Renseignement généraux";
+      case 2:
+        return "Situation actuelle";
+      case 3:
+        return "Voeux de formation";
+      case 4:
+        return "Pièces complementaires";
+      default:
+    }
+  };
+
   return (
     <>
       <NavBar />

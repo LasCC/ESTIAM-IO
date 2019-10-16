@@ -61,7 +61,7 @@ const StyledBadge2 = withStyles(theme => ({
       opacity: 1
     },
     "100%": {
-      transform: "scale(2.4)",
+      transform: "scale(2.6)",
       opacity: 0
     }
   }
@@ -125,7 +125,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(4)
+    padding: theme.spacing(6)
   }
 }));
 
@@ -283,6 +283,7 @@ export default props => {
                 height: "auto"
               }}
             >
+              {/* The google sheet > https://docs.google.com/spreadsheets/d/1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg/edit#gid=1006376999 */}
               <iframe
                 title="nombreUtilisateur"
                 width="100%"
@@ -331,7 +332,6 @@ export default props => {
                   start="A15"
                   end="C5000"
                   type="semi-doughnut"
-                  title="Rapport du jour"
                   sheet="Résultat de la journée"
                   colors={[
                     "#e3f2fd",
@@ -378,7 +378,6 @@ export default props => {
                   start="A15"
                   end="D5000"
                   type="semi-doughnut"
-                  title="Source des utilisateurs"
                   sheet="Source des utilisateurs"
                   colors={[
                     "#90caf9",
@@ -419,7 +418,6 @@ export default props => {
                   start="A15"
                   end="B5000"
                   type="line"
-                  title="Utilisateurs inscrits par jour"
                   sheet="Utilisateurs inscrits par jour"
                   colors={[
                     "#64b5f6",

@@ -5,23 +5,22 @@ import jwtdecode from "jwt-decode";
 export const Candidature = createContext();
 
 const CandidatureProvider = props => {
-  const [dossier, setDossier] = useState({ administrationStep: 0, step: "3" });
+  const [dossier, setDossier] = useState({ administrationStep: 0, step: 3 });
   // const [actualdossier, setActualInformations] = useState({});
   const { endpoint } = useContext(LoginContext);
   const tokendata = localStorage.getItem("token")
     ? jwtdecode(localStorage.getItem("token"))
     : "";
 
-  const fetchDossier = async () => {
+  function fetchDossier() {
     console.log("fetching the candidature", tokendata.dossierID);
     console.log(tokendata);
-    const res = await http.get(
-      endpoint + `/api/candidature/${tokendata.candidatureID}`
-    );
-    console.log(res.data);
-    return;
+    http
+      .get(endpoint + `/api/candidature/${tokendata.candidatureID}`)
+      .then(res => console.log(res.data))
+      .catch(ex => console.log(ex));
     // setting it in the state
-  };
+  }
   const updateDossier = async () => {
     console.log("update the candidature with actual dossier");
   };
