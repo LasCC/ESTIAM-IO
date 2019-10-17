@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Button, Container } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Routes from "../../Routes";
 
 export default props => {
   return (
@@ -11,7 +12,7 @@ export default props => {
         justifyContent="center"
         p={1}
         m={1}
-        css={{ height: "100vh" }}
+        css={{ height: "90vh" }}
       >
         <Box p={1}>
           <img
@@ -22,7 +23,7 @@ export default props => {
           <Box p={1}>
             <Typography
               variant="subtitle2"
-              style={{ color: "black", fontSize: 15 }}
+              style={{ color: "white", fontSize: 15 }}
             >
               Oh non !
               <br />
@@ -32,9 +33,9 @@ export default props => {
               de graisse. L'attente se transforme en déception profonde et en
               désespoir. Il n'y a plus rien !
             </Typography>
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
               <Button
-                style={{ color: "#f9ca24", fontWeight: "bold", padding: 0 }}
+                style={{ color: "#ffea00", fontWeight: "bold", padding: 0 }}
               >
                 Revenir à l'accueil
               </Button>

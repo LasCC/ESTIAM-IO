@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import NavBar from "../NavBar";
 import Routes from "../../../Routes";
+import Task from "./Task";
+
 import {
   Box,
   Paper,
@@ -10,29 +12,66 @@ import {
   Divider
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Candidature } from ".  ./../../contexts/CandidatureContext";
+import { Candidature } from "../../../contexts/CandidatureContext";
 document.body.style.backgroundColor = "white";
-
 export default props => {
-  const [component, setComponent] = useState(1);
-  // forceReload()
-  useEffect(() => setComponent(0), []);
-  const { dossier } = useContext(Candidature);
+  const { dossier, dataloaded, fetchDossier } = useContext(Candidature);
+  useEffect(() => fetchDossier(), []);
+  if (!dataloaded)
+    return (
+      <div className="loader">
+        <div className="outer" />
+        <div className="middle" />
+        <div className="inner" />
+      </div>
+    );
   const { step } = dossier;
-  const getFormulaire = () => {
-    switch (step) {
-      case 1:
-        return "Renseignement généraux";
-      case 2:
-        return "Situation actuelle";
-      case 3:
-        return "Voeux de formation";
-      case 4:
-        return "Pièces complementaires";
-      default:
+  console.log(step);
+  const filteredSteps = step
+    .filter(singlestep => !singlestep.done)
+    .map(task => task.nom);
+  console.log(filteredSteps);
+  const pageArray = [
+    {
+      id: 1,
+      title: "Renseignement généraux",
+      route: Routes.GENERAL_INFO,
+      color: "#03a9f4",
+      name: "step1"
+    },
+    {
+      id: 2,
+      title: "Situation actuelle",
+      route: Routes.CURRENT_SITUATION,
+      color: "#039be5",
+      name: "step2"
+    },
+    {
+      id: 3,
+      title: "Voeux de formation",
+      route: Routes.WISHES_FORMATION,
+      color: "#0288d1",
+      name: "step3"
+    },
+    {
+      id: 4,
+      title: "Pièces complementaires",
+      route: Routes.UPLOAD_FILE,
+      color: "#0277bd",
+      name: "step4"
     }
-  };
-
+  ];
+  const Todolists = pageArray
+    .filter(task => filteredSteps.includes(task.name))
+    .map(task => (
+      <Task
+        id={task.id}
+        title={task.title}
+        route={task.route}
+        color={task.color}
+      />
+    ));
+  console.log(step);
   return (
     <>
       <NavBar />
@@ -66,99 +105,16 @@ export default props => {
           </Box>
 
           <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+          {Todolists}
+        </Paper>
+      </Container>
+    </>
+  );
+};
 
-          <Paper
-            style={{
-              borderRadius: 10,
-              backgroundColor: "#508CC9",
-              padding: 20,
-              margin: 10
-            }}
-          >
-            <Typography
-              variant="h5"
-              style={{
-                color: "white",
-                fontWeight: "bold"
-              }}
-            >
-              Terminer "path"
-            </Typography>
-            <Typography variant="subtitle2" style={{ color: "white" }}>
-              Généralement, on utilise un texte en faux latin (le texte ne veut
-              rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-              donc de faire office de texte d'attente.
-            </Typography>
-            <Button
-              fullWidth
-              variant="outlined"
-              style={{ color: "white", marginTop: 10, borderColor: "white" }}
-            >
-              Remplir le formulaire
-            </Button>
-          </Paper>
-          <Paper
-            style={{
-              borderRadius: 10,
-              backgroundColor: "#508CC9",
-              padding: 20,
-              margin: 10
-            }}
-          >
-            <Typography
-              variant="h5"
-              style={{
-                color: "white",
-                fontWeight: "bold"
-              }}
-            >
-              Terminer "path"
-            </Typography>
-            <Typography variant="subtitle2" style={{ color: "white" }}>
-              Généralement, on utilise un texte en faux latin (le texte ne veut
-              rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-              donc de faire office de texte d'attente.
-            </Typography>
-            <Button
-              fullWidth
-              variant="outlined"
-              style={{ color: "white", marginTop: 10, borderColor: "white" }}
-            >
-              Remplir le formulaire
-            </Button>
-          </Paper>
-          <Paper
-            style={{
-              borderRadius: 10,
-              backgroundColor: "#508CC9",
-              padding: 20,
-              margin: 10
-            }}
-          >
-            <Typography
-              variant="h5"
-              style={{
-                color: "white",
-                fontWeight: "bold"
-              }}
-            >
-              Terminer "path"
-            </Typography>
-            <Typography variant="subtitle2" style={{ color: "white" }}>
-              Généralement, on utilise un texte en faux latin (le texte ne veut
-              rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-              donc de faire office de texte d'attente.
-            </Typography>
-            <Button
-              fullWidth
-              variant="outlined"
-              style={{ color: "white", marginTop: 10, borderColor: "white" }}
-            >
-              Remplir le formulaire
-            </Button>
-          </Paper>
-
-          {/* <Typography
+/*
+Upload : 
+  <Typography
             variant="h5"
             style={{ fontWeight: "bold", marginTop: 25 }}
           >
@@ -279,9 +235,5 @@ export default props => {
             >
               Envoyer
             </Button>
-          </Box> */}
-        </Paper>
-      </Container>
-    </>
-  );
-};
+          </Box> 
+*/

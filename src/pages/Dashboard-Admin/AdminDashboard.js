@@ -165,7 +165,7 @@ export default props => {
             <MenuIcon />
           </IconButton>
           <Box flexGrow={1}>
-            <Typography variant="h6" noWrap style={{ fontWeight: "bold" }}>
+            <Typography variant="h5" noWrap style={{ fontWeight: "bold" }}>
               Administration Dashboard
             </Typography>
           </Box>

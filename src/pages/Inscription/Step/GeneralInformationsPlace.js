@@ -130,7 +130,16 @@ export default props => {
                     margin="normal"
                     id="date-picker-inline"
                     label="Date de naissance"
-                    value={selectedDate}
+                    value={
+                      selectedDate.value !== ""
+                        ? moment(
+                            moment().format("DD MMM YYYY") +
+                              " " +
+                              selectedDate.value
+                          ).toDate()
+                        : null
+                    }
+                    // value={selectedDate}
                     onChange={handleDateChange}
                     KeyboardButtonProps={{
                       "aria-label": "date de naissance"
@@ -191,7 +200,7 @@ export default props => {
                   </FormControl>
                   <FormControl
                     variant="outlined"
-                    style={{ minWidth: 210, marginRight: 15 }}
+                    style={{ minWidth: 255, marginRight: 15 }}
                     margin="normal"
                   >
                     <InputLabel htmlFor="departement" required ref={inputLabel}>

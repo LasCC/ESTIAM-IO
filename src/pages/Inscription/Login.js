@@ -158,7 +158,7 @@ export default props => {
                   style={{
                     color: "#004080",
                     fontWeight: "bold",
-                    marginTop: 20
+                    marginTop: 10
                   }}
                 >
                   Identifiant

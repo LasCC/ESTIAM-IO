@@ -6,7 +6,7 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 export default props => {
   return (
     <>
-      <Typography style={{ color: "gray", marginBottom: 10 }}>
+      <Typography style={{ color: "gray", marginBottom: 10, marginTop: 15 }}>
         Tutoriels
         <i className="uil uil-angle-down" />
       </Typography>

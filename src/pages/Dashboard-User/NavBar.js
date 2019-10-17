@@ -80,7 +80,7 @@ export default props => {
   };
   return (
     <div style={{ width: "100%" }}>
-      <Box display="flex" p={4} alignItems="center">
+      <Box display="flex" p={2} alignItems="center">
         <Box p={1} flexGrow={1}>
           <Link to={Routes.DASHBOARD}>
             <img

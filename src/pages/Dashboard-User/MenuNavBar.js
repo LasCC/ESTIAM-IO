@@ -58,19 +58,20 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <List component="nav" aria-label="main mailbox folders">
+      <List component="nav">
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
             <Avatar alt="avatarLogo" src="https://picsum.photos/200/300" />
           </ListItemAvatar>
           <ListItemText
+            style={{ textOverflow: "ellipsis", overflow: "hidden" }}
             primary={`${firstName} ${lastName}`}
             secondary={
               <React.Fragment>
                 <Typography
                   component="span"
+                  color="textSecondary"
                   variant="body2"
-                  color="textPrimary"
                 >
                   {`${email}`}
                 </Typography>

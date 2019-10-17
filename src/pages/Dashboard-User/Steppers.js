@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
+  },
+  circle: {
+    color: "red"
   }
 }));
 

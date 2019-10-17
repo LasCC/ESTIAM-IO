@@ -16,10 +16,19 @@ import {
   Box,
   Avatar,
   Badge,
-  Tooltip
+  Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  FormControl,
+  Select,
+  DialogActions,
+  Button,
+  InputLabel,
+  MenuItem
 } from "@material-ui/core";
-import MaterialTable from "material-table";
 import Routes from "../../../Routes";
+import MaterialTable from "material-table";
 import { Link } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
@@ -121,124 +130,83 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(4)
+    padding: theme.spacing(6)
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
   }
 }));
 
 export default props => {
   const [state, setState] = React.useState({
     columns: [
+      {
+        title: "Photo d'identité",
+        field: "imageUrl",
+        render: rowData => (
+          <img
+            alt="imageProfile"
+            src={rowData.imageUrl}
+            style={{ borderRadius: 50, width: 50, height: 50 }}
+          />
+        )
+      },
       { title: "Nom", field: "firstname" },
       { title: "Prénom", field: "lastname" },
-      { title: "Campus", field: "campus" },
+      { title: "Campus", field: "choice_1" },
       {
         title: "Pays",
-        field: "city",
-        lookup: { 75: "France", 93: "Afrique" }
+        field: "country"
       }
     ],
+
     data: [
       {
+        imageUrl: "https://picsum.photos/200/300",
         firstname: "Mehmet",
         lastname: "Baran",
-        campus: "Paris",
-        city: 75
+        country: "France",
+        adress: "12 rue des fleures 75001 Paris",
+        tel: "0603310775",
+        formation: "Etudiant",
+        name_formation: "BAC S",
+        class_formation: "Terminale",
+        name_school: "Lycée Gustave Eiffel",
+        country_school: "Pairs",
+        number_adress_school: "2",
+        adress_school: "Rue du maine",
+        department_school: "Seine-Saint-Denis",
+        city_school: "Sevran",
+        class_whises: "1ère année",
+        spe_whises: "Pas disponible",
+        cursus_whisies: "Pas disponible",
+        choice_1: "Paris 75e",
+        choice_2: "Saint-Denis 93",
+        choice_3: "Lyon 69"
       },
       {
-        firstname: "Michel",
-        lastname: "Platini",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Mehmet",
-        lastname: "Baran",
-        campus: "Paris",
-        city: 75
-      },
-      {
-        firstname: "Zerya Betül",
-        lastname: "Baran",
-        campus: "Saint-Denis",
-        city: 93
+        imageUrl: "https://picsum.photos/200/300",
+        firstname: "Boubi",
+        lastname: "Bouba",
+        country: "France",
+        adress: "12 rue des fleures 75001 Paris",
+        tel: "0603310775",
+        formation: "Etudiant",
+        name_formation: "BAC S",
+        class_formation: "Terminale",
+        name_school: "Lycée Gustave Eiffel",
+        country_school: "Pairs",
+        number_adress_school: "2",
+        adress_school: "Rue du maine",
+        department_school: "Seine-Saint-Denis",
+        city_school: "Sevran",
+        class_whises: "1ère année",
+        spe_whises: "Pas disponible",
+        cursus_whisies: "Pas disponible",
+        choice_1: "Saint-Denis 93",
+        choice_2: "Lyon 69",
+        choice_3: "Paris 75"
       }
     ]
   });
@@ -253,7 +221,24 @@ export default props => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const [values, setValues] = React.useState({
+    step_update: ""
+  });
 
+  const handleChange = event => {
+    setValues(oldValues => ({
+      ...oldValues,
+      [event.target.name]: event.target.value
+    }));
+  };
+  const handleClickOpen = () => {
+    setState({ ...state, open: true });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+  console.log(values);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -276,7 +261,7 @@ export default props => {
             <MenuIcon />
           </IconButton>
           <Box flexGrow={1}>
-            <Typography variant="h6" noWrap style={{ fontWeight: "bold" }}>
+            <Typography variant="h5" noWrap style={{ fontWeight: "bold" }}>
               Administration Dashboard
             </Typography>
           </Box>
@@ -296,13 +281,11 @@ export default props => {
             <Typography>Michel Platini</Typography>
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
-            <Link to={Routes.ADMIN_DASHBOARD_LOGIN}>
-              <Tooltip title="Déconnexion">
-                <IconButton>
-                  <PowerSettingsNewIcon style={{ color: "white" }} />
-                </IconButton>
-              </Tooltip>
-            </Link>
+            <Tooltip title="Déconnexion">
+              <IconButton>
+                <PowerSettingsNewIcon style={{ color: "white" }} />
+              </IconButton>
+            </Tooltip>
           </Box>
         </Toolbar>
       </AppBar>
@@ -389,86 +372,140 @@ export default props => {
           title="Dossiers des utilisateurs inscrits"
           columns={state.columns}
           data={state.data}
-          editable={{
-            onRowUpdate: (newData, oldData) =>
-              new Promise(resolve => {
-                setTimeout(() => {
-                  resolve();
-                  const data = [...state.data];
-                  data[data.indexOf(oldData)] = newData;
-                  setState({ ...state, data });
-                }, 600);
-              }),
-            onRowDelete: oldData =>
-              new Promise(resolve => {
-                setTimeout(() => {
-                  resolve();
-                  const data = [...state.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  setState({ ...state, data });
-                }, 600);
-              })
-          }}
           detailPanel={rowData => {
             return (
               <div style={{ padding: 50 }}>
-                <Typography variant="h6">
-                  Etat Civil de {state.data[0].firstname}{" "}
-                  {state.data[0].lastname}
+                <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                  Etat Civil de {rowData.firstname} {rowData.lastname}
                 </Typography>
-                <Typography>Michel Platini</Typography>
-                <Typography>Pays de naissance : France</Typography>
+                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                <Box display="flex" justifyContent="flex-start">
+                  <Box display={{ xs: "none", lg: "block", md: "block" }}>
+                    <Avatar
+                      src="https://picsum.photos/200/300"
+                      style={{
+                        borderRadius: 2,
+                        height: 150,
+                        width: 150
+                      }}
+                    />
+                  </Box>
+                  <Box display="inline">
+                    <Typography style={{ marginLeft: 10 }}>
+                      {rowData.firstname} {rowData.lastname}
+                    </Typography>
+                    <Typography style={{ marginLeft: 10 }}>
+                      Pays de naissance : {rowData.country}
+                    </Typography>
+                    <Typography style={{ marginLeft: 10 }}>
+                      Adresse : {rowData.adress}
+                    </Typography>
+                    <Typography style={{ marginLeft: 10 }}>
+                      N° de téléphone : {rowData.tel}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "bold", marginTop: 25 }}
+                >
+                  Situation actuelle de {rowData.firstname} {rowData.lastname}
+                </Typography>
+                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
                 <Typography>
-                  Adresse : 12 rue des fleures 75001 Paris
+                  Intitulé de votre formation : {rowData.formation}
                 </Typography>
-                <Typography>N° de téléphone : 0603109750</Typography>
-
-                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
-
-                <Typography variant="h6">
-                  Situation actuelle de {state.data[0].firstname}{" "}
-                  {state.data[0].lastname}
+                <Typography>
+                  Nom de votre formation : {rowData.name_formation}
                 </Typography>
-                <Typography>Intitulé de votre formation : Etudiant</Typography>
-                <Typography>Nom de votre formation : BAC S</Typography>
-                <Typography>Nom de votre formation : Terminale</Typography>
-
-                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
-
-                <Typography variant="h6">
-                  Etablissement de {state.data[0].firstname}{" "}
-                  {state.data[0].lastname}
+                <Typography>
+                  Classe de votre formation : {rowData.class_formation}
                 </Typography>
-                <Typography>Nom de l'établissement : Gustave Eiffel</Typography>
-                <Typography>Pays de l'établissement : Paris</Typography>
-                <Typography>N° de rue : 34</Typography>
-                <Typography>Adresse : Rue du maine</Typography>
-                <Typography>Département : Seine-Saint-denis</Typography>
-                <Typography>Ville : Sevran</Typography>
-
-                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
-
-                <Typography variant="h6">
-                  Voeux de formation de {state.data[0].firstname}{" "}
-                  {state.data[0].lastname}
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "bold", marginTop: 25 }}
+                >
+                  Etablissement de {rowData.firstname} {rowData.lastname}
                 </Typography>
-                <Typography>Classe demandée : 1ère année</Typography>
-                <Typography>Spécialisation : Pas disponible</Typography>
-                <Typography>Cursus : Pas disponible</Typography>
-                <Typography>Choix campus n°1 : Paris 75</Typography>
-                <Typography>Choix campus n°2 : Saint-Denis 93</Typography>
-                <Typography>Choix campus n°3 : Lyon 69</Typography>
+                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                <Typography>
+                  Nom de l'établissement : {rowData.name_school}
+                </Typography>
+                <Typography>
+                  Pays de l'établissement : {rowData.country_school}
+                </Typography>
+                <Typography>
+                  N° de rue : {rowData.number_adress_school}
+                </Typography>
+                <Typography>Adresse : {rowData.adress_school}</Typography>
+                <Typography>
+                  Département : {rowData.department_school}
+                </Typography>
+                <Typography>Ville : {rowData.city_school}</Typography>
+                <Typography
+                  variant="h5"
+                  style={{ fontWeight: "bold", marginTop: 25 }}
+                >
+                  Voeux de formation de {rowData.firstname} {rowData.lastname}
+                </Typography>
+                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                <Typography>
+                  Classe demandée : {rowData.class_whises}
+                </Typography>
+                <Typography>Spécialisation : {rowData.spe_whises}</Typography>
+                <Typography>Cursus : {rowData.cursus_whisies}</Typography>
+                <Typography>Choix campus n°1 : {rowData.choice_1}</Typography>
+                <Typography>Choix campus n°2 : {rowData.choice_2}</Typography>
+                <Typography>Choix campus n°3 : {rowData.choice_3}</Typography>
               </div>
             );
           }}
           onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          actions={[
+            {
+              icon: "check",
+              tooltip: "Validé l'inscription",
+              onClick: (event, rowData) =>
+                alert(
+                  "Vous avez validé l'utilisateur " +
+                    rowData.firstname +
+                    " " +
+                    rowData.lastname
+                )
+            },
+            {
+              icon: "clear",
+              tooltip: "Désapprouver l'inscription",
+              onClick: (event, rowData) =>
+                alert(
+                  "Vous venez de désapprouver l'inscription de " +
+                    rowData.firstname +
+                    " " +
+                    rowData.lastname
+                )
+            },
+            {
+              icon: "dashboardicon",
+              tooltip: "Mettre à jour l'utilisateur",
+              onClick: (event, rowData) => {
+                handleClickOpen();
+                console.log(
+                  "Utilisateur sélectionné" +
+                    " " +
+                    rowData.firstname +
+                    " " +
+                    rowData.lastname
+                );
+              }
+            }
+          ]}
           localization={{
             body: {
               deleteTooltip: "Supprimer",
               editTooltip: "Edit",
               emptyDataSourceMessage: "Aucun utilisateurs trouvé",
               editRow: {
-                deleteText: "Êtes-vous sur de bien vouloirs faire ça ?",
+                deleteText: "Êtes-vous sur de bien vouloir faire ça ?",
                 cancelTooltip: "Annuler",
                 saveTooltip: "Confirmer"
               }
@@ -490,6 +527,7 @@ export default props => {
             }
           }}
           options={{
+            actionsColumnIndex: -1,
             exportButton: true,
             exportFileName: "export_user_dashboard",
             // exportCsv: (columns, data) => {
@@ -504,6 +542,42 @@ export default props => {
             }
           }}
         />
+        <Dialog
+          disableBackdropClick
+          disableEscapeKeyDown
+          open={state.open}
+          onClose={handleClose}
+        >
+          <DialogTitle>Mettre à jour le dossier de l'utilisateur</DialogTitle>
+          <DialogContent>
+            <form>
+              <FormControl style={{ height: "25vh", width: "100%" }}>
+                <InputLabel>Veuillez sélectionner une valeur</InputLabel>
+                <Select
+                  value={values.step_update}
+                  onChange={handleChange}
+                  inputProps={{
+                    name: "step_update"
+                  }}
+                >
+                  <MenuItem value={"step" + 0}>Dossier incomplet</MenuItem>
+                  <MenuItem value={"step" + 1}>En cours de traitement</MenuItem>
+                  <MenuItem value={"step" + 2}>Rendez-vous planifié</MenuItem>
+                  <MenuItem value={"step" + 3}>Dossier rejeté</MenuItem>
+                  <MenuItem value={"step" + 4}>Dossier validé</MenuItem>
+                </Select>
+              </FormControl>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Annuler
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Confirmer
+            </Button>
+          </DialogActions>
+        </Dialog>
       </main>
     </div>
   );
