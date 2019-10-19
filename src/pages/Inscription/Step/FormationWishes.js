@@ -43,8 +43,8 @@ export default props => {
           <Box
             style={{
               padding: 25,
-              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-              backgroundPosition: "right",
+              backgroundImage: `url(https://i.imgur.com/7x6wfMR.png)`,
+              backgroundPosition: "top",
               height: "100%",
               backgroundColor: "white"
             }}

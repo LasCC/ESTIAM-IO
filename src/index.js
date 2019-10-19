@@ -9,6 +9,7 @@ import AdminDashboardProvider from "./contexts/AdminDashboardContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UnProtectedRoute from "./components/UnProtectedRoute";
 import ReactDOM from "react-dom";
+import Loader from "./components/Loader";
 import GAListener from "./components/TrackerGA";
 import "./styles.css";
 
@@ -76,15 +77,7 @@ const AdminDashboardGlobalVision = lazy(() =>
 
 function App() {
   return (
-    <Suspense
-      fallback={
-        <div className="loader">
-          <div className="outer" />
-          <div className="middle" />
-          <div className="inner" />
-        </div>
-      }
-    >
+    <Suspense fallback={<Loader />}>
       <LoginProvider>
         <CandidatureProvider>
           <ToastContainer

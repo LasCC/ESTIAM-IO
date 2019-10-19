@@ -18,20 +18,15 @@ export default props => {
           fontWeight: "bold"
         }}
       >
-        Terminer {props.title}
+        Compléter {props.title}
       </Typography>
-      <Typography variant="subtitle2" style={{ color: "white" }}>
-        Généralement, on utilise un texte en faux latin (le texte ne veut rien
-        dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet donc de
-        faire office de texte d'attente.
+      <Typography variant="subtitle2" style={{ color: "white", marginTop: 15 }}>
+        Afin de pouvoir validé votre dossier d'inscription à l'ESTIAM, veillez à
+        bien vouloir remplir un formulaire ainsi que vos documents personnels.
       </Typography>
       <Link to={props.route} style={{ textDecoration: "none", color: "white" }}>
-        <Button
-          fullWidth
-          variant="outlined"
-          style={{ color: "white", marginTop: 10, borderColor: "white" }}
-        >
-          Remplir le formulaire
+        <Button variant="outlined" style={{ color: "white", marginTop: 10 }}>
+          Reprendre l'avancement
         </Button>
       </Link>
     </Paper>

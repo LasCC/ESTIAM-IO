@@ -46,16 +46,16 @@ export default props => {
   const [selectedDate, setSelectedDate] = React.useState(moment());
   const handleDateChange = date => {
     setSelectedDate(date);
-    console.log(date);
+    setValues({ ...values, date_naissance: date });
   };
   const handleChangeTextField = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
   const handleChange = event => {
-    setValues(oldValues => ({
-      ...oldValues,
+    setValues({
+      ...values,
       [event.target.name]: event.target.value
-    }));
+    });
   };
   console.log(values);
   return (
@@ -71,8 +71,8 @@ export default props => {
             }}
             style={{
               padding: 25,
-              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-              backgroundPosition: "right",
+              backgroundImage: `url(https://i.imgur.com/7x6wfMR.png)`,
+              backgroundPosition: "top",
               height: "90%",
               backgroundColor: "white"
             }}
@@ -129,17 +129,17 @@ export default props => {
                     format="dd/MM/yyyy"
                     margin="normal"
                     id="date-picker-inline"
-                    label="Date de naissance"
-                    value={
-                      selectedDate.value !== ""
-                        ? moment(
-                            moment().format("DD MMM YYYY") +
-                              " " +
-                              selectedDate.value
-                          ).toDate()
-                        : null
-                    }
-                    // value={selectedDate}
+                    label={!values.date_naissance ? "Date de naissance" : ""}
+                    // value={
+                    //   selectedDate.value !== ""
+                    //     ? moment(
+                    //         moment().format("DD MMM YYYY") +
+                    //           " " +
+                    //           selectedDate.value
+                    //       ).toDate()
+                    //     : null
+                    // }
+                    value={moment().format("DD MMM YYYY")}
                     onChange={handleDateChange}
                     KeyboardButtonProps={{
                       "aria-label": "date de naissance"
@@ -149,6 +149,7 @@ export default props => {
                 <TextField
                   style={{ marginRight: 15 }}
                   variant="outlined"
+                  required
                   onChange={handleChangeTextField("nationalite_naissance")}
                   label="Nationalité"
                   type="text"
@@ -224,6 +225,7 @@ export default props => {
                   </FormControl>
                   <TextField
                     style={{ marginRight: 15 }}
+                    required
                     variant="outlined"
                     onChange={handleChangeTextField("ville_naissance")}
                     label="Ville"
@@ -237,6 +239,7 @@ export default props => {
                     style={{ marginRight: 15 }}
                     variant="outlined"
                     label="Code postale"
+                    required
                     onChange={handleChangeTextField("code_postale_naissance")}
                     type="text"
                     margin="normal"

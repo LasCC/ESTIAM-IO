@@ -3,11 +3,13 @@ import { Paper, Typography, Divider, Button, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Routes from "../../Routes";
 import { Candidature } from "../../contexts/CandidatureContext";
+
 export default props => {
   const { dossier } = useContext(Candidature);
   console.log(dossier.step);
   const uncompletedStep = 4 - dossier.step.filter(step => step.done).length;
   console.log(uncompletedStep);
+
   return (
     <div style={{ height: "100%", marginTop: 15 }}>
       <Typography style={{ color: "gray", marginBottom: 10 }}>
@@ -50,7 +52,12 @@ export default props => {
 
         <Paper
           children
-          style={{ padding: 25, backgroundColor: "#0277bd", borderRadius: 10 }}
+          style={{
+            padding: 25,
+            backgroundColor: "#01579b",
+            borderRadius: 10,
+            boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)"
+          }}
         >
           <Typography
             variant="h5"
@@ -61,21 +68,22 @@ export default props => {
           >
             {uncompletedStep} dossier{uncompletedStep > 1 ? "s" : ""} manquant
           </Typography>
-          <Typography style={{ color: "white" }}>
-            Généralement, on utilise un texte en faux latin (le texte ne veut
-            rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-            donc de faire office de texte d'attente.
+          <Typography style={{ color: "white", marginTop: 10 }}>
+            Dans cette partie il va vous être demandé de compléter un ou
+            plusieurs formulaires, vous avez la possibilité de les remplir à
+            tout moment de la journée.
           </Typography>
-          <Button
-            variant="outlined"
-            fullWidth
-            style={{
-              color: "white",
-              marginTop: 15
-            }}
-          >
-            Remplir
-          </Button>
+          <Link to={Routes.DASHBOARD_TASKS} style={{ textDecoration: "none" }}>
+            <Button
+              variant="outlined"
+              style={{
+                color: "white",
+                marginTop: 15
+              }}
+            >
+              Voir les dossiers
+            </Button>
+          </Link>
         </Paper>
       </Paper>
     </div>

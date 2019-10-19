@@ -39,7 +39,7 @@ const LoginProvider = props => {
     clientError: false,
     serverError: false
   });
-  const endpoint = "https://rogo.serveo.net";
+  const endpoint = "https://funis.serveo.net";
   const handleLogin = async data => {
     console.log("login request ....", data);
 
@@ -54,10 +54,14 @@ const LoginProvider = props => {
       // if(ex.response)
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
-      return setHttpError({
-        serverError: expectedError,
-        clientError: !httpError.serverError
+      console.dir(expectedError);
+
+      setHttpError({
+        serverError: !expectedError,
+        clientError: expectedError
       });
+      setTimeout(() => console.log(httpError), 5000);
+      return;
     }
 
     const { token } = res.data;

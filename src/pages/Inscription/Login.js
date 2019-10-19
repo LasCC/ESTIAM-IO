@@ -15,7 +15,8 @@ import {
 import { Link } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { LoginContext } from "../../contexts/LoginContext";
 import NavBar from "./components/NavBar";
 
@@ -82,77 +83,64 @@ export default props => {
   };
   console.log(values);
   const emailerror =
-    loginState.loginError ||
     httpError.clientError ||
     (errors.hasOwnProperty("email") && values.submitted)
       ? "#f00"
       : "";
   const passworderror =
-    loginState.loginError ||
     httpError.clientError ||
     (errors.hasOwnProperty("password") && values.submitted)
       ? "#f00"
       : "";
   const LoginErrorComponent = (
     <Typography variant="subtitle2" color="error" className="shake-horizontal">
-      Identifiant ou mot de passe incorrect
+      Adresse email ou mot de passe incorrect
+    </Typography>
+  );
+  const ServerErrorComponent = (
+    <Typography variant="subtitle2" color="error" className="shake-horizontal">
+      Connexion au serveur echoué (erreur 500)
     </Typography>
   );
 
   return (
     <Container maxWidth="lg">
       <NavBar />
-      <Grid container spacing={0}>
-        <Grid item lg={3} md={3}>
-          <Box
-            display={{
-              xs: "none",
-              md: "block",
-              lg: "block"
-            }}
-            style={{
-              padding: 25,
-              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-              backgroundPosition: "right",
-              height: "70vh",
-              backgroundColor: "white"
-            }}
-          >
-            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
-              <Button style={{ color: "white" }}>
-                <ArrowBackIosIcon />
-                Accueil
-              </Button>
-            </Link>
-          </Box>
-        </Grid>
-        <Grid item xs lg={9} md={9}>
-          <Box
-            display="flex"
-            alignItems="center"
-            style={{ height: "70vh", marginTop: 25 }}
-          >
+      <Box css={{ height: "90vh" }}>
+        <Grid container spacing={0}>
+          <Grid item xs lg={6} md={6} sm={12}>
             <Box
               style={{
-                padding: 25,
                 backgroundColor: "white",
-                width: "100%",
-                height: "100%"
+                padding: 35
               }}
+              css={{ height: "100%" }}
             >
               <div className="fade-in-fwd">
                 <Typography
-                  variant="h4"
-                  style={{ color: "#004080", fontWeight: "bold" }}
+                  variant="h3"
+                  style={{ fontWeight: "bold", color: "#004080" }}
                 >
+                  <LockOpenIcon
+                    className="iconlogin"
+                    style={{ marginRight: 10 }}
+                  />
                   Connexion
                 </Typography>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                {!errors && loginState.loginError && LoginErrorComponent}
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  style={{ marginTop: 10 }}
+                >
+                  Merci de bien vouloir mettre vos informations pour pouvoir
+                  accéder à l'application
+                </Typography>
+                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
+                {httpError.clientError && LoginErrorComponent}
                 {values.submitted &&
                   (emailerror || passworderror) &&
                   LoginErrorComponent}
-                {httpError.clientError && LoginErrorComponent}
+                {httpError.serverError && ServerErrorComponent}
                 <Typography
                   variant="h5"
                   style={{
@@ -165,7 +153,7 @@ export default props => {
                 </Typography>
                 <TextField
                   variant="outlined"
-                  label="Identifiant ou email"
+                  label="Adresse email"
                   value={values.email}
                   onChange={handleChange("email")}
                   type="email"
@@ -213,57 +201,266 @@ export default props => {
                     )
                   }}
                 />
-                <div style={{ marginTop: 20 }}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={handleSubmit}
+                  style={{
+                    marginTop: 25,
+                    color: "white",
+                    backgroundColor: "rgb(0, 64, 128)"
+                  }}
+                >
+                  Se connecter
+                </Button>
+                <Divider style={{ marginTop: 25, marginBottom: 25 }} />
+                <Typography variant="subtitle2">
                   <Link
-                    to="/reinitialisation-mot-de-passe"
-                    style={{ textDecoration: "none" }}
+                    to={Routes.REGISTER}
+                    style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
                   >
-                    <Typography
-                      variant="subtitle2"
-                      style={{
-                        color: "#004080",
-                        fontStyle: "italic",
-                        fontWeight: "bold"
-                      }}
-                    >
-                      Mot de passe oublié?
-                    </Typography>
+                    Vous n'avez pas de compte ?
                   </Link>
-                  <Link
-                    to="/reinitialisation-identifiant"
-                    style={{ textDecoration: "none" }}
+                </Typography>
+                <Link
+                  to={Routes.PASSWORD_RESET}
+                  style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    style={{ fontStyle: "italic" }}
                   >
-                    <Typography
-                      variant="subtitle2"
-                      style={{
-                        color: "#004080",
-                        fontStyle: "italic",
-                        fontWeight: "bold"
-                      }}
-                    >
-                      Nom d'utilisateur oublié
-                    </Typography>
-                  </Link>
-                </div>
-                <>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    style={{
-                      marginTop: 20,
-                      backgroundColor: "#004080",
-                      color: "white"
-                    }}
-                    onClick={handleSubmit}
+                    Mot de passe oublié?
+                  </Typography>
+                </Link>
+                <Link
+                  to={Routes.USER_RESET}
+                  style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    style={{ fontStyle: "italic" }}
                   >
-                    Continuer
-                  </Button>
-                </>
+                    Nom d'utilisateur oublié ?
+                  </Typography>
+                </Link>
               </div>
             </Box>
-          </Box>
+          </Grid>
+          <Grid item xs lg={6} md={6} sm={12}>
+            <Box
+              display={{
+                xs: "none",
+                sm: "none",
+                lg: "block",
+                md: "block",
+                xl: "block"
+              }}
+              alignItems="flex-end"
+              style={{
+                backgroundImage: `url(https://i.imgur.com/8d2H5Ww.png)`,
+                backgroundPosition: "center",
+                padding: 35
+              }}
+              css={{ height: "100%", display: "flex" }}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                style={{ marginBottom: 15 }}
+              >
+                <ChatBubbleOutlineIcon
+                  style={{
+                    color: "white",
+                    height: 35,
+                    width: 35,
+                    marginRight: 10
+                  }}
+                />
+                <Typography variant="subtitle2" style={{ color: "white" }}>
+                  Le saviez-vous ?
+                </Typography>
+              </Box>
+              <Typography variant="subtitle2" style={{ color: "white" }}>
+                Éstiam prépare à des titres enregistrés par l'État au Répertoire
+                national des certifications professionnelles (RNCP). Éstiam
+                propose 3 Spécialisations technologiques et 1 MBA, des parcours
+                conçus autour des technologies en demande et en émergence en
+                entreprise.
+              </Typography>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </Container>
   );
 };
+
+{
+  // BACKUP
+  // <Container maxWidth="lg">
+  //   <NavBar />
+  //   <Grid container spacing={0}>
+  //     <Grid item lg={3} md={3}>
+  //       <Box
+  //         display={{
+  //           xs: "none",
+  //           md: "block",
+  //           lg: "block"
+  //         }}
+  //         style={{
+  //           padding: 25,
+  //           backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+  //           backgroundPosition: "right",
+  //           height: "70vh",
+  //           backgroundColor: "white"
+  //         }}
+  //       >
+  //         <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
+  //           <Button style={{ color: "white" }}>
+  //             <ArrowBackIosIcon />
+  //             Accueil
+  //           </Button>
+  //         </Link>
+  //       </Box>
+  //     </Grid>
+  //     <Grid item xs lg={9} md={9}>
+  //       <Box
+  //         display="flex"
+  //         alignItems="center"
+  //         style={{ height: "70vh", marginTop: 25 }}
+  //       >
+  //         <Box
+  //           style={{
+  //             padding: 25,
+  //             backgroundColor: "white",
+  //             width: "100%",
+  //             height: "100%"
+  //           }}
+  //         >
+  //           <div className="fade-in-fwd">
+  //             <Typography
+  //               variant="h4"
+  //               style={{ color: "#004080", fontWeight: "bold" }}
+  //             >
+  //               Connexion
+  //             </Typography>
+  //             <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+  //             {!errors && loginState.loginError && LoginErrorComponent}
+  //             {values.submitted &&
+  //               (emailerror || passworderror) &&
+  //               LoginErrorComponent}
+  //             {httpError.clientError && LoginErrorComponent}
+  //             <Typography
+  //               variant="h5"
+  //               style={{
+  //                 color: "#004080",
+  //                 fontWeight: "bold",
+  //                 marginTop: 10
+  //               }}
+  //             >
+  //               Identifiant
+  //             </Typography>
+  //             <TextField
+  //               variant="outlined"
+  //               label="Adresse email"
+  //               value={values.email}
+  //               onChange={handleChange("email")}
+  //               type="email"
+  //               fullWidth
+  //               error={emailerror}
+  //               style={{
+  //                 marginTop: 20
+  //               }}
+  //             />
+  //             <Typography
+  //               variant="h5"
+  //               style={{
+  //                 color: "#004080",
+  //                 fontWeight: "bold",
+  //                 marginTop: 20
+  //               }}
+  //             >
+  //               Mot de passe
+  //             </Typography>
+  //             <TextField
+  //               variant="outlined"
+  //               label="Mot de passe"
+  //               onChange={handleChange("password")}
+  //               value={values.password}
+  //               fullWidth
+  //               type={values.showPassword ? "text" : "password"}
+  //               error={passworderror}
+  //               style={{ marginTop: 20 }}
+  //               InputProps={{
+  //                 endAdornment: (
+  //                   <InputAdornment position="end">
+  //                     <IconButton
+  //                       edge="end"
+  //                       aria-label="toggle password visibility"
+  //                       onClick={handleClickShowPassword}
+  //                       onMouseDown={handleMouseDownPassword}
+  //                     >
+  //                       {values.showPassword ? (
+  //                         <VisibilityOff />
+  //                       ) : (
+  //                         <Visibility />
+  //                       )}
+  //                     </IconButton>
+  //                   </InputAdornment>
+  //                 )
+  //               }}
+  //             />
+  //             <div style={{ marginTop: 20 }}>
+  //               <Link
+  //                 to="/reinitialisation-mot-de-passe"
+  //                 style={{ textDecoration: "none" }}
+  //               >
+  //                 <Typography
+  //                   variant="subtitle2"
+  //                   style={{
+  //                     color: "#004080",
+  //                     fontStyle: "italic",
+  //                     fontWeight: "bold"
+  //                   }}
+  //                 >
+  //                   Mot de passe oublié?
+  //                 </Typography>
+  //               </Link>
+  //               <Link
+  //                 to="/reinitialisation-identifiant"
+  //                 style={{ textDecoration: "none" }}
+  //               >
+  //                 <Typography
+  //                   variant="subtitle2"
+  //                   style={{
+  //                     color: "#004080",
+  //                     fontStyle: "italic",
+  //                     fontWeight: "bold"
+  //                   }}
+  //                 >
+  //                   Nom d'utilisateur oublié ?
+  //                 </Typography>
+  //               </Link>
+  //             </div>
+  //             <>
+  //               <Button
+  //                 variant="contained"
+  //                 fullWidth
+  //                 style={{
+  //                   marginTop: 20,
+  //                   backgroundColor: "#004080",
+  //                   color: "white"
+  //                 }}
+  //                 onClick={handleSubmit}
+  //               >
+  //                 Continuer
+  //               </Button>
+  //             </>
+  //           </div>
+  //         </Box>
+  //       </Box>
+  //     </Grid>
+  //   </Grid>
+  // </Container>
+}

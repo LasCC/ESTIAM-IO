@@ -4,18 +4,13 @@ import NavBar from "./NavBar";
 import CardUpper from "./CardUpper";
 import CardBellow from "./CardBellow";
 import { Container } from "@material-ui/core";
+import Loader from "../../components/Loader";
+
 document.body.style.backgroundColor = "white";
 export default props => {
   const { fetchDossier, dataloaded } = useContext(Candidature);
   useEffect(() => fetchDossier(), []);
-  if (!dataloaded)
-    return (
-      <div className="loader">
-        <div className="outer" />
-        <div className="middle" />
-        <div className="inner" />
-      </div>
-    );
+  if (!dataloaded) return <Loader />;
   return (
     <>
       <NavBar />

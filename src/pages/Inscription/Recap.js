@@ -24,6 +24,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import InfoIcon from "@material-ui/icons/Info";
 import ApartmentIcon from "@material-ui/icons/Apartment";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import Routes from "../../Routes";
 
 export default props => {
   const [open, setOpen] = React.useState(false);
@@ -48,10 +49,10 @@ export default props => {
             }}
             style={{
               padding: 25,
-              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-              backgroundPosition: "right",
+              backgroundImage: `url(https://i.imgur.com/7x6wfMR.png)`,
+              backgroundPosition: "center",
               backgroundSize: "cover",
-              height: "90%",
+              height: "95%",
               backgroundColor: "white"
             }}
           >
@@ -67,14 +68,13 @@ export default props => {
           <Box
             display="flex"
             alignItems="center"
-            css={{ height: "90%", marginTop: 25 }}
+            css={{ height: "95%", marginTop: 25 }}
           >
             <Box
               style={{
                 padding: 25,
                 backgroundColor: "white",
-                height: "100%",
-                width: "100%"
+                height: "100%"
               }}
             >
               <div className="fade-in-fwd">
@@ -295,18 +295,35 @@ export default props => {
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                 </Paper>
-                <Box display="flex" justifyContent="flex-end">
-                  <Button
-                    onClick={handleClickOpen}
-                    variant="contained"
-                    style={{
-                      color: "white",
-                      backgroundColor: "#004080",
-                      marginTop: 15
-                    }}
-                  >
-                    Confirmer votre inscription
-                  </Button>
+                <Box display="flex">
+                  <Box flexGrow={1}>
+                    <Link
+                      to={Routes.UPLOAD_FILE}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Button
+                        variant="outlined"
+                        type="submit"
+                        component="label"
+                        style={{ color: "#004080", marginTop: 15 }}
+                      >
+                        Retour
+                      </Button>
+                    </Link>
+                  </Box>
+                  <Box>
+                    <Button
+                      onClick={handleClickOpen}
+                      variant="contained"
+                      style={{
+                        color: "white",
+                        backgroundColor: "#004080",
+                        marginTop: 15
+                      }}
+                    >
+                      Confirmer votre inscription
+                    </Button>
+                  </Box>
                   <Dialog
                     open={open}
                     onClose={handleClose}

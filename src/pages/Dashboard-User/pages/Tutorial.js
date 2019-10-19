@@ -1,21 +1,20 @@
 import React from "react";
 import Routes from "../../../Routes";
 import NavBar from "../NavBar";
-import { Link as Links } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Link from "@material-ui/core/Link";
 import {
   Box,
-  Paper,
   Typography,
   Container,
   Button,
-  Divider
+  Divider,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary
 } from "@material-ui/core";
+import { Link as Links } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,34 +43,40 @@ export default props => {
     <>
       <NavBar />
       <Container maxWidth="lg">
-        <Paper
-          style={{
-            padding: 15,
-            boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)",
-            borderRadius: 10
-          }}
-        >
-          <Box display="flex" alignItems="center" justifyContent="center">
-            <Box flexGrow={1}>
-              <Typography variant="h5" style={{ fontWeight: "bold" }}>
-                Tutoriels
-              </Typography>
-            </Box>
-            <Box p={1}>
-              <Links
-                to={Routes.DASHBOARD}
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                <Button
-                  variant="contained"
-                  style={{ backgroundColor: "#1875F0", color: "white" }}
-                >
-                  Retour
-                </Button>
-              </Links>
-            </Box>
+        <Box display="flex">
+          <Box flexGrow={1}>
+            <Typography
+              variant="h4"
+              style={{ marginBottom: 15, fontWeight: "bold" }}
+            >
+              Questions fréquentes
+            </Typography>
           </Box>
-          <Divider style={{ marginTop: 10, marginBottom: 15 }} />
+          <Box>
+            <Links
+              to={Routes.DASHBOARD}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "#1875F0", color: "white" }}
+              >
+                Retour
+              </Button>
+            </Links>
+          </Box>
+        </Box>
+
+        <Divider style={{ marginBottom: 15 }} />
+
+        <Typography variant="body1" style={{ marginBottom: 15 }}>
+          Toutes les réponses à vos questions. <br />
+          Nous nous efforçons de vous apporter l'ensemble des réponses à vos
+          questions les plus courantes, si vous ne trouvez pas de réponses
+          n'hésitez pas à nous contacter.
+        </Typography>
+
+        <Box>
           <div className={classes.root}>
             <ExpansionPanel
               expanded={expanded === "panel1"}
@@ -104,7 +109,7 @@ export default props => {
                       Ensuite, un entretien d’orientation professionnelle sera
                       programmé.
                     </li>
-                    <li> Signature du contrat d’inscription.</li>
+                    <li>Signature du contrat d’inscription.</li>
                   </ul>
                 </Typography>
               </ExpansionPanelDetails>
@@ -205,7 +210,7 @@ export default props => {
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </div>
-        </Paper>
+        </Box>
       </Container>
     </>
   );

@@ -22,7 +22,7 @@ export default props => {
           <Box display="flex" alignItems="center">
             <Box flexGrow={1}>
               <Typography variant="h5" style={{ fontWeight: "bold" }}>
-                Aide
+                Questions fréquentes
               </Typography>
             </Box>
             <Box p={1}>
@@ -46,16 +46,16 @@ export default props => {
         </Box>
         <Typography component="div" style={{ fontWeight: "bold" }}>
           <Box textAlign="center" style={{ fontSize: 25 }}>
-            Une question ?
+            Besoin d'aide ?
           </Box>
           <Box
             textAlign="center"
             color="text.disabled"
             style={{ fontSize: 15, fontWeight: "normal" }}
           >
-            Généralement, on utilise un texte en faux latin (le texte ne veut
-            rien dire, il a été modifié), le Lorem ipsum ou Lipsum, qui permet
-            donc de faire office de texte d'attente.
+            Nous nous efforçons de vous apporter l'ensemble des réponses à vos
+            questions les plus courantes, si vous ne trouvez pas de réponses
+            n'hésitez pas à nous contacter.
           </Box>
         </Typography>
       </Paper>

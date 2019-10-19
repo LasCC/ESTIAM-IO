@@ -349,7 +349,13 @@ export default props => {
                     "#03a9f4",
                     "#039be5",
                     "#80d8ff",
-                    "#0091ea"
+                    "#0091ea",
+                    "#4fc3f7",
+                    "#29b6f6",
+                    "#03a9f4",
+                    "#039be5",
+                    "#0288d1",
+                    "#0277bd"
                   ]}
                   token="AIzaSyBWtOzwt9jSgf8JPGxsi1CWt9BR4w_6IrQ"
                 />

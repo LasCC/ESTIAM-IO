@@ -56,28 +56,29 @@ export default props => {
   const { firstName, lastName } = jwtdecode(localStorage.getItem("token"));
   console.log("dashboard", loginState);
 
-  const time = moment()
-    .startOf("hour")
-    .fromNow();
-  const handleMenuItemClick = (event, index) => {
-    setAnchorEl(null);
-    console.log("Notification selectionné > " + index);
-  };
-  const notifs = [
-    "Mettre à jour vos documents",
-    "Terminier de remplir voeux de formation",
-    "Vous avez reçu une mise à jour",
-    "J'ai plus d'idée frerot abuse pas",
-    "Test d'une update avec momentJS"
-  ];
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const time = moment()
+  //   .startOf("hour")
+  //   .fromNow();
+  // const handleMenuItemClick = (event, index) => {
+  //   setAnchorEl(null);
+  //   console.log("Notification selectionné > " + index);
+  // };
+  // V2 DE L'APP
+  // const notifs = [
+  //   "Mettre à jour vos documents",
+  //   "Terminier de remplir voeux de formation",
+  //   "Vous avez reçu une mise à jour",
+  //   "J'ai plus d'idée frerot abuse pas",
+  //   "Test d'une update avec momentJS"
+  // ];
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const handleClick = event => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
   return (
     <div style={{ width: "100%" }}>
       <Box display="flex" p={2} alignItems="center">
@@ -90,6 +91,8 @@ export default props => {
             />
           </Link>
         </Box>
+        {/* 
+        V2 DE L'APP
         <Box p={1}>
           <Tooltip title="Notifications">
             <IconButton aria-label="add an alarm" onClick={handleClick}>
@@ -132,7 +135,7 @@ export default props => {
               </ListItem>
             ))}
           </Menu>
-        </Box>
+        </Box> */}
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
           <StyledBadge2
             overlap="circle"

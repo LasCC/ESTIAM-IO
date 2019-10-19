@@ -5,6 +5,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 
 import { Candidature } from "../../contexts/CandidatureContext";
+
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
@@ -12,15 +13,14 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginRight: theme.spacing(1)
   },
+  completed: {
+    display: "inline-block"
+  },
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
-  },
-  circle: {
-    color: "red"
   }
 }));
-
 function getSteps() {
   return [
     "Dossier incomplet",
@@ -30,43 +30,25 @@ function getSteps() {
     "Dossier validé"
   ];
 }
-
-// function getStepContent(step) {
-//   switch (step) {
-//     case 0:
-//       return "En cours de traitement";
-//     case 1:
-//       return "Dossier incomplet";
-//     case 2:
-//       return "Rendez-vous planifié";
-//     case 3:
-//       return "Dossier rejeté";
-//     case 4:
-//       return "Dossier validé";
-//     default:
-//       return "Unknown step";
-//   }
-// }
-
-export default function HorizontalLinearStepper() {
+export default props => {
   const classes = useStyles();
+  const [completed] = React.useState({});
   const { dossier } = useContext(Candidature);
-  const [activeStep, setActiveStep] = useState(2);
+  console.log(dossier);
   const steps = getSteps();
-
   return (
     <div className={classes.root}>
-      <Stepper activeStep={dossier.administrationStep} alternativeLabel>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
+      <Stepper
+        nonLinear
+        activeStep={dossier.administrationStep}
+        alternativeLabel
+      >
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepLabel completed={completed[index]}>{label}</StepLabel>
+          </Step>
+        ))}
       </Stepper>
     </div>
   );
-}
+};

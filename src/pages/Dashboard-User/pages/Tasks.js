@@ -13,18 +13,13 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { Candidature } from "../../../contexts/CandidatureContext";
+import Loader from "../../../components/Loader";
+
 document.body.style.backgroundColor = "white";
 export default props => {
   const { dossier, dataloaded, fetchDossier } = useContext(Candidature);
   useEffect(() => fetchDossier(), []);
-  if (!dataloaded)
-    return (
-      <div className="loader">
-        <div className="outer" />
-        <div className="middle" />
-        <div className="inner" />
-      </div>
-    );
+  if (!dataloaded) return <Loader />;
   const { step } = dossier;
   console.log(step);
   const filteredSteps = step

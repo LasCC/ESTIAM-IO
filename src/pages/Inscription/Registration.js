@@ -13,7 +13,8 @@ import {
   Divider,
   Container
 } from "@material-ui/core";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -23,11 +24,8 @@ export default props => {
   const [errors, setErrors] = useState({ err: "" });
   const handleChange = name => event => {
     if (name === "lastname" || name === "firstname") {
-      const pattern = new RegExp(/^[a-zA-Z ]+$/);
-      const emptypattern = new RegExp(/^$/);
-      const isWellFormated =
-        pattern.test(event.target.value) ||
-        emptypattern.test(event.target.value);
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellFormated = pattern.test(event.target.value);
       if (!isWellFormated) return;
     }
     setErrors(validate() || {});
@@ -115,7 +113,12 @@ export default props => {
       ? "#f00"
       : "";
   const RegistrationErrorComponent = (
-    <Typography variant="subtitle2" color="error" className="shake-horizontal">
+    <Typography
+      variant="subtitle2"
+      color="error"
+      className="shake-horizontal"
+      style={{ marginTop: 5 }}
+    >
       Certains champs n'ont pas été renseigné
     </Typography>
   );
@@ -128,56 +131,77 @@ export default props => {
   return (
     <Container maxWidth="lg">
       <NavBar />
-      <Grid container spacing={0}>
-        <Grid item xs sm="auto" lg={3} md={3}>
-          <Box
-            display={{
-              xs: "none",
-              md: "block",
-              lg: "block"
-            }}
-            style={{
-              padding: 25,
-              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-              backgroundPosition: "right",
-              height: "90%",
-              backgroundColor: "white"
-            }}
-          >
-            <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
-              <Button style={{ color: "white" }}>
-                <ArrowBackIosIcon />
-                Accueil
-              </Button>
-            </Link>
-          </Box>
-        </Grid>
-        <Grid item lg={9} md={9}>
-          <Box
-            display="flex"
-            alignItems="center"
-            css={{ height: "90%", marginTop: 25 }}
-          >
+      <Box css={{ height: "90vh" }}>
+        <Grid container spacing={0}>
+          <Grid lg={6} md={6} sm={12}>
+            <Box
+              display={{
+                xs: "none",
+                sm: "none",
+                lg: "block",
+                md: "block",
+                xl: "block"
+              }}
+              alignItems="flex-end"
+              style={{
+                backgroundImage: `url(https://i.imgur.com/8d2H5Ww.png)`,
+                backgroundPosition: "center",
+                padding: 35
+              }}
+              css={{ height: "100%", display: "flex" }}
+            >
+              <Box
+                display="flex"
+                alignItems="center"
+                style={{ marginBottom: 15 }}
+              >
+                <ChatBubbleOutlineIcon
+                  style={{
+                    color: "white",
+                    height: 35,
+                    width: 35,
+                    marginRight: 10
+                  }}
+                />
+                <Typography variant="subtitle2" style={{ color: "white" }}>
+                  Le saviez-vous ?
+                </Typography>
+              </Box>
+              <Typography variant="subtitle2" style={{ color: "white" }}>
+                Éstiam, ça veut dire : <br />
+                École supérieure des technologies de l’information appliquées
+                aux métiers
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid lg={6} md={6} sm={12}>
             <Box
               style={{
-                padding: 25,
                 backgroundColor: "white",
-                height: "100%",
-                width: "100%"
+                padding: 35
               }}
+              css={{ height: "100%" }}
             >
               <div className="fade-in-fwd">
                 <Typography
-                  variant="h4"
-                  style={{
-                    color: "#004080",
-                    fontWeight: "bold",
-                    marginBottom: 15
-                  }}
+                  variant="h3"
+                  style={{ fontWeight: "bold", color: "rgb(0, 64, 128)" }}
                 >
+                  <PersonAddIcon
+                    className="iconregister"
+                    style={{ marginRight: 10 }}
+                  />
                   Inscription
                 </Typography>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  style={{ marginTop: 10 }}
+                >
+                  <strong>Attention</strong> : Veuillez entrer une adresse email
+                  valide qui vous servira à valider votre compte
+                </Typography>
+                <Divider style={{ marginTop: 15, marginBottom: 15 }} />
                 {!errors && loginState.loginError && RegistrationErrorComponent}
                 {values.submitted &&
                   (lastNameError ||
@@ -224,7 +248,6 @@ export default props => {
                   style={{ marginTop: 20 }}
                 />
                 <TextField
-                  id="outlined-adornment-password"
                   variant="outlined"
                   fullWidth
                   required
@@ -253,27 +276,189 @@ export default props => {
                     )
                   }}
                 />
-
                 <Button
-                  variant="contained"
                   fullWidth
                   onClick={handleSubmit}
-                  type="submit"
+                  variant="contained"
                   style={{
-                    display: "block",
-                    direction: "flex-end",
                     marginTop: 25,
-                    backgroundColor: "#004080",
-                    color: "white"
+                    color: "white",
+                    backgroundColor: "rgb(0, 64, 128)"
                   }}
                 >
-                  Confirmer l'inscription
+                  Créer mon compte
                 </Button>
+                <Divider style={{ marginTop: 25, marginBottom: 25 }} />
+                <Typography variant="subtitle2">
+                  <Link
+                    to="/dashboard"
+                    style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
+                  >
+                    Vous avez déjà un compte ?
+                  </Link>
+                </Typography>
               </div>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Box>
     </Container>
   );
 };
+
+{
+  /* BACKUP   
+   // <Container maxWidth="lg">
+    //   <NavBar />
+    //   <Grid container spacing={0}>
+    //     <Grid sm="auto" lg={3} md={3}>
+    //       <Box
+    //         display={{
+    //           xs: "none",
+    //           md: "block",
+    //           lg: "block"
+    //         }}
+    //         style={{
+    //           padding: 25,
+    //           backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
+    //           backgroundPosition: "right",
+    //           height: "90%",
+    //           backgroundColor: "white"
+    //         }}
+    //       >
+    //         <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
+    //           <Button style={{ color: "white" }}>
+    //             <ArrowBackIosIcon />
+    //             Accueil
+    //           </Button>
+    //         </Link>
+    //       </Box>
+    //     </Grid>
+    //     <Grid item lg={9} md={9}>
+    //       <Box
+    //         display="flex"
+    //         alignItems="center"
+    //         css={{ height: "90%", marginTop: 25 }}
+    //       >
+    //         <Box
+    //           style={{
+    //             padding: 25,
+    //             backgroundColor: "white",
+    //             height: "100%",
+    //             width: "100%"
+    //           }}
+    //         >
+    //           <div className="fade-in-fwd">
+    //             <Typography
+    //               variant="h4"
+    //               style={{
+    //                 color: "#004080",
+    //                 fontWeight: "bold",
+    //                 marginBottom: 15
+    //               }}
+    //             >
+    //               Inscription
+    //             </Typography>
+    //             <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+    //             <FormHelperText>
+    //               <strong>Attention</strong> : Veuillez entrer une adresse email
+    //               valide qui vous servira à valider votre compte
+    //             </FormHelperText>
+    //             {!errors && loginState.loginError && RegistrationErrorComponent}
+    //             {values.submitted &&
+    //               (lastNameError ||
+    //                 firstNameError ||
+    //                 emailError ||
+    //                 passwordError) &&
+    //               RegistrationErrorComponent}
+    //             {values.submitted &&
+    //               errors.hasOwnProperty("password") &&
+    //               PasswordErrormsg}
+    //             <TextField
+    //               variant="outlined"
+    //               label="Nom"
+    //               value={values.lastname}
+    //               onChange={handleChange("lastname")}
+    //               required
+    //               error={lastNameError}
+    //               fullWidth
+    //               type="text"
+    //               margin="normal"
+    //               style={{ marginTop: 20 }}
+    //             />
+    //             <TextField
+    //               variant="outlined"
+    //               label="Prénom"
+    //               value={values.firstname}
+    //               onChange={handleChange("firstname")}
+    //               required
+    //               error={firstNameError}
+    //               type="text"
+    //               margin="normal"
+    //               fullWidth
+    //               style={{ marginTop: 20 }}
+    //             />
+    //             <TextField
+    //               variant="outlined"
+    //               value={values.email}
+    //               label="Email"
+    //               onChange={handleChange("email")}
+    //               required
+    //               error={emailError}
+    //               fullWidth
+    //               type="email"
+    //               style={{ marginTop: 20 }}
+    //             />
+    //             <TextField
+    //               id="outlined-adornment-password"
+    //               variant="outlined"
+    //               fullWidth
+    //               required
+    //               error={passwordError}
+    //               type={values.showPassword ? "text" : "password"}
+    //               label="Mot de passe"
+    //               style={{ marginTop: 20 }}
+    //               value={values.password}
+    //               onChange={handleChange("password")}
+    //               InputProps={{
+    //                 endAdornment: (
+    //                   <InputAdornment position="end">
+    //                     <IconButton
+    //                       edge="end"
+    //                       aria-label="toggle password visibility"
+    //                       onClick={handleClickShowPassword}
+    //                       onMouseDown={handleMouseDownPassword}
+    //                     >
+    //                       {values.showPassword ? (
+    //                         <VisibilityOff />
+    //                       ) : (
+    //                         <Visibility />
+    //                       )}
+    //                     </IconButton>
+    //                   </InputAdornment>
+    //                 )
+    //               }}
+    //             />
+
+    //             <Button
+    //               variant="contained"
+    //               fullWidth
+    //               onClick={handleSubmit}
+    //               type="submit"
+    //               style={{
+    //                 display: "block",
+    //                 direction: "flex-end",
+    //                 marginTop: 25,
+    //                 backgroundColor: "#004080",
+    //                 color: "white"
+    //               }}
+    //             >
+    //               Confirmer l'inscription
+    //             </Button>
+    //           </div>
+    //         </Box>
+    //       </Box>
+    //     </Grid>
+    //   </Grid>
+    // </Container> */
+}

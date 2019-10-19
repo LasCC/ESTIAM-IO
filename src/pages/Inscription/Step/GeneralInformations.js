@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Joi from "joi-browser";
 import {
   Grid,
   Box,
@@ -31,6 +32,18 @@ export default props => {
     code_postale: "",
     numero_tel: ""
   });
+
+  const schema = {
+    pays: Joi.string().required(),
+    numero_rue: Joi.string().required(),
+    adresse: Joi.string().required(),
+    departement: Joi.string().required(),
+    ville: Joi.string().required(),
+    code_postale: Joi.string().required(),
+    nummero_tel: Joi.string().required()
+  };
+  const validate = () => {};
+
   const pays = require("../../../data/pays.json");
   const departement =
     values.pays === "France"
@@ -38,11 +51,26 @@ export default props => {
       : ["99-Autre"];
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
+  useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   const handleChangeTextField = name => event => {
+    if (name === "code_postale") {
+      const pattern = new RegExp(/^$|^[0-9]{1,7}$/);
+      const isWellformated = pattern.test(event.target.value);
+      if (!isWellformated) return;
+    } else if (name === "ville") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      if (!isWellformated) return;
+    } else if (name === "numero_tel") {
+      console.log("here");
+      const pattern = new RegExp(/^$|^[0-9]{1,14}$/);
+      const isWellformated = pattern.test(event.target.value);
+      console.log(!isWellformated);
+      if (!isWellformated) return;
+    }
     setValues({ ...values, [name]: event.target.value });
   };
   const handleChange = event => {
@@ -66,8 +94,8 @@ export default props => {
             }}
             style={{
               padding: 25,
-              backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-              backgroundPosition: "right",
+              backgroundImage: `url(https://i.imgur.com/7x6wfMR.png)`,
+              backgroundPosition: "top",
               height: "90%",
               backgroundColor: "white"
             }}
@@ -172,6 +200,8 @@ export default props => {
                   <TextField
                     style={{ minWidth: 200, marginRight: 15 }}
                     variant="outlined"
+                    required
+                    value={values.numero_rue}
                     onChange={handleChangeTextField("numero_rue")}
                     label="Numéro de rue"
                     margin="normal"
@@ -188,7 +218,9 @@ export default props => {
                     style={{ width: "auto", marginRight: 15 }}
                     variant="outlined"
                     onChange={handleChangeTextField("adresse")}
+                    value={values.adresse}
                     label="Adresse"
+                    required
                     type="text"
                     margin="normal"
                     inputProps={{ "aria-label": "Adresse de résidence" }}
@@ -206,6 +238,7 @@ export default props => {
                       value={values.departement}
                       onChange={handleChange}
                       labelWidth={labelWidth}
+                      required
                       inputProps={{
                         name: "departement",
                         "aria-label": "Département de résidence"
@@ -222,8 +255,10 @@ export default props => {
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
+                    required
                     onChange={handleChangeTextField("ville")}
                     label="Ville"
+                    value={values.ville}
                     type="text"
                     margin="normal"
                     inputProps={{
@@ -234,6 +269,8 @@ export default props => {
                     style={{ marginRight: 15 }}
                     variant="outlined"
                     label="Code postale"
+                    required
+                    value={values.code_postale}
                     onChange={handleChangeTextField("code_postale")}
                     type="text"
                     margin="normal"
@@ -244,7 +281,9 @@ export default props => {
                   <TextField
                     style={{ width: "auto", marginRight: 15 }}
                     variant="outlined"
+                    value={values.numero_tel}
                     label="Numéro de téléphone"
+                    required
                     onChange={handleChangeTextField("numero_tel")}
                     type="tel"
                     margin="normal"

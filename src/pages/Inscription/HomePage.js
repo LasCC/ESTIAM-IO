@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, Grid, Typography, Button, Container } from "@material-ui/core";
 import NavBar from "./components/NavBar";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 
 export default props => {
   return (
@@ -19,25 +21,34 @@ export default props => {
             css={{ height: "60vh" }}
           >
             <Typography
-              variant="h4"
+              className="fade-in-fwd"
+              variant="h3"
               style={{ color: "#004080", fontWeight: "bold" }}
             >
+              <PersonAddIcon
+                className="iconregister"
+                style={{ marginRight: 10 }}
+              />
               Inscription
             </Typography>
             <Typography
+              className="fade-in-fwd"
               variant="h5"
               style={{ color: "#004080", fontWeight: "bold" }}
             >
               Vous n'avez pas encore de compte ?
             </Typography>
-            <Typography style={{ color: "#004080", marginTop: 15 }}>
-              Avant de commencer l'inscription merci de vous prémunir de votre
-              CV, lettre de motivation, et de vos trois derniers bulletins de
-              note. At consectetur lorem donec massa sapien faucibus. Sagittis
-              nisl rhoncus mattis rhoncus urna neque.
+            <Typography
+              style={{ color: "#004080", marginTop: 15 }}
+              className="fade-in-fwd"
+            >
+              Vous souhaitez déposer votre candidature ? <br />
+              Complétez le formulaire d’inscription (lien ci-dessous), ajoutez
+              les pièces demandées et le tour est joué !
             </Typography>
             <Link to="/inscription" style={{ textDecoration: "none" }}>
               <Button
+                className="fade-in-fwd"
                 variant="outlined"
                 style={{
                   color: "#004080",
@@ -55,7 +66,8 @@ export default props => {
         <Grid item sm="auto" lg={6} md={6}>
           <Box
             style={{
-              backgroundColor: "#004080",
+              backgroundImage: `url(https://i.imgur.com/8d2H5Ww.png)`,
+              backgroundPosition: "center",
               display: "grid",
               padding: 25,
               alignItems: "center"
@@ -63,18 +75,24 @@ export default props => {
             css={{ height: "60vh" }}
           >
             <Typography
-              variant="h4"
+              className="fade-in-fwd"
+              variant="h3"
               style={{ color: "white", fontWeight: "bold" }}
             >
+              <LockOpenIcon className="iconlogin" style={{ marginRight: 10 }} />
               Connexion
             </Typography>
             <Typography
+              className="fade-in-fwd"
               variant="h5"
               style={{ color: "white", fontWeight: "bold" }}
             >
               Vous avez déjà un compte ?
             </Typography>
-            <Typography style={{ color: "white", marginTop: 15 }}>
+            <Typography
+              style={{ color: "white", marginTop: 15 }}
+              className="fade-in-fwd"
+            >
               Consequat ac felis donec et odio pellentesque. Sed viverra tellus
               in hac mattis vulputate enim nulla aliquet porttitor lacus luctus.
               At consectetur lorem donec massa sapien faucibus, Sagittis nisl
@@ -82,6 +100,7 @@ export default props => {
             </Typography>
             <Link to="/connexion" style={{ textDecoration: "none" }}>
               <Button
+                className="fade-in-fwd"
                 variant="outlined"
                 style={{
                   color: "white",
