@@ -35,6 +35,7 @@ export default function TemporaryDrawer() {
   const { firstName, lastName, email } = jwtdecode(
     localStorage.getItem("token")
   );
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=1875F0&color=fff`;
   console.log(firstName, lastName);
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -61,7 +62,7 @@ export default function TemporaryDrawer() {
       <List component="nav">
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="avatarLogo" src="https://picsum.photos/200/300" />
+            <Avatar alt="avatarLogo" src={avatarUrl} />
           </ListItemAvatar>
           <ListItemText
             style={{ textOverflow: "ellipsis", overflow: "hidden" }}

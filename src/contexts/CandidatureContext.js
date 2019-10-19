@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext } from "react";
 import { LoginContext } from "./LoginContext";
 import http from "../services/httpService";
 import jwtdecode from "jwt-decode";
+import { withRouter } from "react-router-dom";
 export const Candidature = createContext();
 
 const CandidatureProvider = props => {
@@ -17,25 +18,42 @@ const CandidatureProvider = props => {
     console.log("fetching the candidature", tokendata.dossierID);
     console.log(tokendata);
     http
-      .get(endpoint + `/api/candidature/${tokendata.candidatureID}`)
+      .get(endpoint + `/api/candidature/${tokendata.candidatureID}`, dossier, {
+        headers: { "x-auth-token": localStorage.getItem("token") }
+      })
       .then(res => {
         console.log(res);
         setDossier(res.data.data);
         setDataLoaded(true);
+        localStorage.setItem("dossier", JSON.stringify(res.data.data));
       })
       .catch(ex => console.log(ex));
-    // setting it in the state
   }
-  const updateDossier = async () => {
-    console.log("update the candidature with actual dossier");
-  };
+  function updateDossier(dossier, path) {
+    console.log("update the candidature with the current dossier");
+    setDataLoaded(false);
+    http
+      .put(endpoint + `/api/candidature/${tokendata.candidatureID}`, dossier, {
+        headers: { "x-auth-token": localStorage.getItem("token") }
+      })
+      .then(res => {
+        console.log(res);
+        setDossier(res.data.data);
+        setDataLoaded(true);
+        localStorage.setItem("dossier", JSON.stringify(res.data.data));
+        if (path) props.history.push(path);
+      })
+      .catch(ex => console.log(ex));
+  }
   return (
-    <Candidature.Provider value={{ dossier, fetchDossier, dataloaded }}>
+    <Candidature.Provider
+      value={{ dossier, fetchDossier, dataloaded, updateDossier }}
+    >
       {props.children}
     </Candidature.Provider>
   );
 };
-export default CandidatureProvider;
+export default withRouter(CandidatureProvider);
 /*Procedure  
   1 -> recuperation du dossier grace au token -> http.post(backURL,{x-auth-token : LoginContext.token || localstorage.getItem(token) })
   [BACK : dechiffrement token , findOnebyID({dossier : tokendata.dossier})]

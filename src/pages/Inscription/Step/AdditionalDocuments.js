@@ -91,7 +91,8 @@ export default props => {
     http
       .post(endpoint + `/api/candidature/sendfile`, formData, {
         headers: {
-          "Content-type": "multipart/formdata"
+          "Content-type": "multipart/formdata",
+          "x-auth-token": localStorage.getItem("token")
         }
       })
       .then(res => {
@@ -116,7 +117,7 @@ export default props => {
               backgroundImage: `url(https://i.imgur.com/7x6wfMR.png)`,
               backgroundPosition: "top",
               backgroundSize: "cover",
-              height: "100%",
+              height: "90%",
               backgroundColor: "white"
             }}
           >
@@ -132,7 +133,7 @@ export default props => {
           <Box
             display="flex"
             alignItems="center"
-            css={{ height: "100%", marginTop: 25 }}
+            css={{ height: "90%", marginTop: 25 }}
           >
             <Box
               style={{
@@ -325,19 +326,19 @@ export default props => {
                 </Button>
                 <Box display="flex" style={{ marginTop: 15 }}>
                   <Box flexGrow={1}>
-                    {/* <Link
+                    <Link
                       to={Routes.WISHES_END}
                       style={{ textDecoration: "none" }}
-                    > */}
-                    <Button
-                      variant="outlined"
-                      type="submit"
-                      component="label"
-                      style={{ color: "#004080" }}
                     >
-                      Retour
-                    </Button>
-                    {/* </Link> */}
+                      <Button
+                        variant="outlined"
+                        type="submit"
+                        component="label"
+                        style={{ color: "#004080" }}
+                      >
+                        Retour
+                      </Button>
+                    </Link>
                   </Box>
                   <Box>
                     <Link

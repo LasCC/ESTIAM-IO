@@ -2,22 +2,9 @@ import React, { useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import jwtdecode from "jwt-decode";
 import Routes from "../../Routes";
-import {
-  Typography,
-  Box,
-  Avatar,
-  IconButton,
-  Badge,
-  Tooltip,
-  Menu,
-  ListItem,
-  ListItemAvatar,
-  ListItemText
-} from "@material-ui/core";
-import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
+import { Typography, Box, Avatar, Badge } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import MenuNavBar from "./MenuNavBar";
-import SettingsIcon from "@material-ui/icons/Settings";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/fr";
@@ -54,8 +41,8 @@ const StyledBadge2 = withStyles(theme => ({
 export default props => {
   const { loginState } = useContext(LoginContext);
   const { firstName, lastName } = jwtdecode(localStorage.getItem("token"));
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=1875F0&color=fff`;
   console.log("dashboard", loginState);
-
   // const time = moment()
   //   .startOf("hour")
   //   .fromNow();
@@ -145,7 +132,7 @@ export default props => {
             }}
             variant="dot"
           >
-            <Avatar alt="imageProfile" src="https://picsum.photos/200/300" />
+            <Avatar alt="imageProfile" src={avatarUrl} />
           </StyledBadge2>
         </Box>
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>

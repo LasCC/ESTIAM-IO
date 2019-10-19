@@ -20,7 +20,7 @@ export default props => {
   const { dossier, dataloaded, fetchDossier } = useContext(Candidature);
   useEffect(() => fetchDossier(), []);
   if (!dataloaded) return <Loader />;
-  const { step } = dossier;
+  const { step } = JSON.parse(localStorage.getItem("dossier"));
   console.log(step);
   const filteredSteps = step
     .filter(singlestep => !singlestep.done)

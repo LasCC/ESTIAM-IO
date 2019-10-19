@@ -132,6 +132,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=michel+platini&background=fff&color=1875F0&bold=true`;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -179,7 +180,7 @@ export default props => {
               }}
               variant="dot"
             >
-              <Avatar alt="imageProfile" src="https://picsum.photos/200/300" />
+              <Avatar alt="imageProfile" src={avatarUrl} />
             </StyledBadge2>
           </Box>
           <Box p={2} display={{ xs: "none", lg: "block", sm: "block" }}>

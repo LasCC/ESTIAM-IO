@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import UnProtectedRoute from "./components/UnProtectedRoute";
 import ReactDOM from "react-dom";
 import Loader from "./components/Loader";
+import "./components/ChatFacebook";
 import GAListener from "./components/TrackerGA";
 import "./styles.css";
 
@@ -80,16 +81,12 @@ function App() {
     <Suspense fallback={<Loader />}>
       <LoginProvider>
         <CandidatureProvider>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnVisibilityChange
-            draggable
-            pauseOnHover
+          <div id="fb-root" />
+          <div
+            className="fb-customerchat"
+            attribution="setup_tool"
+            page_id="104268487665751"
+            theme_color="#0084ff"
           />
           <Switch>
             <UnProtectedRoute exact path={Routes.HOME} component={HomePage} />

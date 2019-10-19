@@ -39,7 +39,7 @@ const LoginProvider = props => {
     clientError: false,
     serverError: false
   });
-  const endpoint = "https://funis.serveo.net";
+  const endpoint = "https://exustio.serveo.net";
   const handleLogin = async data => {
     console.log("login request ....", data);
 

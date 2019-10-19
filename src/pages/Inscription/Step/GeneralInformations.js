@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import Joi from "joi-browser";
 import {
   Grid,
@@ -19,11 +19,13 @@ import {
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
+import { Candidature } from "../../../contexts/CandidatureContext";
 import Routes from "../../../Routes";
 
 export default props => {
-  const [values, setValues] = React.useState({
-    gender: "homme",
+  const { updateDossier } = useContext(Candidature);
+  const [values, setValues] = useState({
+    genre: "homme",
     pays: "",
     numero_rue: "",
     adresse: "",
@@ -32,17 +34,29 @@ export default props => {
     code_postale: "",
     numero_tel: ""
   });
+  const [errors, setErrors] = useState({});
 
   const schema = {
+    genre: Joi.string().required(),
     pays: Joi.string().required(),
     numero_rue: Joi.string().required(),
     adresse: Joi.string().required(),
     departement: Joi.string().required(),
     ville: Joi.string().required(),
     code_postale: Joi.string().required(),
-    nummero_tel: Joi.string().required()
+    numero_tel: Joi.string().required(),
+    submitted: Joi.boolean()
   };
-  const validate = () => {};
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
 
   const pays = require("../../../data/pays.json");
   const departement =
@@ -78,6 +92,18 @@ export default props => {
       ...oldValues,
       [event.target.name]: event.target.value
     }));
+  };
+  const handleNextStep = e => {
+    const errors = validate();
+    console.log(errors);
+    setValues({ ...values, submitted: true });
+    setErrors(errors || {});
+    if (errors) return;
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
+    console.log("dossier", dossier);
+    dossier.candidat.informations = values;
+    localStorage.setItem("dossier", JSON.stringify(dossier));
+    return props.history.push(Routes.PERSONAL_INFO);
   };
   console.log(values);
 
@@ -137,10 +163,10 @@ export default props => {
                 <FormControl component="fieldset">
                   <FormLabel component="legend">Civilité</FormLabel>
                   <RadioGroup
-                    aria-label="gender"
-                    name="gender"
+                    aria-label="genre"
+                    name="genre"
                     onChange={handleChange}
-                    value={values.gender}
+                    value={values.genre}
                   >
                     <FormControlLabel
                       value="homme"
@@ -182,6 +208,7 @@ export default props => {
                       Pays de résidence
                     </InputLabel>
                     <Select
+                      error={values.submitted && errors.hasOwnProperty("pays")}
                       value={values.pays}
                       onChange={handleChange}
                       labelWidth={labelWidth}
@@ -200,6 +227,9 @@ export default props => {
                   <TextField
                     style={{ minWidth: 200, marginRight: 15 }}
                     variant="outlined"
+                    error={
+                      values.submitted && errors.hasOwnProperty("numero_rue")
+                    }
                     required
                     value={values.numero_rue}
                     onChange={handleChangeTextField("numero_rue")}
@@ -217,6 +247,7 @@ export default props => {
                   <TextField
                     style={{ width: "auto", marginRight: 15 }}
                     variant="outlined"
+                    error={values.submitted && errors.hasOwnProperty("adresse")}
                     onChange={handleChangeTextField("adresse")}
                     value={values.adresse}
                     label="Adresse"
@@ -236,6 +267,9 @@ export default props => {
                     </InputLabel>
                     <Select
                       value={values.departement}
+                      error={
+                        values.submitted && errors.hasOwnProperty("departement")
+                      }
                       onChange={handleChange}
                       labelWidth={labelWidth}
                       required
@@ -258,6 +292,7 @@ export default props => {
                     required
                     onChange={handleChangeTextField("ville")}
                     label="Ville"
+                    error={values.submitted && errors.hasOwnProperty("ville")}
                     value={values.ville}
                     type="text"
                     margin="normal"
@@ -269,6 +304,9 @@ export default props => {
                     style={{ marginRight: 15 }}
                     variant="outlined"
                     label="Code postale"
+                    error={
+                      values.submitted && errors.hasOwnProperty("code_postale")
+                    }
                     required
                     value={values.code_postale}
                     onChange={handleChangeTextField("code_postale")}
@@ -282,6 +320,9 @@ export default props => {
                     style={{ width: "auto", marginRight: 15 }}
                     variant="outlined"
                     value={values.numero_tel}
+                    error={
+                      values.submitted && errors.hasOwnProperty("numero_tel")
+                    }
                     label="Numéro de téléphone"
                     required
                     onChange={handleChangeTextField("numero_tel")}
@@ -293,37 +334,18 @@ export default props => {
                   />
                 </form>
                 <div>
-                  <Link
-                    to={Routes.MAILCONFIRMATION}
-                    style={{ textDecoration: "none" }}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNextStep}
+                    style={{
+                      marginTop: 15,
+                      color: "white",
+                      backgroundColor: "#004080"
+                    }}
                   >
-                    <Button
-                      variant="outlined"
-                      style={{
-                        marginTop: 15,
-                        marginRight: 15,
-                        color: "#004080"
-                      }}
-                    >
-                      Retour
-                    </Button>
-                  </Link>
-                  <Link
-                    to={Routes.PERSONAL_INFO}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        marginTop: 15,
-                        color: "white",
-                        backgroundColor: "#004080"
-                      }}
-                    >
-                      Continuer
-                    </Button>
-                  </Link>
+                    Continuer
+                  </Button>
                 </div>
               </div>
             </Box>

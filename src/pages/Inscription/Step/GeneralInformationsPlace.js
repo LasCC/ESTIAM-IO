@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Candidature } from "../../../contexts/CandidatureContext";
+import Joi from "joi-browser";
 import {
   Grid,
   Box,
@@ -25,7 +27,17 @@ import "moment/locale/fr";
 moment.locale("fr");
 
 export default props => {
-  const [values, setValues] = React.useState({
+  const { updateDossier } = useContext(Candidature);
+  const schema = {
+    date_naissance: Joi.date(),
+    nationalite_naissance: Joi.string().required(),
+    pays_naissance: Joi.string().required(),
+    departement_naissance: Joi.string().required(),
+    ville_naissance: Joi.string().required(),
+    code_postale_naissance: Joi.string().required(),
+    submitted: Joi.boolean()
+  };
+  const [values, setValues] = useState({
     date_naissance: "",
     nationalite_naissance: "",
     pays_naissance: "",
@@ -33,6 +45,7 @@ export default props => {
     ville_naissance: "",
     code_postale_naissance: ""
   });
+  const [errors, setErrors] = useState({});
   const pays = require("../../../data/pays.json");
   const departement =
     values.pays_naissance === "France"
@@ -56,6 +69,46 @@ export default props => {
       ...values,
       [event.target.name]: event.target.value
     });
+  };
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+
+  const handleSubmit = e => {
+    const errors = validate();
+    console.log(errors);
+    setValues({ ...values, submitted: true });
+    setErrors(errors || {});
+    if (errors) return;
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
+    dossier.informations = { ...dossier.informations, ...values };
+    dossier.step = [
+      {
+        nom: "step1",
+        done: true
+      },
+      {
+        nom: "step2",
+        done: false
+      },
+      {
+        nom: "step3",
+        done: false
+      },
+      {
+        nom: "step4",
+        done: false
+      }
+    ];
+    localStorage.setItem("dossier", JSON.stringify(dossier));
+    updateDossier({ dossier }, Routes.END_INFO);
   };
   console.log(values);
   return (
@@ -128,6 +181,11 @@ export default props => {
                     inputVariant="outlined"
                     format="dd/MM/yyyy"
                     margin="normal"
+                    required
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("date_naissance")
+                    }
                     id="date-picker-inline"
                     label={!values.date_naissance ? "Date de naissance" : ""}
                     // value={
@@ -150,6 +208,10 @@ export default props => {
                   style={{ marginRight: 15 }}
                   variant="outlined"
                   required
+                  error={
+                    values.submitted &&
+                    errors.hasOwnProperty("nationalite_naissance")
+                  }
                   onChange={handleChangeTextField("nationalite_naissance")}
                   label="Nationalité"
                   type="text"
@@ -186,6 +248,10 @@ export default props => {
                     <Select
                       value={values.pays_naissance}
                       onChange={handleChange}
+                      error={
+                        values.submitted &&
+                        errors.hasOwnProperty("pays_naissance")
+                      }
                       labelWidth={labelWidth}
                       inputProps={{
                         name: "pays_naissance",
@@ -210,6 +276,10 @@ export default props => {
                     <Select
                       value={values.departement_naissance}
                       onChange={handleChange}
+                      error={
+                        values.submitted &&
+                        errors.hasOwnProperty("departement_naissance")
+                      }
                       labelWidth={labelWidth}
                       inputProps={{
                         name: "departement_naissance",
@@ -228,6 +298,10 @@ export default props => {
                     required
                     variant="outlined"
                     onChange={handleChangeTextField("ville_naissance")}
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("ville_naissance")
+                    }
                     label="Ville"
                     type="text"
                     margin="normal"
@@ -241,6 +315,10 @@ export default props => {
                     label="Code postale"
                     required
                     onChange={handleChangeTextField("code_postale_naissance")}
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("code_postale_naissance")
+                    }
                     type="text"
                     margin="normal"
                     inputProps={{
@@ -264,19 +342,20 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  <Link to={Routes.END_INFO} style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        marginTop: 15,
-                        color: "white",
-                        backgroundColor: "#004080"
-                      }}
-                    >
-                      Continuer
-                    </Button>
-                  </Link>
+                  {/* <Link to={Routes.END_INFO} style={{ textDecoration: "none" }}> */}
+                  <Button
+                    onClick={handleSubmit}
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      marginTop: 15,
+                      color: "white",
+                      backgroundColor: "#004080"
+                    }}
+                  >
+                    Continuer
+                  </Button>
+                  {/* </Link> */}
                 </div>
               </div>
             </Box>

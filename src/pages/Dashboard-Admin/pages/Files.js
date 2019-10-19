@@ -210,6 +210,7 @@ export default props => {
       }
     ]
   });
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=michel+platini&background=fff&color=1875F0&bold=true`;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -274,7 +275,7 @@ export default props => {
               }}
               variant="dot"
             >
-              <Avatar alt="imageProfile" src="https://picsum.photos/200/300" />
+              <Avatar alt="imageProfile" src={avatarUrl} />
             </StyledBadge2>
           </Box>
           <Box p={2} display={{ xs: "none", lg: "block", sm: "block" }}>
@@ -373,6 +374,9 @@ export default props => {
           columns={state.columns}
           data={state.data}
           detailPanel={rowData => {
+            const userAvatar = `https://eu.ui-avatars.com/api/?name=${
+              rowData.firstname
+            }+${rowData.lastname}&background=fff&color=1875F0&bold=true`;
             return (
               <div style={{ padding: 50 }}>
                 <Typography variant="h5" style={{ fontWeight: "bold" }}>
@@ -382,7 +386,7 @@ export default props => {
                 <Box display="flex" justifyContent="flex-start">
                   <Box display={{ xs: "none", lg: "block", md: "block" }}>
                     <Avatar
-                      src="https://picsum.photos/200/300"
+                      src={userAvatar}
                       style={{
                         borderRadius: 2,
                         height: 150,
