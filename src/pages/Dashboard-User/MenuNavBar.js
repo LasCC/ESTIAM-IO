@@ -66,7 +66,7 @@ export default function TemporaryDrawer() {
           </ListItemAvatar>
           <ListItemText
             style={{ textOverflow: "ellipsis", overflow: "hidden" }}
-            primary={`${firstName} ${lastName}`}
+            primary={`${firstName} ${lastName.toUpperCase()}`}
             secondary={
               <React.Fragment>
                 <Typography

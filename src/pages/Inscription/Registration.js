@@ -93,25 +93,13 @@ export default props => {
     });
   };
   const lastNameError =
-    loginState.loginError ||
-    (errors.hasOwnProperty("lastname") && values.submitted)
-      ? "#f00"
-      : "";
+    errors.hasOwnProperty("lastname") && values.submitted ? "#f00" : "";
   const firstNameError =
-    loginState.loginError ||
-    (errors.hasOwnProperty("firstname") && values.submitted)
-      ? "#f00"
-      : "";
+    errors.hasOwnProperty("firstname") && values.submitted ? "#f00" : "";
   const emailError =
-    loginState.loginError ||
-    (errors.hasOwnProperty("email") && values.submitted)
-      ? "#f00"
-      : "";
+    errors.hasOwnProperty("email") && values.submitted ? "#f00" : "";
   const passwordError =
-    loginState.loginError ||
-    (errors.hasOwnProperty("password") && values.submitted)
-      ? "#f00"
-      : "";
+    errors.hasOwnProperty("password") && values.submitted ? "#f00" : "";
   const RegistrationErrorComponent = (
     <Typography
       variant="subtitle2"
@@ -218,7 +206,7 @@ export default props => {
                   value={values.lastname}
                   onChange={handleChange("lastname")}
                   required
-                  error={lastNameError}
+                  error={values.submitted && errors.hasOwnProperty("lastname")}
                   fullWidth
                   type="text"
                   margin="normal"
@@ -242,7 +230,9 @@ export default props => {
                   label="Email"
                   onChange={handleChange("email")}
                   required
-                  error={emailError}
+                  error={
+                    values.submitted && errors.hasOwnProperty("emailError")
+                  }
                   fullWidth
                   type="email"
                   style={{ marginTop: 20 }}
@@ -251,7 +241,7 @@ export default props => {
                   variant="outlined"
                   fullWidth
                   required
-                  error={passwordError}
+                  error={values.submitted && errors.hasOwnProperty("password")}
                   type={values.showPassword ? "text" : "password"}
                   label="Mot de passe"
                   style={{ marginTop: 20 }}
@@ -291,7 +281,7 @@ export default props => {
                 <Divider style={{ marginTop: 25, marginBottom: 25 }} />
                 <Typography variant="subtitle2">
                   <Link
-                    to="/dashboard"
+                    to={Routes.LOGIN}
                     style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
                   >
                     Vous avez déjà un compte ?

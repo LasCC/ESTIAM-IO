@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Candidature } from "../../../contexts/CandidatureContext";
 import Joi from "joi-browser";
 import {
@@ -52,16 +52,26 @@ export default props => {
       ? require("../../../data/departement.json")
       : ["99-Autre"];
   const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const [labelWidth, setLabelWidth] = useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  const [selectedDate, setSelectedDate] = React.useState(moment());
+  const [selectedDate, setSelectedDate] = useState(moment());
   const handleDateChange = date => {
     setSelectedDate(date);
     setValues({ ...values, date_naissance: date });
   };
   const handleChangeTextField = name => event => {
+    if (name === "nationalite_naissance" || name === "ville_naissance") {
+      const pattern = new RegExp(/^$|^[A-Za-z ]+$/);
+      const isWellFormated = pattern.test(event.target.value);
+
+      if (!isWellFormated) return;
+    } else if (name === "code_postale_naissance") {
+      const pattern = new RegExp(/^$|^[0-9]{1,7}$/);
+      const isWellFormated = pattern.test(event.target.value);
+      if (!isWellFormated) return;
+    }
     setValues({ ...values, [name]: event.target.value });
   };
   const handleChange = event => {
@@ -88,29 +98,19 @@ export default props => {
     setErrors(errors || {});
     if (errors) return;
     let dossier = JSON.parse(localStorage.getItem("dossier"));
-    dossier.informations = { ...dossier.informations, ...values };
-    dossier.step = [
-      {
-        nom: "step1",
-        done: true
-      },
-      {
-        nom: "step2",
-        done: false
-      },
-      {
-        nom: "step3",
-        done: false
-      },
-      {
-        nom: "step4",
-        done: false
-      }
-    ];
+    dossier.candidat.informations = {
+      ...dossier.candidat.informations,
+      ...values
+    };
+    dossier.step[0].done = true;
     localStorage.setItem("dossier", JSON.stringify(dossier));
-    updateDossier({ dossier }, Routes.END_INFO);
+    console.log(dossier);
+    updateDossier(
+      { candidat: dossier.candidat, step: dossier.step },
+      Routes.END_INFO
+    );
   };
-  console.log(values);
+
   return (
     <Container maxWidth="lg">
       <RegistedUserNav />
@@ -188,16 +188,7 @@ export default props => {
                     }
                     id="date-picker-inline"
                     label={!values.date_naissance ? "Date de naissance" : ""}
-                    // value={
-                    //   selectedDate.value !== ""
-                    //     ? moment(
-                    //         moment().format("DD MMM YYYY") +
-                    //           " " +
-                    //           selectedDate.value
-                    //       ).toDate()
-                    //     : null
-                    // }
-                    value={moment().format("DD MMM YYYY")}
+                    value={values.date_naissance}
                     onChange={handleDateChange}
                     KeyboardButtonProps={{
                       "aria-label": "date de naissance"
@@ -213,6 +204,7 @@ export default props => {
                     errors.hasOwnProperty("nationalite_naissance")
                   }
                   onChange={handleChangeTextField("nationalite_naissance")}
+                  value={values.nationalite_naissance}
                   label="Nationalité"
                   type="text"
                   margin="normal"
@@ -298,6 +290,7 @@ export default props => {
                     required
                     variant="outlined"
                     onChange={handleChangeTextField("ville_naissance")}
+                    value={values.ville_naissance}
                     error={
                       values.submitted &&
                       errors.hasOwnProperty("ville_naissance")
@@ -315,6 +308,7 @@ export default props => {
                     label="Code postale"
                     required
                     onChange={handleChangeTextField("code_postale_naissance")}
+                    value={values.code_postale_naissance}
                     error={
                       values.submitted &&
                       errors.hasOwnProperty("code_postale_naissance")
@@ -342,7 +336,7 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  {/* <Link to={Routes.END_INFO} style={{ textDecoration: "none" }}> */}
+
                   <Button
                     onClick={handleSubmit}
                     variant="contained"
@@ -355,7 +349,6 @@ export default props => {
                   >
                     Continuer
                   </Button>
-                  {/* </Link> */}
                 </div>
               </div>
             </Box>

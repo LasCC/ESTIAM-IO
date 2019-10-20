@@ -20,24 +20,18 @@ import Routes from "../../../Routes";
 export default props => {
   const [bulletins, setBulletins] = useState([]);
   const [bulletinsname, setBulletinsname] = useState([]);
-  // =============TODO
-  const [cv, setCv] = useState(null);
-  const [cvname, setCvName] = useState("");
-
-  const [lettremv, setLettremv] = useState(null);
-  const [lettremvname, setLettremvName] = useState("");
-
-  const [photo, setPhoto] = useState(null);
-  const [photoname, setPhotoName] = useState(null);
-
   const [cni, setCni] = useState(null);
   const [cniname, setCniName] = useState("");
-
+  const [cv, setCv] = useState(null);
+  const [cvname, setCvName] = useState("");
+  const [lettremv, setLettremv] = useState(null);
+  const [lettremvname, setLettremvName] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [photoname, setPhotoName] = useState(null);
   const [diplome, setDiplome] = useState(null);
   const [diplomename, setDiplomeName] = useState("");
 
   const [filesent, setFilesent] = useState(false);
-  // ===========
   const { endpoint } = useContext(LoginContext);
   console.log(endpoint);
   const onChangeBulletinInput = evt => {
@@ -50,11 +44,47 @@ export default props => {
       console.log(ex);
     }
   };
+  const onChangePieceIdentiteinput = evt => {
+    console.log(evt.target.files[0].name);
+    try {
+      setCni(evt.target.files[0]);
+      setCniName(evt.target.files[0].name);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+  const onChangeDiplomeinput = evt => {
+    console.log(evt.target.files[0].name);
+    try {
+      setDiplome(evt.target.files[0]);
+      setDiplomeName(evt.target.files[0].name);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+  const onChangePhotoinput = evt => {
+    console.log(evt.target.files[0].name);
+    try {
+      setPhoto(evt.target.files[0]);
+      setPhotoName(evt.target.files[0].name);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
   const onChangeCVinput = evt => {
     console.log(evt.target.files[0].name);
     try {
       setCv(evt.target.files[0]);
       setCvName(evt.target.files[0].name);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+  const onChangeLettreMVinput = evt => {
+    console.log(evt.target.files[0].name);
+    try {
+      setLettremv(evt.target.files[0]);
+      setLettremvName(evt.target.files[0].name);
     } catch (ex) {
       console.log(ex);
     }
@@ -72,10 +102,47 @@ export default props => {
     );
     console.log(index, filename);
   };
-  const singleRemove = evt => {
+  const CniRemove = evt => {
+    const filename =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].children[0]
+        .innerText;
+    setCni();
+    setCniName("");
+    console.log(filename);
+  };
+  const LettreMvRemove = evt => {
+    const filename =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].children[0]
+        .innerText;
+    setLettremv();
+    setLettremvName("");
+    console.log(filename);
+  };
+  const PhotoRemove = evt => {
+    const filename =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].children[0]
+        .innerText;
+    setPhoto();
+    setPhotoName("");
+    console.log(filename);
+  };
+  const DiplomeRemove = evt => {
+    const filename =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].children[0]
+        .innerText;
+    setDiplome();
+    setDiplomeName("");
+    console.log(filename);
+  };
+  const CvRemove = evt => {
+    const filename =
+      evt.target.parentNode.parentNode.parentNode.childNodes[1].children[0]
+        .innerText;
     setCv();
     setCvName("");
+    console.log(filename);
   };
+
   const onSubmit = evt => {
     evt.preventDefault();
     console.log("actual files in state:", bulletins);
@@ -85,7 +152,11 @@ export default props => {
       formData.append("bulletins", file);
     }
     //2eme loop ici pour cv et les autres ...
+    formData.append("cni", cni);
     formData.append("cv", cv);
+    formData.append("lettre_motivation", lettremv);
+    formData.append("photo", photo);
+    formData.append("diplome", diplome);
 
     console.log("actual formdata after looped", formData, formData.length);
     http
@@ -117,7 +188,7 @@ export default props => {
               backgroundImage: `url(https://i.imgur.com/7x6wfMR.png)`,
               backgroundPosition: "top",
               backgroundSize: "cover",
-              height: "90%",
+              height: "95%",
               backgroundColor: "white"
             }}
           >
@@ -133,7 +204,7 @@ export default props => {
           <Box
             display="flex"
             alignItems="center"
-            css={{ height: "90%", marginTop: 25 }}
+            css={{ height: "95%", marginTop: 25 }}
           >
             <Box
               style={{
@@ -229,26 +300,22 @@ export default props => {
                   <input
                     type="file"
                     name="cni"
-                    onChange={onChangeCVinput}
+                    onChange={onChangePieceIdentiteinput}
                     style={{ display: "none" }}
                   />
                 </Button>
-
                 <div
                   style={{
-                    display: !cvname ? "none" : "block",
+                    display: !cniname ? "none" : "block",
                     marginTop: 5
                   }}
                 >
                   <Box display="flex" alignItems="center">
-                    <IconButton
-                      onClick={singleRemove}
-                      style={{ marginRight: 10 }}
-                    >
+                    <IconButton onClick={CniRemove} style={{ marginRight: 10 }}>
                       <ClearIcon />
                     </IconButton>
                     <Typography variant="caption" color="textSecondary">
-                      <span>{cvname}</span>
+                      <span>{cniname}</span>
                     </Typography>
                   </Box>
                 </div>
@@ -268,8 +335,27 @@ export default props => {
                   style={{ color: "#004080" }}
                 >
                   Choisir un fichier
-                  <input type="file" style={{ display: "none" }} />
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={onChangeCVinput}
+                  />
                 </Button>
+                <div
+                  style={{
+                    display: !cvname ? "none" : "block",
+                    marginTop: 5
+                  }}
+                >
+                  <Box display="flex" alignItems="center">
+                    <IconButton onClick={CvRemove} style={{ marginRight: 10 }}>
+                      <ClearIcon />
+                    </IconButton>
+                    <Typography variant="caption" color="textSecondary">
+                      <span>{cvname}</span>
+                    </Typography>
+                  </Box>
+                </div>
                 <Typography
                   variant="subtitle2"
                   style={{
@@ -286,8 +372,30 @@ export default props => {
                   style={{ color: "#004080" }}
                 >
                   Choisir un fichier
-                  <input type="file" style={{ display: "none" }} />
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={onChangeLettreMVinput}
+                  />
                 </Button>
+                <div
+                  style={{
+                    display: !lettremvname ? "none" : "block",
+                    marginTop: 5
+                  }}
+                >
+                  <Box display="flex" alignItems="center">
+                    <IconButton
+                      onClick={LettreMvRemove}
+                      style={{ marginRight: 10 }}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                    <Typography variant="caption" color="textSecondary">
+                      <span>{lettremvname}</span>
+                    </Typography>
+                  </Box>
+                </div>
                 <Typography
                   variant="subtitle2"
                   style={{
@@ -304,8 +412,30 @@ export default props => {
                   style={{ color: "#004080" }}
                 >
                   Choisir un fichier
-                  <input type="file" style={{ display: "none" }} />
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={onChangePhotoinput}
+                  />
                 </Button>
+                <div
+                  style={{
+                    display: !photoname ? "none" : "block",
+                    marginTop: 5
+                  }}
+                >
+                  <Box display="flex" alignItems="center">
+                    <IconButton
+                      onClick={PhotoRemove}
+                      style={{ marginRight: 10 }}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                    <Typography variant="caption" color="textSecondary">
+                      <span>{photoname}</span>
+                    </Typography>
+                  </Box>
+                </div>
                 <Typography
                   variant="subtitle2"
                   style={{
@@ -322,8 +452,30 @@ export default props => {
                   style={{ color: "#004080" }}
                 >
                   Choisir un fichier
-                  <input type="file" style={{ display: "none" }} />
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={onChangeDiplomeinput}
+                  />
                 </Button>
+                <div
+                  style={{
+                    display: !diplomename ? "none" : "block",
+                    marginTop: 5
+                  }}
+                >
+                  <Box display="flex" alignItems="center">
+                    <IconButton
+                      onClick={DiplomeRemove}
+                      style={{ marginRight: 10 }}
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                    <Typography variant="caption" color="textSecondary">
+                      <span>{diplomename}</span>
+                    </Typography>
+                  </Box>
+                </div>
                 <Box display="flex" style={{ marginTop: 15 }}>
                   <Box flexGrow={1}>
                     <Link

@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Box, Avatar, Badge } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import jwtdecode from "jwt-decode";
 import MenuNavBarRegisted from "./MenuNavBarRegisted";
 import { Link } from "react-router-dom";
 import Routes from "../../../Routes";
@@ -33,6 +34,9 @@ const StyledBadge2 = withStyles(theme => ({
 }))(Badge);
 
 export default props => {
+  const tokendata = jwtdecode(localStorage.getItem("token"));
+  const { firstName, lastName } = tokendata;
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=1875F0&color=fff`;
   return (
     <div style={{ width: "100%" }}>
       <Box display="flex" p={4} alignItems="center">
@@ -54,12 +58,12 @@ export default props => {
             }}
             variant="dot"
           >
-            <Avatar alt="imageProfile" src="https://picsum.photos/200/300" />
+            <Avatar alt="imageProfile" src={avatarUrl} />
           </StyledBadge2>
         </Box>
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
           <Typography style={{ color: "white", fontWeight: "500" }}>
-            Michel Platini
+            {`${firstName} ${lastName.toUpperCase()}`}
           </Typography>
         </Box>
         <Box p={1}>

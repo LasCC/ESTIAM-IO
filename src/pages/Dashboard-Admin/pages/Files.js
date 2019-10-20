@@ -376,11 +376,12 @@ export default props => {
           detailPanel={rowData => {
             const userAvatar = `https://eu.ui-avatars.com/api/?name=${
               rowData.firstname
-            }+${rowData.lastname}&background=fff&color=1875F0&bold=true`;
+            }+${rowData.lastname.toUpperCase()}&background=fff&color=1875F0&bold=true`;
             return (
               <div style={{ padding: 50 }}>
                 <Typography variant="h5" style={{ fontWeight: "bold" }}>
-                  Etat Civil de {rowData.firstname} {rowData.lastname}
+                  Etat Civil de {rowData.firstname}{" "}
+                  {rowData.lastname.toUpperCase()}
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
                 <Box display="flex" justifyContent="flex-start">
@@ -396,7 +397,7 @@ export default props => {
                   </Box>
                   <Box display="inline">
                     <Typography style={{ marginLeft: 10 }}>
-                      {rowData.firstname} {rowData.lastname}
+                      {rowData.firstname} {rowData.lastname.toUpperCase()}
                     </Typography>
                     <Typography style={{ marginLeft: 10 }}>
                       Pays de naissance : {rowData.country}
@@ -413,7 +414,8 @@ export default props => {
                   variant="h5"
                   style={{ fontWeight: "bold", marginTop: 25 }}
                 >
-                  Situation actuelle de {rowData.firstname} {rowData.lastname}
+                  Situation actuelle de {rowData.firstname}{" "}
+                  {rowData.lastname.toUpperCase()}
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
                 <Typography>
@@ -429,7 +431,8 @@ export default props => {
                   variant="h5"
                   style={{ fontWeight: "bold", marginTop: 25 }}
                 >
-                  Etablissement de {rowData.firstname} {rowData.lastname}
+                  Etablissement de {rowData.firstname}{" "}
+                  {rowData.lastname.toUpperCase()}
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
                 <Typography>
@@ -450,7 +453,8 @@ export default props => {
                   variant="h5"
                   style={{ fontWeight: "bold", marginTop: 25 }}
                 >
-                  Voeux de formation de {rowData.firstname} {rowData.lastname}
+                  Voeux de formation de {rowData.firstname}{" "}
+                  {rowData.lastname.toUpperCase()}
                 </Typography>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
                 <Typography>

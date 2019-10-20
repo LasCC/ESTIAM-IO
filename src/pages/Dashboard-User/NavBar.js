@@ -136,7 +136,7 @@ export default props => {
           </StyledBadge2>
         </Box>
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
-          <Typography>{`${firstName} ${lastName}`}</Typography>
+          <Typography>{`${firstName} ${lastName.toUpperCase()}`}</Typography>
         </Box>
         <Box p={1}>
           <MenuNavBar />

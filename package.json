@@ -19,6 +19,7 @@
     "material-table": "1.52.0",
     "material-ui-form": "1.0.0-alpha.26",
     "moment": "2.24.0",
+    "raven-js": "3.27.2",
     "react": "16.10.2",
     "react-chartjs-2": "2.8.0",
     "react-dom": "16.10.2",

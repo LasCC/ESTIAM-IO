@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
+import jwtdecode from "jwt-decode";
 import Routes from "../../../Routes";
 import {
   List,
@@ -28,6 +29,9 @@ const useStyles = makeStyles({
 });
 
 export default function TemporaryDrawer() {
+  const tokendata = jwtdecode(localStorage.getItem("token"));
+  const { firstName, lastName, email } = tokendata;
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=1875F0&color=fff`;
   const { handleLogout } = useContext(LoginContext);
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -54,10 +58,11 @@ export default function TemporaryDrawer() {
       <List component="nav" aria-label="main mailbox folders">
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="avatarLogo" src="https://picsum.photos/200/300" />
+            <Avatar alt="avatarLogo" src={avatarUrl} />
           </ListItemAvatar>
           <ListItemText
-            primary="Michel Pantini"
+            primary={`${firstName} ${lastName.toUpperCase()}`}
+            style={{ textOverflow: "ellipsis", overflow: "hidden" }}
             secondary={
               <React.Fragment>
                 <Typography
@@ -65,7 +70,7 @@ export default function TemporaryDrawer() {
                   variant="body2"
                   color="textPrimary"
                 >
-                  michel.platini@gmail.com
+                  {email}
                 </Typography>
               </React.Fragment>
             }
