@@ -164,7 +164,11 @@ export default props => {
         headers: {
           "Content-type": "multipart/formdata",
           "x-auth-token": localStorage.getItem("token")
-        }
+        },
+        onUploadProgress: progressEvent =>
+          console.log(
+            Math.round(progressEvent.loaded / progressEvent.total) * 100
+          )
       })
       .then(res => {
         console.log(res);

@@ -17,6 +17,8 @@ import {
   DialogTitle,
   Container
 } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+import BusinessIcon from "@material-ui/icons/Business";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "./components/RegistedUserNav";
@@ -119,7 +121,7 @@ export default props => {
                         style={{ borderRadius: 2, height: 100, width: 100 }}
                       />
                     </Box>
-                    <Box display="inline">
+                    <Box display="inline" alignItems="center">
                       <Typography
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
@@ -187,6 +189,21 @@ export default props => {
                         Nom de votre formation : Terminale
                       </Typography>
                     </ExpansionPanelDetails>
+                    <ExpansionPanelDetails>
+                      <Link
+                        to={Routes.CURRENT_SITUATION}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          style={{ color: "#004080", borderColor: "#004080" }}
+                        >
+                          <EditIcon style={{ marginRight: 15 }} />
+                          <Typography>Modifier</Typography>
+                        </Button>
+                      </Link>
+                    </ExpansionPanelDetails>
                   </ExpansionPanel>
 
                   <ExpansionPanel style={{ boxShadow: "none" }}>
@@ -229,6 +246,21 @@ export default props => {
                       <Typography variant="subtitle2">
                         Ville : Sevran
                       </Typography>
+                    </ExpansionPanelDetails>
+                    <ExpansionPanelDetails>
+                      <Link
+                        to={Routes.CURRENT_SITUATION_PREV_SCHOOL}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          style={{ color: "#004080", borderColor: "#004080" }}
+                        >
+                          <EditIcon style={{ marginRight: 15 }} />
+                          <Typography>Modifier</Typography>
+                        </Button>
+                      </Link>
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                 </Paper>
@@ -274,6 +306,34 @@ export default props => {
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
+                      <Link
+                        to={Routes.WISHES_FORMATION}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          style={{ color: "#004080", borderColor: "#004080" }}
+                        >
+                          <EditIcon style={{ marginRight: 15 }} />
+                          <Typography>Modifier</Typography>
+                        </Button>
+                      </Link>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+
+                  <ExpansionPanel style={{ boxShadow: "none" }}>
+                    <ExpansionPanelSummary
+                      expandIcon={<ExpandMore />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <BusinessIcon
+                        style={{ marginRight: 10, color: "gray" }}
+                      />
+                      <Typography>Campus demandée</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
                         Cursus : Pas disponible
                       </Typography>
@@ -292,6 +352,21 @@ export default props => {
                       <Typography variant="subtitle2">
                         Choix campus n°3 : Lyon 69
                       </Typography>
+                    </ExpansionPanelDetails>
+                    <ExpansionPanelDetails>
+                      <Link
+                        to={Routes.WISHES_CAMPUS}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          style={{ color: "#004080", borderColor: "#004080" }}
+                        >
+                          <EditIcon style={{ marginRight: 15 }} />
+                          <Typography>Modifier</Typography>
+                        </Button>
+                      </Link>
                     </ExpansionPanelDetails>
                   </ExpansionPanel>
                 </Paper>

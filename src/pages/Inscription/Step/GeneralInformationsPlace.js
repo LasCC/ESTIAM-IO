@@ -47,6 +47,7 @@ export default props => {
   });
   const [errors, setErrors] = useState({});
   const pays = require("../../../data/pays.json");
+  const nationalite = require("../../../data/nationalite.json");
   const departement =
     values.pays_naissance === "France"
       ? require("../../../data/departement.json")
@@ -63,7 +64,7 @@ export default props => {
   };
   const handleChangeTextField = name => event => {
     if (name === "nationalite_naissance" || name === "ville_naissance") {
-      const pattern = new RegExp(/^$|^[A-Za-z ]+$/);
+      const pattern = new RegExp(/^$|^[A-Za-z çèé]+$/);
       const isWellFormated = pattern.test(event.target.value);
 
       if (!isWellFormated) return;
@@ -163,7 +164,38 @@ export default props => {
                 >
                   Renseignements
                 </Typography>
-
+                <Box
+                  display={{
+                    xs: "none",
+                    sm: "none",
+                    lg: "block",
+                    md: "block",
+                    xl: "block"
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "grid",
+                      marginLeft: 50
+                    }}
+                  >
+                    <ul className="progressbar">
+                      <li className="active">
+                        <Typography variant="subtitle2">
+                          Renseignement
+                        </Typography>
+                      </li>
+                      <li className="active">
+                        <Typography variant="subtitle2">
+                          Informations personnelles
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography variant="subtitle2">Fin</Typography>
+                      </li>
+                    </ul>
+                  </Box>
+                </Box>
                 <Typography
                   variant="h5"
                   style={{
@@ -195,23 +227,34 @@ export default props => {
                     }}
                   />
                 </MuiPickersUtilsProvider>
-                <TextField
-                  style={{ marginRight: 15 }}
+                <FormControl
                   variant="outlined"
-                  required
-                  error={
-                    values.submitted &&
-                    errors.hasOwnProperty("nationalite_naissance")
-                  }
-                  onChange={handleChangeTextField("nationalite_naissance")}
-                  value={values.nationalite_naissance}
-                  label="Nationalité"
-                  type="text"
+                  style={{ minWidth: 255, marginRight: 15 }}
                   margin="normal"
-                  inputProps={{
-                    "aria-label": "Nationalité"
-                  }}
-                />
+                >
+                  <InputLabel htmlFor="nationalite" required ref={inputLabel}>
+                    Nationalité
+                  </InputLabel>
+                  <Select
+                    value={values.nationalite_naissance}
+                    onChange={handleChangeTextField("nationalite_naissance")}
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("nationalite_naissance")
+                    }
+                    labelWidth={labelWidth}
+                    inputProps={{
+                      name: "departement_naissance",
+                      "aria-label": "Département de résidence"
+                    }}
+                  >
+                    {nationalite.map(name => (
+                      <MenuItem key={name} value={name}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
                 <Typography
                   variant="h5"

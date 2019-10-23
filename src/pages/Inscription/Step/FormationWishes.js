@@ -11,6 +11,7 @@ import {
   FormHelperText,
   Container
 } from "@material-ui/core";
+import Joi from "joi-browser";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
@@ -28,6 +29,24 @@ export default props => {
       ...oldValues,
       [event.target.name]: event.target.value
     }));
+  };
+  const schema = {
+    annee_demandee: Joi.string().required(),
+    specialisation: Joi.string().required()
+  };
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  const handleNextStep = e => {
+    const errors = validate();
+    console.log(errors);
   };
   console.log(values);
   const radiologic =
@@ -73,7 +92,38 @@ export default props => {
               >
                 Voeux de formation
               </Typography>
-
+              <Box
+                display={{
+                  xs: "none",
+                  sm: "none",
+                  lg: "block",
+                  md: "block",
+                  xl: "block"
+                }}
+              >
+                <Box
+                  style={{
+                    display: "grid",
+                    marginLeft: 50
+                  }}
+                >
+                  <ul className="progressbar">
+                    <li className="active">
+                      <Typography variant="subtitle2">
+                        Voeux de formation
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography variant="subtitle2">
+                        Campus demandée
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography variant="subtitle2">Fin</Typography>
+                    </li>
+                  </ul>
+                </Box>
+              </Box>
               <Typography
                 variant="h5"
                 style={{

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Joi from "joi-browser";
 import {
   Grid,
   Box,
@@ -17,7 +18,8 @@ import RegistedUserNav from "../components/RegistedUserNav";
 import Routes from "../../../Routes";
 
 export default props => {
-  const [values, setValues] = React.useState({
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({
     nom_etablissement: "",
     pays_etablissement: "",
     numero_rue_etablissement: "",
@@ -25,6 +27,28 @@ export default props => {
     departement_etablissement: "",
     ville_etablissement: ""
   });
+  const schema = {
+    nom_etablissement: Joi.string().required(),
+    pays_etablissement: Joi.string().required(),
+    numero_rue_etablissement: Joi.string().required(),
+    adresse_etablissement: Joi.string().required(),
+    departement_etablissement: Joi.string().required(),
+    ville_etablissement: Joi.string().required()
+  };
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  const handleNextStep = e => {
+    const errors = validate();
+    console.log(errors);
+  };
   const pays = require("../../../data/pays.json");
   const departement =
     values.pays_etablissement === "France"
@@ -98,7 +122,38 @@ export default props => {
                 >
                   Situation actuelle
                 </Typography>
-
+                <Box
+                  display={{
+                    xs: "none",
+                    sm: "none",
+                    lg: "block",
+                    md: "block",
+                    xl: "block"
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "grid",
+                      marginLeft: 50
+                    }}
+                  >
+                    <ul className="progressbar">
+                      <li className="active">
+                        <Typography variant="subtitle2">
+                          Situation actuelle
+                        </Typography>
+                      </li>
+                      <li className="active">
+                        <Typography variant="subtitle2">
+                          Établissement
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography variant="subtitle2">Fin</Typography>
+                      </li>
+                    </ul>
+                  </Box>
+                </Box>
                 <Typography
                   variant="h5"
                   style={{
@@ -123,7 +178,7 @@ export default props => {
                   />
                   <FormControl
                     variant="outlined"
-                    style={{ minWidth: 210, marginRight: 15 }}
+                    style={{ minWidth: 220, marginRight: 15 }}
                     margin="normal"
                   >
                     <InputLabel
@@ -149,8 +204,9 @@ export default props => {
                       ))}
                     </Select>
                   </FormControl>
+                  <br />
                   <TextField
-                    style={{ marginRight: 15, minWidth: 200 }}
+                    style={{ marginRight: 15, minWidth: 210 }}
                     variant="outlined"
                     onChange={handleChangeTextField("numero_rue_etablissement")}
                     label="Numéro de rue"
@@ -173,6 +229,7 @@ export default props => {
                     margin="normal"
                     inputProps={{ "aria-label": "Adresse de l'etablissement" }}
                   />
+                  <br />
                   <FormControl
                     variant="outlined"
                     style={{ minWidth: 210, marginRight: 15 }}

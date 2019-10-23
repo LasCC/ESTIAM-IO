@@ -62,7 +62,11 @@ export default function TemporaryDrawer() {
       <List component="nav">
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar alt="avatarLogo" src={avatarUrl} />
+            <Avatar
+              alt="avatarLogo"
+              src={avatarUrl}
+              style={{ backgroundColor: "blue" }}
+            />
           </ListItemAvatar>
           <ListItemText
             style={{ textOverflow: "ellipsis", overflow: "hidden" }}

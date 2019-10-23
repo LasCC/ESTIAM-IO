@@ -159,7 +159,38 @@ export default props => {
                 >
                   Renseignements
                 </Typography>
-
+                <Box
+                  display={{
+                    xs: "none",
+                    sm: "none",
+                    lg: "block",
+                    md: "block",
+                    xl: "block"
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "grid",
+                      marginLeft: 50
+                    }}
+                  >
+                    <ul className="progressbar">
+                      <li className="active">
+                        <Typography variant="subtitle2">
+                          Renseignement
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography variant="subtitle2">
+                          Informations personnelles
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography variant="subtitle2">Fin</Typography>
+                      </li>
+                    </ul>
+                  </Box>
+                </Box>
                 <FormControl component="fieldset">
                   <FormLabel component="legend">Civilité</FormLabel>
                   <RadioGroup

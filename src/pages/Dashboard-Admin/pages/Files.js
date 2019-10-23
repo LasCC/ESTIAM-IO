@@ -25,7 +25,8 @@ import {
   DialogActions,
   Button,
   InputLabel,
-  MenuItem
+  MenuItem,
+  Grid
 } from "@material-ui/core";
 import Routes from "../../../Routes";
 import MaterialTable from "material-table";
@@ -130,7 +131,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(6)
+    padding: theme.spacing(3)
   },
   formControl: {
     margin: theme.spacing(1),
@@ -158,6 +159,10 @@ export default props => {
       {
         title: "Pays",
         field: "country"
+      },
+      {
+        title: "Avancement du dossier",
+        field: "avancement"
       }
     ],
 
@@ -183,7 +188,8 @@ export default props => {
         cursus_whisies: "Pas disponible",
         choice_1: "Paris 75e",
         choice_2: "Saint-Denis 93",
-        choice_3: "Lyon 69"
+        choice_3: "Lyon 69",
+        avancement: "Dossier incomplet"
       },
       {
         imageUrl: "https://picsum.photos/200/300",
@@ -206,7 +212,8 @@ export default props => {
         cursus_whisies: "Pas disponible",
         choice_1: "Saint-Denis 93",
         choice_2: "Lyon 69",
-        choice_3: "Paris 75"
+        choice_3: "Paris 75",
+        avancement: "Dossier validé"
       }
     ]
   });
@@ -361,7 +368,7 @@ export default props => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography color="textSecondary">
-          Vous pouvez exporter la liste des utilisateurs
+          Vous pouvez exporter la liste des candidats
         </Typography>
         <Typography variant="h4" style={{ fontWeight: "bold" }}>
           Liste des utilisateurs inscrits
@@ -374,97 +381,124 @@ export default props => {
           columns={state.columns}
           data={state.data}
           detailPanel={rowData => {
-            const userAvatar = `https://eu.ui-avatars.com/api/?name=${
-              rowData.firstname
-            }+${rowData.lastname.toUpperCase()}&background=fff&color=1875F0&bold=true`;
             return (
               <div style={{ padding: 50 }}>
-                <Typography variant="h5" style={{ fontWeight: "bold" }}>
-                  Etat Civil de {rowData.firstname}{" "}
-                  {rowData.lastname.toUpperCase()}
-                </Typography>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                <Box display="flex" justifyContent="flex-start">
-                  <Box display={{ xs: "none", lg: "block", md: "block" }}>
-                    <Avatar
-                      src={userAvatar}
+                <Grid container spacing={2}>
+                  <Grid item xs lg={6} md={6} sm={12}>
+                    <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                      Etat Civil de {rowData.firstname}{" "}
+                      {rowData.lastname.toUpperCase()}
+                      <Box display="flex" justifyContent="flex-start">
+                        <Box display={{ xs: "none", lg: "block", md: "block" }}>
+                          <Avatar
+                            src="https://picsum.photos/200/300"
+                            style={{
+                              borderRadius: 2,
+                              height: 150,
+                              width: 150,
+                              marginTop: 15
+                            }}
+                          />
+                        </Box>
+                        <Box display="inline" style={{ marginTop: 15 }}>
+                          <Typography style={{ marginLeft: 10 }}>
+                            {rowData.firstname} {rowData.lastname.toUpperCase()}
+                          </Typography>
+                          <Typography style={{ marginLeft: 10 }}>
+                            Pays de naissance : {rowData.country}
+                          </Typography>
+                          <Typography style={{ marginLeft: 10 }}>
+                            Adresse : {rowData.adress}
+                          </Typography>
+                          <Typography style={{ marginLeft: 10 }}>
+                            N° de téléphone : {rowData.tel}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs lg={6} md={6} sm={12}>
+                    <Typography
+                      variant="h5"
                       style={{
-                        borderRadius: 2,
-                        height: 150,
-                        width: 150
+                        fontWeight: "bold",
+                        marginTop: 25,
+                        marginBottom: 15
                       }}
-                    />
-                  </Box>
-                  <Box display="inline">
-                    <Typography style={{ marginLeft: 10 }}>
-                      {rowData.firstname} {rowData.lastname.toUpperCase()}
+                    >
+                      Situation actuelle de {rowData.firstname}{" "}
+                      {rowData.lastname.toUpperCase()}
                     </Typography>
-                    <Typography style={{ marginLeft: 10 }}>
-                      Pays de naissance : {rowData.country}
+                    <Typography>
+                      Intitulé de votre formation : {rowData.formation}
                     </Typography>
-                    <Typography style={{ marginLeft: 10 }}>
-                      Adresse : {rowData.adress}
+                    <Typography>
+                      Nom de votre formation : {rowData.name_formation}
                     </Typography>
-                    <Typography style={{ marginLeft: 10 }}>
-                      N° de téléphone : {rowData.tel}
+                    <Typography>
+                      Classe de votre formation : {rowData.class_formation}
                     </Typography>
-                  </Box>
-                </Box>
-                <Typography
-                  variant="h5"
-                  style={{ fontWeight: "bold", marginTop: 25 }}
-                >
-                  Situation actuelle de {rowData.firstname}{" "}
-                  {rowData.lastname.toUpperCase()}
-                </Typography>
+                  </Grid>
+                </Grid>
                 <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                <Typography>
-                  Intitulé de votre formation : {rowData.formation}
-                </Typography>
-                <Typography>
-                  Nom de votre formation : {rowData.name_formation}
-                </Typography>
-                <Typography>
-                  Classe de votre formation : {rowData.class_formation}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  style={{ fontWeight: "bold", marginTop: 25 }}
-                >
-                  Etablissement de {rowData.firstname}{" "}
-                  {rowData.lastname.toUpperCase()}
-                </Typography>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                <Typography>
-                  Nom de l'établissement : {rowData.name_school}
-                </Typography>
-                <Typography>
-                  Pays de l'établissement : {rowData.country_school}
-                </Typography>
-                <Typography>
-                  N° de rue : {rowData.number_adress_school}
-                </Typography>
-                <Typography>Adresse : {rowData.adress_school}</Typography>
-                <Typography>
-                  Département : {rowData.department_school}
-                </Typography>
-                <Typography>Ville : {rowData.city_school}</Typography>
-                <Typography
-                  variant="h5"
-                  style={{ fontWeight: "bold", marginTop: 25 }}
-                >
-                  Voeux de formation de {rowData.firstname}{" "}
-                  {rowData.lastname.toUpperCase()}
-                </Typography>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-                <Typography>
-                  Classe demandée : {rowData.class_whises}
-                </Typography>
-                <Typography>Spécialisation : {rowData.spe_whises}</Typography>
-                <Typography>Cursus : {rowData.cursus_whisies}</Typography>
-                <Typography>Choix campus n°1 : {rowData.choice_1}</Typography>
-                <Typography>Choix campus n°2 : {rowData.choice_2}</Typography>
-                <Typography>Choix campus n°3 : {rowData.choice_3}</Typography>
+                <Grid container spacing={2}>
+                  <Grid lg={6} sm={12} md={6}>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        fontWeight: "bold",
+                        marginTop: 25,
+                        marginBottom: 15
+                      }}
+                    >
+                      Etablissement de {rowData.firstname}{" "}
+                      {rowData.lastname.toUpperCase()}
+                    </Typography>
+                    <Typography>
+                      Nom de l'établissement : {rowData.name_school}
+                    </Typography>
+                    <Typography>
+                      Pays de l'établissement : {rowData.country_school}
+                    </Typography>
+                    <Typography>
+                      N° de rue : {rowData.number_adress_school}
+                    </Typography>
+                    <Typography>Adresse : {rowData.adress_school}</Typography>
+                    <Typography>
+                      Département : {rowData.department_school}
+                    </Typography>
+                    <Typography>Ville : {rowData.city_school}</Typography>
+                  </Grid>
+                  <Grid lg={6} md={6} sm={12}>
+                    <Typography
+                      variant="h5"
+                      style={{
+                        fontWeight: "bold",
+                        marginTop: 25,
+                        marginBottom: 15
+                      }}
+                    >
+                      Voeux de formation de {rowData.firstname}{" "}
+                      {rowData.lastname.toUpperCase()}
+                    </Typography>
+                    <Typography>
+                      Classe demandée : {rowData.class_whises}
+                    </Typography>
+                    <Typography>
+                      Spécialisation : {rowData.spe_whises}
+                    </Typography>
+                    <Typography>Cursus : {rowData.cursus_whisies}</Typography>
+                    <Typography>
+                      Choix campus n°1 : {rowData.choice_1}
+                    </Typography>
+                    <Typography>
+                      Choix campus n°2 : {rowData.choice_2}
+                    </Typography>
+                    <Typography>
+                      Choix campus n°3 : {rowData.choice_3}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </div>
             );
           }}
@@ -568,11 +602,17 @@ export default props => {
                     name: "step_update"
                   }}
                 >
-                  <MenuItem value={"step" + 0}>Dossier incomplet</MenuItem>
-                  <MenuItem value={"step" + 1}>En cours de traitement</MenuItem>
-                  <MenuItem value={"step" + 2}>Rendez-vous planifié</MenuItem>
-                  <MenuItem value={"step" + 3}>Dossier rejeté</MenuItem>
-                  <MenuItem value={"step" + 4}>Dossier validé</MenuItem>
+                  <MenuItem value={"Dossier incomplet"}>
+                    Dossier incomplet
+                  </MenuItem>
+                  <MenuItem value={"En cours de traitement"}>
+                    En cours de traitement
+                  </MenuItem>
+                  <MenuItem value={"Rendez-vous planifié"}>
+                    Rendez-vous planifié
+                  </MenuItem>
+                  <MenuItem value={"Dossier rejeté"}>Dossier rejeté</MenuItem>
+                  <MenuItem value={"Dossier validé"}>Dossier validé</MenuItem>
                 </Select>
               </FormControl>
             </form>

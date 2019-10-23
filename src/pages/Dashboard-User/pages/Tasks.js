@@ -31,42 +31,43 @@ export default props => {
       id: 1,
       title: "Renseignement généraux",
       route: Routes.GENERAL_INFO,
-      color: "#03a9f4",
-      name: "step1"
+      name: "step1",
+      completed: JSON.parse(localStorage.getItem("dossier")).step[0].done
     },
     {
       id: 2,
       title: "Situation actuelle",
       route: Routes.CURRENT_SITUATION,
-      color: "#039be5",
-      name: "step2"
+      name: "step2",
+      completed: JSON.parse(localStorage.getItem("dossier")).step[1].done
     },
     {
       id: 3,
       title: "Voeux de formation",
       route: Routes.WISHES_FORMATION,
-      color: "#0288d1",
-      name: "step3"
+      name: "step3",
+      completed: JSON.parse(localStorage.getItem("dossier")).step[2].done
     },
     {
       id: 4,
       title: "Pièces complementaires",
       route: Routes.UPLOAD_FILE,
-      color: "#0277bd",
-      name: "step4"
+      name: "step4",
+      completed: JSON.parse(localStorage.getItem("dossier")).step[3].done
     }
   ];
   const Todolists = pageArray
-    .filter(task => filteredSteps.includes(task.name))
+    // .filter(task => filteredSteps.includes(task.name))
     .map(task => (
       <Task
         id={task.id}
         title={task.title}
         route={task.route}
         color={task.color}
+        completed={task.completed}
       />
     ));
-  console.log(step);
+
   return (
     <>
       <NavBar />

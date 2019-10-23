@@ -1,4 +1,5 @@
 import React from "react";
+import Joi from "joi-browser";
 import {
   Grid,
   Box,
@@ -36,6 +37,25 @@ export default props => {
       ...oldValues,
       [event.target.name]: event.target.value
     }));
+  };
+  const schema = {
+    choix: Joi.string().required(),
+    nom_formation: Joi.string().required(),
+    formation: Joi.string().required()
+  };
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  const handleNextStep = e => {
+    const errors = validate();
+    console.log(errors);
   };
   console.log(values);
   return (
@@ -90,7 +110,38 @@ export default props => {
                 >
                   Situation actuelle
                 </Typography>
-
+                <Box
+                  display={{
+                    xs: "none",
+                    sm: "none",
+                    lg: "block",
+                    md: "block",
+                    xl: "block"
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "grid",
+                      marginLeft: 50
+                    }}
+                  >
+                    <ul className="progressbar">
+                      <li className="active">
+                        <Typography variant="subtitle2">
+                          Situation actuelle
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography variant="subtitle2">
+                          Établissement
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography variant="subtitle2">Fin</Typography>
+                      </li>
+                    </ul>
+                  </Box>
+                </Box>
                 <Typography
                   variant="h5"
                   style={{
@@ -160,7 +211,7 @@ export default props => {
                       required
                       ref={inputLabel}
                     >
-                      Nom de votre formation
+                      Votre formation
                     </InputLabel>
                     <Select
                       value={values.formation}

@@ -8,7 +8,6 @@ export default props => {
     <>
       <Typography style={{ color: "gray", marginBottom: 10, marginTop: 15 }}>
         Tutoriels
-        <i className="uil uil-angle-down" />
       </Typography>
       <Paper
         style={{
@@ -18,7 +17,7 @@ export default props => {
           height: "80%"
         }}
       >
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "auto" }}>
           <Box display="flex" alignItems="center">
             <Box flexGrow={1}>
               <Typography variant="h5" style={{ fontWeight: "bold" }}>

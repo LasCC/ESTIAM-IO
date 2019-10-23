@@ -86,7 +86,7 @@ export default function FullWidthTabs() {
               id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
               end="C5000"
-              type="line"
+              type="doughnut"
               title="Plateforme des utilisateurs"
               sheet="Traffic des utilisateurs"
               colors={[
@@ -113,7 +113,7 @@ export default function FullWidthTabs() {
             <RoboChart
               id="1aZ_RyDvlzowiIqVPm2y7ZbvHAW0bknuUir2V_dt8xYg"
               start="A15"
-              end="E5000"
+              end="D5000"
               type="line"
               title="Utilisateurs mobile"
               sheet="Traffic des utilisateurs mobile"

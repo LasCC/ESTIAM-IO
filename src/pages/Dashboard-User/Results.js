@@ -10,7 +10,6 @@ export default props => {
     <>
       <Typography style={{ color: "gray", marginBottom: 10 }}>
         Vos résultats
-        <i className="uil uil-angle-down" />
       </Typography>
       <Paper
         style={{

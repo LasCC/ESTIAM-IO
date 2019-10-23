@@ -18,7 +18,7 @@ export default props => {
         backgroundColor: "#1875F0",
         boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)",
         borderRadius: 10,
-        height: "75%"
+        height: "auto"
       }}
     >
       <Typography variant="h5" style={{ color: "white", fontWeight: "bold" }}>
@@ -26,7 +26,7 @@ export default props => {
       </Typography>
       <Divider style={{ marginTop: 15, marginBottom: 15 }} />
       <Typography style={{ marginTop: 20, color: "white" }}>
-        Nous souhaitons la bienvenue dans le dashboard {`${firstName}`}, ici
+        Nous souhaitons la bienvenue dans le dashboard {`${firstName}`} ici,
         vous avez la possibilité de reprendre, et voir l'avancement de votre
         dossier d'admission.
       </Typography>

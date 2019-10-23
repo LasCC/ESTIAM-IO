@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import React, { Suspense, lazy } from "react";
 import Routes from "./Routes";
 import LoginProvider from "./contexts/LoginContext";

@@ -2,7 +2,14 @@ import React, { useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import jwtdecode from "jwt-decode";
 import Routes from "../../Routes";
-import { Typography, Box, Avatar, Badge } from "@material-ui/core";
+import {
+  Typography,
+  Box,
+  Avatar,
+  Badge,
+  IconButton,
+  Drawer
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import MenuNavBar from "./MenuNavBar";
 import { Link } from "react-router-dom";
@@ -132,7 +139,9 @@ export default props => {
             }}
             variant="dot"
           >
+            {/* <IconButton onClick={toggleDrawer("right", true)}> */}
             <Avatar alt="imageProfile" src={avatarUrl} />
+            {/* </IconButton> */}
           </StyledBadge2>
         </Box>
         <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>

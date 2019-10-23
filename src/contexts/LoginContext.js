@@ -17,29 +17,13 @@ const LoginProvider = props => {
     isLogged: false,
     isActive: false
   });
-  // (function reloadState() {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     const tokendata = jwtdecode(token);
-  //     return setLoginState({
-  //       name: tokendata.firstName,
-  //       lastname: tokendata.lastName,
-  //       email: tokendata.email,
-  //       token: token,
-  //       numero_dossier: tokendata.candidatureID,
-  //       hasRegistred: true,
-  //       isLogged: true,
-  //       isActive: tokendata.isActive
-  //     });
-  //   }
-  //   return;
-  // })();
 
   const [httpError, setHttpError] = useState({
     clientError: false,
     serverError: false
   });
   const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
+  // const endpoint = "https://oriri.serveo.net";
   const handleLogin = async data => {
     console.log("login request ....", data);
 

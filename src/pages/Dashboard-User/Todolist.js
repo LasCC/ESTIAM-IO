@@ -14,7 +14,6 @@ export default props => {
     <div style={{ height: "100%", marginTop: 15 }}>
       <Typography style={{ color: "gray", marginBottom: 10 }}>
         Tâches
-        <i className="uil uil-angle-down" />
       </Typography>
       <Paper
         component="div"

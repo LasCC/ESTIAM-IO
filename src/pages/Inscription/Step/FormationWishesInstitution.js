@@ -14,6 +14,7 @@ import {
   FormHelperText,
   Container
 } from "@material-ui/core";
+import Joi from "joi-browser";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
@@ -31,7 +32,26 @@ export default props => {
     campus_choix_2: "",
     campus_choix_3: ""
   });
-
+  const schema = {
+    cursus_formation: Joi.string().required(),
+    campus_choix_1: Joi.string().required(),
+    campus_choix_2: Joi.string().required(),
+    campus_choix_3: Joi.string().required()
+  };
+  const validate = () => {
+    const result = Joi.validate(values, schema, { abortEarly: false });
+    console.log(result);
+    if (!result.error) return null;
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+    return errors;
+  };
+  const handleNextStep = e => {
+    const errors = validate();
+    console.log(errors);
+  };
   const handleChange = event => {
     setValues(oldValues => ({
       ...oldValues,
@@ -92,7 +112,38 @@ export default props => {
               >
                 Voeux de formation
               </Typography>
-
+              <Box
+                display={{
+                  xs: "none",
+                  sm: "none",
+                  lg: "block",
+                  md: "block",
+                  xl: "block"
+                }}
+              >
+                <Box
+                  style={{
+                    display: "grid",
+                    marginLeft: 50
+                  }}
+                >
+                  <ul className="progressbar">
+                    <li className="active">
+                      <Typography variant="subtitle2">
+                        Voeux de formation
+                      </Typography>
+                    </li>
+                    <li className="active">
+                      <Typography variant="subtitle2">
+                        Campus demandée
+                      </Typography>
+                    </li>
+                    <li>
+                      <Typography variant="subtitle2">Fin</Typography>
+                    </li>
+                  </ul>
+                </Box>
+              </Box>
               <Typography
                 variant="h5"
                 style={{
@@ -189,7 +240,7 @@ export default props => {
                   style={{ minWidth: 210, marginRight: 15 }}
                   margin="normal"
                 >
-                  <InputLabel htmlFor="campusEcole" required ref={inputLabel}>
+                  <InputLabel htmlFor="campusEcole" ref={inputLabel}>
                     Choix n°2
                   </InputLabel>
                   <Select
@@ -213,7 +264,7 @@ export default props => {
                   style={{ minWidth: 210, marginRight: 15 }}
                   margin="normal"
                 >
-                  <InputLabel htmlFor="campusEcole" required ref={inputLabel}>
+                  <InputLabel htmlFor="campusEcole" ref={inputLabel}>
                     Choix n°3
                   </InputLabel>
                   <Select

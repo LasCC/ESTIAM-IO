@@ -278,15 +278,18 @@ export default props => {
                 >
                   Créer mon compte
                 </Button>
-                <Divider style={{ marginTop: 25, marginBottom: 25 }} />
-                <Typography variant="subtitle2">
-                  <Link
-                    to={Routes.LOGIN}
-                    style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
+                <Link
+                  to={Routes.LOGIN}
+                  style={{ color: "rgb(0, 64, 128)", textDecoration: "none" }}
+                >
+                  <Button
+                    variant="outlined"
+                    style={{ marginTop: 10, color: "rgb(0, 64, 128)" }}
+                    fullWidth
                   >
                     Vous avez déjà un compte ?
-                  </Link>
-                </Typography>
+                  </Button>
+                </Link>
               </div>
             </Box>
           </Grid>
@@ -295,160 +298,3 @@ export default props => {
     </Container>
   );
 };
-
-{
-  /* BACKUP   
-   // <Container maxWidth="lg">
-    //   <NavBar />
-    //   <Grid container spacing={0}>
-    //     <Grid sm="auto" lg={3} md={3}>
-    //       <Box
-    //         display={{
-    //           xs: "none",
-    //           md: "block",
-    //           lg: "block"
-    //         }}
-    //         style={{
-    //           padding: 25,
-    //           backgroundImage: `url(https://i.imgur.com/okouGrD.png)`,
-    //           backgroundPosition: "right",
-    //           height: "90%",
-    //           backgroundColor: "white"
-    //         }}
-    //       >
-    //         <Link to={Routes.HOME} style={{ textDecoration: "none" }}>
-    //           <Button style={{ color: "white" }}>
-    //             <ArrowBackIosIcon />
-    //             Accueil
-    //           </Button>
-    //         </Link>
-    //       </Box>
-    //     </Grid>
-    //     <Grid item lg={9} md={9}>
-    //       <Box
-    //         display="flex"
-    //         alignItems="center"
-    //         css={{ height: "90%", marginTop: 25 }}
-    //       >
-    //         <Box
-    //           style={{
-    //             padding: 25,
-    //             backgroundColor: "white",
-    //             height: "100%",
-    //             width: "100%"
-    //           }}
-    //         >
-    //           <div className="fade-in-fwd">
-    //             <Typography
-    //               variant="h4"
-    //               style={{
-    //                 color: "#004080",
-    //                 fontWeight: "bold",
-    //                 marginBottom: 15
-    //               }}
-    //             >
-    //               Inscription
-    //             </Typography>
-    //             <Divider style={{ marginTop: 10, marginBottom: 10 }} />
-    //             <FormHelperText>
-    //               <strong>Attention</strong> : Veuillez entrer une adresse email
-    //               valide qui vous servira à valider votre compte
-    //             </FormHelperText>
-    //             {!errors && loginState.loginError && RegistrationErrorComponent}
-    //             {values.submitted &&
-    //               (lastNameError ||
-    //                 firstNameError ||
-    //                 emailError ||
-    //                 passwordError) &&
-    //               RegistrationErrorComponent}
-    //             {values.submitted &&
-    //               errors.hasOwnProperty("password") &&
-    //               PasswordErrormsg}
-    //             <TextField
-    //               variant="outlined"
-    //               label="Nom"
-    //               value={values.lastname}
-    //               onChange={handleChange("lastname")}
-    //               required
-    //               error={lastNameError}
-    //               fullWidth
-    //               type="text"
-    //               margin="normal"
-    //               style={{ marginTop: 20 }}
-    //             />
-    //             <TextField
-    //               variant="outlined"
-    //               label="Prénom"
-    //               value={values.firstname}
-    //               onChange={handleChange("firstname")}
-    //               required
-    //               error={firstNameError}
-    //               type="text"
-    //               margin="normal"
-    //               fullWidth
-    //               style={{ marginTop: 20 }}
-    //             />
-    //             <TextField
-    //               variant="outlined"
-    //               value={values.email}
-    //               label="Email"
-    //               onChange={handleChange("email")}
-    //               required
-    //               error={emailError}
-    //               fullWidth
-    //               type="email"
-    //               style={{ marginTop: 20 }}
-    //             />
-    //             <TextField
-    //               id="outlined-adornment-password"
-    //               variant="outlined"
-    //               fullWidth
-    //               required
-    //               error={passwordError}
-    //               type={values.showPassword ? "text" : "password"}
-    //               label="Mot de passe"
-    //               style={{ marginTop: 20 }}
-    //               value={values.password}
-    //               onChange={handleChange("password")}
-    //               InputProps={{
-    //                 endAdornment: (
-    //                   <InputAdornment position="end">
-    //                     <IconButton
-    //                       edge="end"
-    //                       aria-label="toggle password visibility"
-    //                       onClick={handleClickShowPassword}
-    //                       onMouseDown={handleMouseDownPassword}
-    //                     >
-    //                       {values.showPassword ? (
-    //                         <VisibilityOff />
-    //                       ) : (
-    //                         <Visibility />
-    //                       )}
-    //                     </IconButton>
-    //                   </InputAdornment>
-    //                 )
-    //               }}
-    //             />
-
-    //             <Button
-    //               variant="contained"
-    //               fullWidth
-    //               onClick={handleSubmit}
-    //               type="submit"
-    //               style={{
-    //                 display: "block",
-    //                 direction: "flex-end",
-    //                 marginTop: 25,
-    //                 backgroundColor: "#004080",
-    //                 color: "white"
-    //               }}
-    //             >
-    //               Confirmer l'inscription
-    //             </Button>
-    //           </div>
-    //         </Box>
-    //       </Box>
-    //     </Grid>
-    //   </Grid>
-    // </Container> */
-}

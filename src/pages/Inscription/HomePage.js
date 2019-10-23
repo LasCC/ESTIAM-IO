@@ -93,10 +93,10 @@ export default props => {
               style={{ color: "white", marginTop: 15 }}
               className="fade-in-fwd"
             >
-              Consequat ac felis donec et odio pellentesque. Sed viverra tellus
-              in hac mattis vulputate enim nulla aliquet porttitor lacus luctus.
-              At consectetur lorem donec massa sapien faucibus, Sagittis nisl
-              rhoncus mattis rhoncus urna neque !
+              L'avantage de le mettre en latin est que l'opérateur sait au
+              premier coup d'oeil que la page contenant ces lignes n'est pas
+              valide, et surtout l'attention du client n'est pas dérangée par le
+              contenu, il demeure concentré seulement sur l'aspect graphique.
             </Typography>
             <Link to="/connexion" style={{ textDecoration: "none" }}>
               <Button

@@ -76,10 +76,8 @@ export default props => {
                   terminer votre inscription !
                 </Typography>
                 <Box display="flex" justifyContent="center">
-                  <a
-                    href="https://rw4ji.csb.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={Routes.DASHBOARD_TASKS}
                     style={{ textDecoration: "none", marginRight: 15 }}
                   >
                     <Button
@@ -94,7 +92,7 @@ export default props => {
                     >
                       Poursuivre plus tard
                     </Button>
-                  </a>
+                  </Link>
                   <Link
                     to={Routes.UPLOAD_FILE}
                     style={{ textDecoration: "none" }}

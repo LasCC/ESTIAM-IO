@@ -6,9 +6,7 @@ import FirstCard from "./FirstCard";
 export default props => {
   return (
     <>
-      <Typography style={{ color: "gray" }}>
-        Dashboard <i className="uil uil-angle-down" />
-      </Typography>
+      <Typography style={{ color: "gray" }}>Dashboard</Typography>
       <Typography variant="h4" style={{ fontWeight: "bold", marginBottom: 10 }}>
         Vue d'ensemble
       </Typography>

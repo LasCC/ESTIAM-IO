@@ -77,7 +77,7 @@ export default props => {
                 </Typography>
                 <Box display="flex" justifyContent="center">
                   <Link
-                    to={Routes.DASHBOARD}
+                    to={Routes.DASHBOARD_TASKS}
                     style={{ textDecoration: "none", marginRight: 15 }}
                   >
                     <Button
