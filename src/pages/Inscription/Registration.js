@@ -47,8 +47,10 @@ export default props => {
     submitted: false
   });
 
-  const { handleRegistration, loginState } = useContext(LoginContext);
-  console.log(values, handleRegistration);
+  const { handleRegistration, loginState, httpError } = useContext(
+    LoginContext
+  );
+  console.log(httpError);
 
   const schema = {
     lastname: Joi.string()
@@ -114,6 +116,11 @@ export default props => {
   const PasswordErrormsg = (
     <Typography variant="subtitle2" color="error" className="shake-horizontal">
       Le mot de passe doit contenir au minimum 5 caractères
+    </Typography>
+  );
+  const LoginErrorComponent = (
+    <Typography variant="subtitle2" color="error" className="shake-horizontal">
+      Adresse email déjà enregistré
     </Typography>
   );
   return (
@@ -200,6 +207,7 @@ export default props => {
                 {values.submitted &&
                   errors.hasOwnProperty("password") &&
                   PasswordErrormsg}
+                {httpError.status === 409 && LoginErrorComponent}
                 <TextField
                   variant="outlined"
                   label="Nom"
@@ -231,7 +239,8 @@ export default props => {
                   onChange={handleChange("email")}
                   required
                   error={
-                    values.submitted && errors.hasOwnProperty("emailError")
+                    (values.submitted && errors.hasOwnProperty("emailError")) ||
+                    httpError.status === 409
                   }
                   fullWidth
                   type="email"

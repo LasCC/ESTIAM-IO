@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Joi from "joi-browser";
 import {
   Grid,
@@ -28,8 +28,22 @@ export default props => {
     nom_formation: "",
     formation: ""
   });
-
+  const [errors, setErrors] = useState({});
   const handleChangeTextField = name => event => {
+    if (name === "choix") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      if (!isWellformated) return;
+    } else if (name === "nom_formation") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      if (!isWellformated) return;
+    } else if (name === "formation") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      console.log(!isWellformated);
+      if (!isWellformated) return;
+    }
     setValues({ ...values, [name]: event.target.value });
   };
   const handleChange = event => {
@@ -43,6 +57,7 @@ export default props => {
     nom_formation: Joi.string().required(),
     formation: Joi.string().required()
   };
+
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
     console.log(result);
@@ -56,6 +71,9 @@ export default props => {
   const handleNextStep = e => {
     const errors = validate();
     console.log(errors);
+    setValues({ ...values, submitted: true });
+    setErrors(errors || {});
+    if (errors) return;
   };
   console.log(values);
   return (
@@ -164,6 +182,7 @@ export default props => {
                   <Select
                     value={values.choix}
                     onChange={handleChange}
+                    error={values.submitted && errors.hasOwnProperty("choix")}
                     labelWidth={labelWidth}
                     inputProps={{
                       name: "choix",
@@ -197,9 +216,12 @@ export default props => {
                     onChange={handleChangeTextField("nom_formation")}
                     label="Nom de votre formation"
                     placeholder="Bac S"
+                    error={
+                      values.submitted && errors.hasOwnProperty("nom_formation")
+                    }
                     type="text"
                     margin="normal"
-                    inputProps={{ "aria-label": "Numéro de rue" }}
+                    inputProps={{ "aria-label": "Nom de votre formation" }}
                   />
                   <FormControl
                     variant="outlined"
@@ -216,6 +238,9 @@ export default props => {
                     <Select
                       value={values.formation}
                       onChange={handleChange}
+                      error={
+                        values.submitted && errors.hasOwnProperty("formation")
+                      }
                       labelWidth={labelWidth}
                       inputProps={{
                         name: "formation",
@@ -247,22 +272,18 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  <Link
-                    to={Routes.CURRENT_SITUATION_PREV_SCHOOL}
-                    style={{ textDecoration: "none" }}
+                  <Button
+                    variant="contained"
+                    onClick={handleNextStep}
+                    color="primary"
+                    style={{
+                      marginTop: 15,
+                      color: "white",
+                      backgroundColor: "#004080"
+                    }}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        marginTop: 15,
-                        color: "white",
-                        backgroundColor: "#004080"
-                      }}
-                    >
-                      Continuer
-                    </Button>
-                  </Link>
+                    Continuer
+                  </Button>
                 </div>
               </div>
             </Box>

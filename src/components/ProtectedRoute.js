@@ -11,7 +11,10 @@ const ProtectedRoute = ({ path, component: Component, render, ...rest }) => {
         if (!checkAuth())
           return (
             <Redirect
-              to={{ pathname: "/connexion", state: { from: props.location } }}
+              to={{
+                pathname: "/connexion/administration",
+                state: { from: props.location }
+              }}
             />
           );
         return Component ? <Component {...props} /> : render(props);

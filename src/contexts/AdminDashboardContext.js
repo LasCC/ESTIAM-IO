@@ -14,11 +14,11 @@ const AdminDashboardProvider = props => {
     serverError: false
   });
   const endpoint = "";
-  const handleAdminLogin = async data => {
+  const handleAdminLogin = async (data, path) => {
     let res;
     try {
       console.log("login try ");
-      res = await http.post(endpoint + "/auth/login", data);
+      res = await http.post(endpoint + "/admin/login", data);
       console.log(res);
     } catch (ex) {
       console.log("*****************", ex);
@@ -45,7 +45,7 @@ const AdminDashboardProvider = props => {
       localStorage.setItem("token", token);
       setHttpError({ serverError: false, clientError: false });
       console.log("######firsttime logged : ", tokendata.firstLogged);
-      return window.location.replace("/administration");
+      return props.history.push(path);
     } catch (ex) {
       console.log("invalid Token", ex);
       throw ex;
@@ -106,13 +106,13 @@ const AdminDashboardProvider = props => {
   };
   return (
     <AdminDashboardContext.Provider
-      candidature={{ data, candidatures, handleAdminLogin }}
+      value={{ data, candidatures, handleAdminLogin, checkAuth, httpError }}
     >
       <Switch>{props.children}</Switch>
     </AdminDashboardContext.Provider>
   );
 };
-export default AdminDashboardProvider;
+export default withRouter(AdminDashboardProvider);
 
 /*
 envoie une requete post vers le serveur avec un token admin

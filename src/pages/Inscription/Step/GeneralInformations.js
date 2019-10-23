@@ -20,6 +20,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBack";
 import { Link } from "react-router-dom";
 import RegistedUserNav from "../components/RegistedUserNav";
 import { Candidature } from "../../../contexts/CandidatureContext";
+import MuiPhoneNumber from "material-ui-phone-number";
 import Routes from "../../../Routes";
 
 export default props => {
@@ -274,7 +275,6 @@ export default props => {
                       max: 500
                     }}
                   />
-
                   <TextField
                     style={{ width: "auto", marginRight: 15 }}
                     variant="outlined"
@@ -287,7 +287,6 @@ export default props => {
                     margin="normal"
                     inputProps={{ "aria-label": "Adresse de résidence" }}
                   />
-
                   <FormControl
                     variant="outlined"
                     style={{ minWidth: 210, marginRight: 15 }}
@@ -316,7 +315,6 @@ export default props => {
                       ))}
                     </Select>
                   </FormControl>
-
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
@@ -347,21 +345,16 @@ export default props => {
                       "aria-label": "Code postale"
                     }}
                   />
-                  <TextField
-                    style={{ width: "auto", marginRight: 15 }}
+                  <MuiPhoneNumber
+                    defaultCountry={"fr"}
+                    margin="normal"
                     variant="outlined"
                     value={values.numero_tel}
+                    // onChange={handleChangeTextField("numero_tel")}
                     error={
                       values.submitted && errors.hasOwnProperty("numero_tel")
                     }
-                    label="Numéro de téléphone"
-                    required
-                    onChange={handleChangeTextField("numero_tel")}
-                    type="tel"
-                    margin="normal"
-                    inputProps={{
-                      "aria-label": "Numéro de téléphone"
-                    }}
+                    style={{ width: "auto", marginRight: 15 }}
                   />
                 </form>
                 <div>

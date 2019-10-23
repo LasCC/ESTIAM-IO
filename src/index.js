@@ -6,6 +6,7 @@ import CandidatureProvider from "./contexts/CandidatureContext";
 import AdminDashboardProvider from "./contexts/AdminDashboardContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import UnProtectedRoute from "./components/UnProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 import ReactDOM from "react-dom";
 import Loader from "./components/Loader";
 import "./components/ChatFacebook";

@@ -48,6 +48,9 @@ export default props => {
   const handleNextStep = e => {
     const errors = validate();
     console.log(errors);
+    setValues({ ...values, submitted: true });
+    setErrors(errors || {});
+    if (errors) return;
   };
   const pays = require("../../../data/pays.json");
   const departement =
@@ -61,6 +64,26 @@ export default props => {
   }, []);
 
   const handleChangeTextField = name => event => {
+    if (name === "nom_etablissement") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      if (!isWellformated) return;
+    } else if (name === "numero_rue_etablissement") {
+      const pattern = new RegExp(/^[0-9]*$/gm);
+      const isWellformated = pattern.test(event.target.value);
+      console.log(!isWellformated);
+      if (!isWellformated) return;
+    } else if (name === "adresse_etablissement") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      console.log(!isWellformated);
+      if (!isWellformated) return;
+    } else if (name === "ville_etablissement") {
+      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
+      const isWellformated = pattern.test(event.target.value);
+      console.log(!isWellformated);
+      if (!isWellformated) return;
+    }
     setValues({ ...values, [name]: event.target.value });
   };
   const handleChange = event => {
@@ -171,6 +194,10 @@ export default props => {
                     variant="outlined"
                     onChange={handleChangeTextField("nom_etablissement")}
                     label="Nom de l'établissement"
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("nom_etablissement")
+                    }
                     placeholder="Gustave EIFFEL"
                     type="text"
                     margin="normal"
@@ -191,6 +218,10 @@ export default props => {
                     <Select
                       value={values.pays_etablissement}
                       onChange={handleChange}
+                      error={
+                        values.submitted &&
+                        errors.hasOwnProperty("pays_etablissement")
+                      }
                       labelWidth={labelWidth}
                       inputProps={{
                         name: "pays_etablissement",
@@ -210,7 +241,10 @@ export default props => {
                     variant="outlined"
                     onChange={handleChangeTextField("numero_rue_etablissement")}
                     label="Numéro de rue"
-                    placeholder=""
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("numero_rue_etablissement")
+                    }
                     type="number"
                     margin="normal"
                     inputProps={{
@@ -224,7 +258,10 @@ export default props => {
                     variant="outlined"
                     onChange={handleChangeTextField("adresse_etablissement")}
                     label="Adresse"
-                    placeholder=""
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("adresse_etablissement")
+                    }
                     type="text"
                     margin="normal"
                     inputProps={{ "aria-label": "Adresse de l'etablissement" }}
@@ -245,6 +282,10 @@ export default props => {
                     <Select
                       value={values.departement_etablissement}
                       onChange={handleChange}
+                      error={
+                        values.submitted &&
+                        errors.hasOwnProperty("departement_etablissement")
+                      }
                       labelWidth={labelWidth}
                       inputProps={{
                         name: "departement_etablissement",
@@ -261,6 +302,10 @@ export default props => {
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("ville_etablissement")
+                    }
                     onChange={handleChangeTextField("ville_etablissement")}
                     label="Ville de l'établissement"
                     type="text"
@@ -284,22 +329,18 @@ export default props => {
                       Retour
                     </Button>
                   </Link>
-                  <Link
-                    to={Routes.CURRENT_SITUATION_END}
-                    style={{ textDecoration: "none" }}
+                  <Button
+                    variant="contained"
+                    onClick={handleNextStep}
+                    color="primary"
+                    style={{
+                      marginTop: 15,
+                      color: "white",
+                      backgroundColor: "#004080"
+                    }}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{
-                        marginTop: 15,
-                        color: "white",
-                        backgroundColor: "#004080"
-                      }}
-                    >
-                      Continuer
-                    </Button>
-                  </Link>
+                    Continuer
+                  </Button>
                 </div>
               </div>
             </Box>

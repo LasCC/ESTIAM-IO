@@ -81,12 +81,11 @@ const LoginProvider = props => {
     try {
       res = await http.post(endpoint + "/auth/register", data);
     } catch (ex) {
-      console.log(res);
+      console.log(ex.response.status);
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
-        serverError: expectedError,
-        clientError: !expectedError
+        status: ex.response.status
       });
     }
 
@@ -164,8 +163,8 @@ const LoginProvider = props => {
     // return loginState.isLogged;
 
     try {
-      const { exp, isActive } = jwtdecode(token);
-      if (!isActive) return false;
+      const { exp, isActive, isAdmin } = jwtdecode(token);
+      if (!isActive || isAdmin) return false;
       const now = new Date().getTime() / 1000;
       const dateExp = new Date(exp * 1000);
       const dateNow = new Date(now * 1000);
