@@ -74,6 +74,11 @@ export default props => {
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
     if (errors) return;
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
+    console.log("dossier", dossier);
+    dossier.candidat.situation = values;
+    localStorage.setItem("dossier", JSON.stringify(dossier));
+    return props.history.push(Routes.CURRENT_SITUATION_PREV_SCHOOL);
   };
   console.log(values);
   return (

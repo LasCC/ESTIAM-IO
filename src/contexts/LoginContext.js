@@ -163,8 +163,8 @@ const LoginProvider = props => {
     // return loginState.isLogged;
 
     try {
-      const { exp, isActive, isAdmin } = jwtdecode(token);
-      if (!isActive || isAdmin) return false;
+      const { exp, isActive } = jwtdecode(token);
+      if (!isActive) return false;
       const now = new Date().getTime() / 1000;
       const dateExp = new Date(exp * 1000);
       const dateNow = new Date(now * 1000);
@@ -177,8 +177,8 @@ const LoginProvider = props => {
       console.log("isexp", exp < now, dayRelativeDifference, "mn");
       if (exp < now) {
         console.log("TOKEN expired !");
-        return false;
         handleLogout();
+        return false;
       }
     } catch (ex) {
       console.log(ex);

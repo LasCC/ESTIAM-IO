@@ -195,17 +195,17 @@ function App() {
                 path={Routes.ADMIN_DASHBOARD_FORGOT_PASSWORD}
                 component={AdminDashboardForgotPassword}
               />
-              <Route
+              <AdminRoute
                 exact
                 path={Routes.ADMIN_DASHBOARD}
                 component={AdminDashboard}
               />
-              <Route
+              <AdminRoute
                 exact
                 path={Routes.ADMIN_DASHBOARD_FILES}
                 component={AdminDashboardFiles}
               />
-              <Route
+              <AdminRoute
                 exact
                 path={Routes.ADMIN_DASHBOARD_GLOBALVISION}
                 component={AdminDashboardGlobalVision}

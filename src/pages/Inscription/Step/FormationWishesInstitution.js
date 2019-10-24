@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Candidature } from "../../../contexts/CandidatureContext";
 import {
   Grid,
   Box,
@@ -21,6 +22,8 @@ import RegistedUserNav from "../components/RegistedUserNav";
 import Routes from "../../../Routes";
 
 export default props => {
+  const { updateDossier } = useContext(Candidature);
+  const [errors, setErrors] = useState({});
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -30,13 +33,21 @@ export default props => {
     cursus_formation: "",
     campus_choix_1: "",
     campus_choix_2: "",
-    campus_choix_3: ""
+    campus_choix_3: "",
+    submitted: false
   });
   const schema = {
-    cursus_formation: Joi.string().required(),
+    cursus_formation: Joi.string()
+      .allow("")
+      .optional(),
     campus_choix_1: Joi.string().required(),
-    campus_choix_2: Joi.string().required(),
-    campus_choix_3: Joi.string().required()
+    campus_choix_2: Joi.string()
+      .allow("")
+      .optional(),
+    campus_choix_3: Joi.string()
+      .allow("")
+      .optional(),
+    submitted: Joi.boolean()
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
@@ -51,6 +62,21 @@ export default props => {
   const handleNextStep = e => {
     const errors = validate();
     console.log(errors);
+    setValues({ ...values, submitted: true });
+    setErrors(errors || {});
+    if (errors) return;
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
+    dossier.candidat.voeux = {
+      ...dossier.candidat.voeux,
+      ...values
+    };
+    dossier.step[2].done = true;
+    localStorage.setItem("dossier", JSON.stringify(dossier));
+    console.log(dossier);
+    updateDossier(
+      { candidat: dossier.candidat, step: dossier.step },
+      Routes.WISHES_END
+    );
   };
   const handleChange = event => {
     setValues(oldValues => ({
@@ -74,6 +100,13 @@ export default props => {
       Tarbes 65 (établissement Pradeau-La Sède)
     </MenuItem>
   ];
+  const disabledLogic =
+    JSON.parse(localStorage.getItem("dossier")).candidat.voeux
+      .annee_demandee !== "4th MBA Data Solution Architect & NWoW" &&
+    JSON.parse(localStorage.getItem("dossier")).candidat.voeux
+      .annee_demandee !== "4th année Master of Science";
+  console.log(disabledLogic);
+
   return (
     <Container maxWidth="lg">
       <RegistedUserNav />
@@ -162,30 +195,35 @@ export default props => {
                   onChange={handleChange}
                 >
                   <FormControlLabel
+                    disabled={disabledLogic}
                     value="finance"
                     control={<Radio color="primary" />}
                     label="Finance"
                     labelPlacement="end"
                   />
                   <FormControlLabel
+                    disabled={disabledLogic}
                     value="e_industries"
                     control={<Radio color="primary" />}
                     label="E-Industries"
                     labelPlacement="end"
                   />
                   <FormControlLabel
+                    disabled={disabledLogic}
                     value="digital_medias"
                     control={<Radio color="primary" />}
                     label="Digital Médias"
                     labelPlacement="end"
                   />
                   <FormControlLabel
+                    disabled={disabledLogic}
                     value="mobile_management"
                     control={<Radio color="primary" />}
                     label="Entreprise Mobile Management"
                     labelPlacement="end"
                   />
                   <FormControlLabel
+                    disabled={disabledLogic}
                     value="retail"
                     control={<Radio color="primary" />}
                     label="Retail"
@@ -223,6 +261,10 @@ export default props => {
                     value={values.campus_choix_1}
                     onChange={handleChange}
                     labelWidth={labelWidth}
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("campus_choix_1")
+                    }
                     inputProps={{
                       name: "campus_choix_1",
                       "aria-label": "Campus choix"
@@ -247,6 +289,10 @@ export default props => {
                     value={values.campus_choix_2}
                     onChange={handleChange}
                     labelWidth={labelWidth}
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("campus_choix_2")
+                    }
                     inputProps={{
                       name: "campus_choix_2",
                       "aria-label": "Campus choix"
@@ -270,6 +316,10 @@ export default props => {
                   <Select
                     value={values.campus_choix_3}
                     onChange={handleChange}
+                    error={
+                      values.submitted &&
+                      errors.hasOwnProperty("campus_choix_3")
+                    }
                     labelWidth={labelWidth}
                     inputProps={{
                       name: "campus_choix_3",
@@ -305,19 +355,18 @@ export default props => {
                     Retour
                   </Button>
                 </Link>
-                <Link to={Routes.WISHES_END} style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{
-                      marginTop: 25,
-                      color: "white",
-                      backgroundColor: "#004080"
-                    }}
-                  >
-                    Continuer
-                  </Button>
-                </Link>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNextStep}
+                  style={{
+                    marginTop: 25,
+                    color: "white",
+                    backgroundColor: "#004080"
+                  }}
+                >
+                  Continuer
+                </Button>
               </div>
             </div>
           </Box>

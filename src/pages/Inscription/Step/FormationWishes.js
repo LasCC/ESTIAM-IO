@@ -19,12 +19,10 @@ import Routes from "../../../Routes";
 
 export default props => {
   const [values, setValues] = React.useState({
-    annee_demandee: "",
+    annee_demandee: "1st year",
     specialisation: ""
   });
   const handleChange = event => {
-    /*    if(values.annee_demandee.split(" ")[0] !== "4th")
-    setValues(oldValues => ({specialisation : ""}))  TO FIX LATER*/
     setValues(oldValues => ({
       ...oldValues,
       [event.target.name]: event.target.value
@@ -32,7 +30,7 @@ export default props => {
   };
   const schema = {
     annee_demandee: Joi.string().required(),
-    specialisation: Joi.string().required()
+    specialisation: Joi.string()
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
@@ -47,6 +45,12 @@ export default props => {
   const handleNextStep = e => {
     const errors = validate();
     console.log(errors);
+
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
+    console.log("dossier", dossier);
+    dossier.candidat.voeux = values;
+    localStorage.setItem("dossier", JSON.stringify(dossier));
+    return props.history.push(Routes.WISHES_CAMPUS);
   };
   console.log(values);
   const radiologic =
@@ -154,7 +158,7 @@ export default props => {
                   aria-label="gender"
                   name="annee_demandee"
                   onChange={handleChange}
-                  value={values.name}
+                  value={values.annee_demandee}
                 >
                   <FormControlLabel
                     value="1st year"
@@ -270,22 +274,19 @@ export default props => {
                     Retour
                   </Button>
                 </Link>
-                <Link
-                  to={Routes.WISHES_CAMPUS}
-                  style={{ textDecoration: "none" }}
+
+                <Button
+                  variant="contained"
+                  onClick={handleNextStep}
+                  color="primary"
+                  style={{
+                    marginTop: 25,
+                    color: "white",
+                    backgroundColor: "#004080"
+                  }}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{
-                      marginTop: 25,
-                      color: "white",
-                      backgroundColor: "#004080"
-                    }}
-                  >
-                    Continuer
-                  </Button>
-                </Link>
+                  Continuer
+                </Button>
               </div>
             </div>
           </Box>

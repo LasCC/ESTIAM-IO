@@ -80,14 +80,11 @@ export default props => {
       const isWellformated = pattern.test(event.target.value);
       if (!isWellformated) return;
     } else if (name === "numero_tel") {
-      console.log("here");
-      const pattern = new RegExp(/^$|^[0-9]{1,14}$/);
-      const isWellformated = pattern.test(event.target.value);
-      console.log(!isWellformated);
-      if (!isWellformated) return;
+      return setValues({ ...values, [name]: event });
     }
     setValues({ ...values, [name]: event.target.value });
   };
+
   const handleChange = event => {
     setValues(oldValues => ({
       ...oldValues,
@@ -171,8 +168,8 @@ export default props => {
                 >
                   <Box
                     style={{
-                      display: "grid",
-                      marginLeft: 50
+                      display: "flex",
+                      justifyContent: "center"
                     }}
                   >
                     <ul className="progressbar">
@@ -350,7 +347,7 @@ export default props => {
                     margin="normal"
                     variant="outlined"
                     value={values.numero_tel}
-                    // onChange={handleChangeTextField("numero_tel")}
+                    onChange={handleChangeTextField("numero_tel")}
                     error={
                       values.submitted && errors.hasOwnProperty("numero_tel")
                     }

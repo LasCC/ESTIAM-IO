@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Candidature } from "../../../contexts/CandidatureContext";
 import Joi from "joi-browser";
 import {
   Grid,
@@ -18,6 +19,7 @@ import RegistedUserNav from "../components/RegistedUserNav";
 import Routes from "../../../Routes";
 
 export default props => {
+  const { updateDossier } = useContext(Candidature);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     nom_etablissement: "",
@@ -51,6 +53,18 @@ export default props => {
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
     if (errors) return;
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
+    dossier.candidat.situation = {
+      ...dossier.candidat.situation,
+      ...values
+    };
+    dossier.step[1].done = true;
+    localStorage.setItem("dossier", JSON.stringify(dossier));
+    console.log(dossier);
+    updateDossier(
+      { candidat: dossier.candidat, step: dossier.step },
+      Routes.CURRENT_SITUATION_END
+    );
   };
   const pays = require("../../../data/pays.json");
   const departement =

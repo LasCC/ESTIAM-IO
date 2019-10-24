@@ -132,7 +132,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
-  const avatarUrl = `https://eu.ui-avatars.com/api/?name=michel+platini&background=fff&color=1875F0&bold=true`;
+  const { firstName, lastName } = JSON.parse(localStorage.getItem("user"));
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=fff&color=1875F0&bold=true`;
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -184,7 +186,7 @@ export default props => {
             </StyledBadge2>
           </Box>
           <Box p={2} display={{ xs: "none", lg: "block", sm: "block" }}>
-            <Typography>Michel Platini</Typography>
+            <Typography>{`${firstName} ${lastName}`}</Typography>
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
             <Link to={Routes.ADMIN_DASHBOARD_LOGIN}>

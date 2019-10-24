@@ -140,6 +140,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
+  const { firstName, lastName } = JSON.parse(localStorage.getItem("user"));
+  const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=fff&color=1875F0&bold=true`;
+
   const [state, setState] = React.useState({
     columns: [
       {
@@ -217,7 +220,7 @@ export default props => {
       }
     ]
   });
-  const avatarUrl = `https://eu.ui-avatars.com/api/?name=michel+platini&background=fff&color=1875F0&bold=true`;
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -286,7 +289,7 @@ export default props => {
             </StyledBadge2>
           </Box>
           <Box p={2} display={{ xs: "none", lg: "block", sm: "block" }}>
-            <Typography>Michel Platini</Typography>
+            <Typography>{`${firstName} ${lastName}`}</Typography>
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
             <Tooltip title="Déconnexion">
@@ -572,12 +575,6 @@ export default props => {
             actionsColumnIndex: -1,
             exportButton: true,
             exportFileName: "export_user_dashboard",
-            // exportCsv: (columns, data) => {
-            //   // alert(
-            //   //   "Faut export tout le bordel y'a" + data.length + " rangées"
-            //   // Actuellement il export que les lignes qui il y a sur la page, mais il faut trouver un moyen de tout export d'un coup avec data.lenght
-            //   // );
-            // },
             headerStyle: {
               backgroundColor: "#1976d2",
               color: "white"

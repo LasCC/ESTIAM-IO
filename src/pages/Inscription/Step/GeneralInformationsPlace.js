@@ -69,7 +69,7 @@ export default props => {
 
       if (!isWellFormated) return;
     } else if (name === "code_postale_naissance") {
-      const pattern = new RegExp(/^$|^[0-9]{1,7}$/);
+      const pattern = new RegExp(/^$|^([a-zA-Z0-9_-]){1,10}$/);
       const isWellFormated = pattern.test(event.target.value);
       if (!isWellFormated) return;
     }

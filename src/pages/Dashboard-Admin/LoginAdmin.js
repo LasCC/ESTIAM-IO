@@ -12,15 +12,21 @@ import {
   IconButton
 } from "@material-ui/core";
 import Routes from "../../Routes";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Joi from "joi-browser";
 document.body.style.backgroundColor = "#fafafa";
 
-export default props => {
-  const { handleAdminLogin, httpError } = useContext(AdminDashboardContext);
+const LoginAdmin = props => {
+  const { handleAdminLogin, httpError, checkAuth } = useContext(
+    AdminDashboardContext
+  );
+  if (checkAuth()) {
+    return window.location.replace(Routes.ADMIN_DASHBOARD);
+  }
+
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
@@ -54,7 +60,8 @@ export default props => {
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     const errors = validate();
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
@@ -76,6 +83,8 @@ export default props => {
     </Typography>
   );
   console.log(values);
+
+  console.log("isAuth : ", checkAuth());
   return (
     <Container maxWidth="lg">
       <Box
@@ -160,7 +169,7 @@ export default props => {
 
           <Button
             fullWidth
-            onClick={handleAdminLogin}
+            onClick={handleSubmit}
             style={{
               marginTop: 15,
               color: "white",
@@ -190,3 +199,5 @@ export default props => {
     </Container>
   );
 };
+
+export default withRouter(LoginAdmin);

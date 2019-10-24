@@ -13,9 +13,10 @@ const AdminDashboardProvider = props => {
     clientError: false,
     serverError: false
   });
-  const endpoint = "";
+  const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
   const handleAdminLogin = async (data, path) => {
     let res;
+    console.log(data);
     try {
       console.log("login try ");
       res = await http.post(endpoint + "/admin/login", data);
@@ -42,10 +43,18 @@ const AdminDashboardProvider = props => {
         setHttpError({ clientError: true, serverError: false });
         return;
       }
-      localStorage.setItem("token", token);
+      localStorage.setItem("admintoken", token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          firstName: tokendata.firstName,
+          lastName: tokendata.lastName,
+          isAdmin: tokendata.isAdmin
+        })
+      );
       setHttpError({ serverError: false, clientError: false });
       console.log("######firsttime logged : ", tokendata.firstLogged);
-      return props.history.push(path);
+      props.history.push(path);
     } catch (ex) {
       console.log("invalid Token", ex);
       throw ex;
@@ -54,23 +63,13 @@ const AdminDashboardProvider = props => {
 
   const handleLogout = () => {
     console.log("logged out .....");
-    localStorage.removeItem("token");
-    setLoginState({
-      name: "",
-      lastname: "",
-      email: "",
-      numero_dossier: "",
-      token: "",
-      hasRegistred: false,
-      isLogged: false,
-      isActive: false
-    });
-    window.location.replace("/");
+    localStorage.removeItem("admintoken");
+    window.location.replace("/connexion/administration");
   };
   const checkAuth = () => {
     console.log("checking...");
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("admintoken");
     // in proddatadatadata
     if (!token) {
       return false;
@@ -80,8 +79,8 @@ const AdminDashboardProvider = props => {
     // return loginState.isLogged;
 
     try {
-      const { exp, isActive, isAdmin } = jwtdecode(token);
-      if (!isActive || !isAdmin) return false;
+      const { exp, isAdmin } = jwtdecode(token);
+      if (!isAdmin) return false;
       const now = new Date().getTime() / 1000;
       const dateExp = new Date(exp * 1000);
       const dateNow = new Date(now * 1000);
@@ -94,8 +93,8 @@ const AdminDashboardProvider = props => {
       console.log("isexp", exp < now, dayRelativeDifference, "mn");
       if (exp < now) {
         console.log("TOKEN expired !");
-        return false;
         handleLogout();
+        return false;
       }
     } catch (ex) {
       console.log(ex);
@@ -106,13 +105,20 @@ const AdminDashboardProvider = props => {
   };
   return (
     <AdminDashboardContext.Provider
-      value={{ data, candidatures, handleAdminLogin, checkAuth, httpError }}
+      value={{
+        data,
+        candidatures,
+        handleAdminLogin,
+        checkAuth,
+        httpError,
+        handleLogout
+      }}
     >
       <Switch>{props.children}</Switch>
     </AdminDashboardContext.Provider>
   );
 };
-export default withRouter(AdminDashboardProvider);
+export default AdminDashboardProvider;
 
 /*
 envoie une requete post vers le serveur avec un token admin

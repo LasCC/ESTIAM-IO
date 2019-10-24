@@ -10,9 +10,9 @@ const routes = {
   END_INFO: "/renseignement/fin",
   RECAPITULATION: "/recapitulatif",
   DASHBOARD: "/dashboard",
-  DASHBOARD_TASKS: "/dashboard/taches", // !  :  /taches
-  DASHBOARD_HELP: "/dashboard/aide", // ! current : aide
-  WISHES_END: "/voeux-formation/fin", // incorrect route !
+  DASHBOARD_TASKS: "/dashboard/taches",
+  DASHBOARD_HELP: "/dashboard/aide",
+  WISHES_END: "/voeux-formation/fin",
   UPLOAD_FILE: "/pieces-complementaires",
   ADMIN_DASHBOARD_LOGIN: "/connexion/administration",
   ADMIN_DASHBOARD_FORGOT_PASSWORD: "/mot-de-passe-oublie/administration",
