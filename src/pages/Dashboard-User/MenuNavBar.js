@@ -11,7 +11,9 @@ import {
   Divider,
   ListItemAvatar,
   Avatar,
-  Typography
+  Typography,
+  Box,
+  Badge
 } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
@@ -20,6 +22,7 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import MenuIcon from "@material-ui/icons/Menu";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 import { LoginContext } from "../../contexts/LoginContext";
 const useStyles = makeStyles({
   list: {
@@ -29,6 +32,34 @@ const useStyles = makeStyles({
     width: "auto"
   }
 });
+
+const StyledBadge2 = withStyles(theme => ({
+  badge: {
+    backgroundColor: "#44b700",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "70%",
+      height: "70%",
+      borderRadius: "50%",
+      animation: "$ripple 1.2s infinite ease-in-out",
+      border: "1px solid #44b700",
+      content: '""'
+    }
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0
+    }
+  }
+}))(Badge);
 
 export default function TemporaryDrawer() {
   const { handleLogout, loginState } = useContext(LoginContext);
@@ -133,7 +164,24 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
+        <StyledBadge2
+          overlap="circle"
+          style={{ cursor: "pointer" }}
+          onClick={toggleDrawer("right", true)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right"
+          }}
+          variant="dot"
+        >
+          <Avatar alt="imageProfile" src={avatarUrl} />
+        </StyledBadge2>
+      </Box>
+      <Box p={1} display={{ xs: "none", lg: "block", sm: "block" }}>
+        <Typography>{`${firstName} ${lastName.toUpperCase()}`}</Typography>
+      </Box>
       <IconButton onClick={toggleDrawer("right", true)}>
         <MenuIcon />
       </IconButton>

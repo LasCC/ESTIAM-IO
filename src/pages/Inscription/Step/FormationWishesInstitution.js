@@ -87,24 +87,30 @@ export default props => {
   console.log(values);
   console.log(props);
   let campusList = [
-    <MenuItem value={"Paris"}>Paris 75 (Porte de Lilas)</MenuItem>,
-    <MenuItem value={"Saint-Denis"}>
+    <MenuItem value={"Paris 75 (Porte de Lilas)"}>
+      Paris 75 (Porte de Lilas)
+    </MenuItem>,
+    <MenuItem value={"Saint-Denis 93 (établissement J.B. de La Salle)"}>
       Saint-Denis 93 (établissement J.B. de La Salle)
     </MenuItem>,
-    <MenuItem value={"Bourges"}>
+    <MenuItem value={"Bourges 18 (établissement J.B. de La Salle)"}>
       Bourges 18 (établissement J.B. de La Salle)
     </MenuItem>,
-    <MenuItem value={"Lyon"}>Lyon 69 (av. Jean Jaurès, 7ᵉ)</MenuItem>,
-    <MenuItem value={"Metz"}>Metz 57 (établissement Jean XXIII)</MenuItem>,
-    <MenuItem value={"Trabes"}>
+    <MenuItem value={"Lyon 69 (av. Jean Jaurès, 7ᵉ)"}>
+      Lyon 69 (av. Jean Jaurès, 7ᵉ)
+    </MenuItem>,
+    <MenuItem value={"Metz 57 (établissement Jean XXIII)"}>
+      Metz 57 (établissement Jean XXIII)
+    </MenuItem>,
+    <MenuItem value={"Tarbes 65 (établissement Pradeau-La Sède)"}>
       Tarbes 65 (établissement Pradeau-La Sède)
     </MenuItem>
   ];
   const disabledLogic =
     JSON.parse(localStorage.getItem("dossier")).candidat.voeux
-      .annee_demandee !== "4th MBA Data Solution Architect & NWoW" &&
+      .annee_demandee !== "4ème MBA Data Solution Architect & NWoW" &&
     JSON.parse(localStorage.getItem("dossier")).candidat.voeux
-      .annee_demandee !== "4th année Master of Science";
+      .annee_demandee !== "4ème année Master of Science";
   console.log(disabledLogic);
 
   return (

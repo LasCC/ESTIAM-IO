@@ -53,36 +53,69 @@ export default props => {
           children
           style={{
             padding: 25,
-            backgroundColor: "#01579b",
+            backgroundColor: "#2196f3",
             borderRadius: 10,
             boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)"
           }}
         >
-          <Typography
-            variant="h5"
-            style={{
-              fontWeight: "bold",
-              color: "white"
-            }}
-          >
-            {uncompletedStep} dossier{uncompletedStep > 1 ? "s" : ""} manquant
-          </Typography>
-          <Typography style={{ color: "white", marginTop: 10 }}>
-            Dans cette partie il va vous être demandé de compléter un ou
-            plusieurs formulaires, vous avez la possibilité de les remplir à
-            tout moment de la journée.
-          </Typography>
-          <Link to={Routes.DASHBOARD_TASKS} style={{ textDecoration: "none" }}>
-            <Button
-              variant="outlined"
+          <Box style={{ display: !uncompletedStep ? "none" : "block" }}>
+            <Typography
+              variant="h5"
               style={{
-                color: "white",
-                marginTop: 15
+                fontWeight: "bold",
+                color: "white"
               }}
             >
-              Voir les dossiers
-            </Button>
-          </Link>
+              {uncompletedStep} dossier{uncompletedStep > 1 ? "s" : ""} manquant
+            </Typography>
+            <Typography style={{ color: "white", marginTop: 10 }}>
+              Dans cette partie il va vous être demandé de compléter un ou
+              plusieurs formulaires, vous avez la possibilité de les remplir à
+              tout moment de la journée.
+            </Typography>
+            <Link
+              to={Routes.DASHBOARD_TASKS}
+              style={{ textDecoration: "none" }}
+            >
+              <Button
+                variant="outlined"
+                style={{
+                  color: "white",
+                  borderColor: "white",
+                  marginTop: 15
+                }}
+              >
+                Voir les dossiers
+              </Button>
+            </Link>
+          </Box>
+
+          <Box style={{ display: !uncompletedStep ? "block" : "none" }}>
+            <Typography
+              variant="h5"
+              style={{
+                fontWeight: "bold",
+                color: "white"
+              }}
+            >
+              Bravo tu as tout fini
+            </Typography>
+            <Typography style={{ color: "white", marginTop: 10 }}>
+              ok
+            </Typography>
+            <a href={Routes.RECAPITULATION} style={{ textDecoration: "none" }}>
+              <Button
+                variant="outlined"
+                style={{
+                  color: "white",
+                  borderColor: "white",
+                  marginTop: 15
+                }}
+              >
+                Récapitulatif de votre dossier
+              </Button>
+            </a>
+          </Box>
         </Paper>
       </Paper>
     </div>

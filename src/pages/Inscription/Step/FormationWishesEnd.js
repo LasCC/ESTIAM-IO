@@ -78,32 +78,16 @@ export default props => {
                 <Box display="flex" justifyContent="center">
                   <Link
                     to={Routes.DASHBOARD_TASKS}
-                    style={{ textDecoration: "none", marginRight: 15 }}
-                  >
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      style={{
-                        color: "#004080",
-                        fontWeight: "bold",
-                        borderColor: "#004080",
-                        marginTop: 25
-                      }}
-                    >
-                      Poursuivre plus tard
-                    </Button>
-                  </Link>
-                  <Link
-                    to={Routes.UPLOAD_FILE}
                     style={{ textDecoration: "none" }}
                   >
                     <Button
                       variant="contained"
                       color="primary"
                       style={{
-                        marginTop: 25,
                         color: "white",
-                        backgroundColor: "#004080"
+                        fontWeight: "bold",
+                        backgroundColor: "#004080",
+                        marginTop: 25
                       }}
                     >
                       Poursuivre l'inscription

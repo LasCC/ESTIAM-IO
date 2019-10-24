@@ -19,7 +19,7 @@ import Routes from "../../../Routes";
 
 export default props => {
   const [values, setValues] = React.useState({
-    annee_demandee: "1st year",
+    annee_demandee: "1ère année",
     specialisation: ""
   });
   const handleChange = event => {
@@ -54,9 +54,9 @@ export default props => {
   };
   console.log(values);
   const radiologic =
-    values.annee_demandee === "1st year" ||
-    values.annee_demandee === "2nd year" ||
-    values.annee_demandee === "3rd year" ||
+    values.annee_demandee === "1ère année" ||
+    values.annee_demandee === "2ème année" ||
+    values.annee_demandee === "3ème année" ||
     values.annee_demandee === "";
   return (
     <Container maxWidth="lg">
@@ -161,31 +161,31 @@ export default props => {
                   value={values.annee_demandee}
                 >
                   <FormControlLabel
-                    value="1st year"
+                    value="1ère année"
                     control={<Radio color="primary" />}
                     label="1ère année"
                     labelPlacement="end"
                   />
                   <FormControlLabel
-                    value="2nd year"
+                    value="2ème année"
                     control={<Radio color="primary" />}
                     label="2ème année"
                     labelPlacement="end"
                   />
                   <FormControlLabel
-                    value="3rd year"
+                    value="3ème année"
                     control={<Radio color="primary" />}
                     label="3ème année"
                     labelPlacement="end"
                   />
                   <FormControlLabel
-                    value="4th année Master of Science"
+                    value="4ème année Master of Science"
                     control={<Radio color="primary" />}
                     label="4ème année Master of Science"
                     labelPlacement="end"
                   />
                   <FormControlLabel
-                    value="4th MBA Data Solution Architect & NWoW"
+                    value="4ème MBA Data Solution Architect & NWoW"
                     control={<Radio color="primary" />}
                     label="4ème année MBA Data Solution Architect & NWoW"
                     labelPlacement="end"

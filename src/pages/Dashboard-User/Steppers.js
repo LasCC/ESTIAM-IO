@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
 }));
 function getSteps() {
   return [
-    "Dossier incomplet",
     "En cours de traitement",
+    "Dossier incomplet",
     "Rendez-vous planifié",
     "Dossier rejeté",
     "Dossier validé"

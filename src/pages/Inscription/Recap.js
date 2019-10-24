@@ -29,6 +29,8 @@ import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import Routes from "../../Routes";
 
 export default props => {
+  const { candidat } = JSON.parse(localStorage.getItem("dossier"));
+  console.log(candidat);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -126,25 +128,31 @@ export default props => {
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
                       >
-                        Michel Platini
+                        {`${candidat.nom} ${candidat.prenom}`}
                       </Typography>
                       <Typography
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
                       >
-                        Pays de naissance : France
+                        Pays de naissance :{" "}
+                        {candidat.informations.pays_naissance}
                       </Typography>
                       <Typography
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
                       >
-                        Adresse: 12 rue des fleures 75001 Paris
+                        Adresse:{" "}
+                        {`${candidat.informations.numero_rue} ${
+                          candidat.informations.adresse
+                        } ${candidat.informations.code_postale} ${
+                          candidat.informations.ville
+                        }`}
                       </Typography>
                       <Typography
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
                       >
-                        Numéro de téléphone : 0602305564
+                        Numéro de téléphone :{candidat.informations.numero_tel}
                       </Typography>
                     </Box>
                   </Box>
@@ -176,17 +184,18 @@ export default props => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Intitulé de votre formation : Etudiant
+                        Intitulé de votre formation : {candidat.situation.choix}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Nom de votre formation : BAC S
+                        Nom de votre formation :{" "}
+                        {candidat.situation.nom_formation}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Nom de votre formation : Terminale
+                        Formation : {candidat.situation.formation}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
@@ -219,32 +228,36 @@ export default props => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Nom de l'établissement : Gustave Eiffel
+                        Nom de l'établissement :{" "}
+                        {candidat.situation.nom_etablissement}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Pays de l'établissement : Paris
+                        Pays de l'établissement :{" "}
+                        {candidat.situation.pays_etablissement}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        N° de rue : 34
+                        N° de rue :{" "}
+                        {candidat.situation.numero_rue_etablissement}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Adresse : Rue du maine
+                        Adresse : {candidat.situation.adresse_etablissement}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Département : Seine-Saint-denis
+                        Département :{" "}
+                        {candidat.situation.departement_etablissement}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Ville : Sevran
+                        Ville : {candidat.situation.ville_etablissement}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
@@ -297,12 +310,13 @@ export default props => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Classe demandée : 1ère année
+                        Classe demandée : {candidat.voeux.annee_demandee}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Spécialisation : Pas disponible
+                        Spécialisation :{" "}
+                        {candidat.voeux.specialisation || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
@@ -335,22 +349,24 @@ export default props => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Cursus : Pas disponible
+                        Cursus : {candidat.voeux.cursus_formation || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Choix campus n°1 : Paris 75
+                        Choix campus n°1 : {candidat.voeux.campus_choix_1}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Choix campus n°2 : Saint-Denis 93
+                        Choix campus n°2 :{" "}
+                        {candidat.voeux.campus_choix_2 || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Choix campus n°3 : Lyon 69
+                        Choix campus n°3 :{" "}
+                        {candidat.voeux.campus_choix_3 || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
