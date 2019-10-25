@@ -9,6 +9,7 @@ const AdminDashboardProvider = props => {
   const [data, setData] = useState({});
   const [loginState, setLoginState] = useState({});
   const [candidatures, setCandidatures] = useState([]);
+  const [candidaturesReady, setCandidaturesReady] = useState(false);
   const [httpError, setHttpError] = useState({
     clientError: false,
     serverError: false
@@ -103,6 +104,56 @@ const AdminDashboardProvider = props => {
 
     return true;
   };
+
+  const fetchCandidature = () => {
+    const token = localStorage.getItem("admintoken");
+    http
+      .get(endpoint + "/api/candidature/all", {
+        headers: {
+          "x-auth-token": token
+        }
+      })
+      .then(res => {
+        console.log(res);
+        const administrationStepsName = [
+          "En cours de traitement",
+          "Dossier Incomplet",
+          "Rendez-vous plannifié",
+          "Dossier rejeté",
+          "Dossier validé"
+        ];
+        res.data.map(
+          c =>
+            (c.nameAdministrationStep =
+              administrationStepsName[c.administrationStep])
+        );
+        setCandidatures(res.data);
+        setCandidaturesReady(true);
+      })
+      .catch(err => console.log(err));
+  };
+  const updateBackState = data => {
+    http
+      .put(endpoint + `/api/candidature/step/${data.id}`, { step: data.step })
+      .then(res => {
+        const administrationStepsName = [
+          "En cours de traitement",
+          "Dossier Incomplet",
+          "Rendez-vous plannifié",
+          "Dossier rejeté",
+          "Dossier validé"
+        ];
+        res.data.data.map(
+          c =>
+            (c.nameAdministrationStep =
+              administrationStepsName[c.administrationStep])
+        );
+        setCandidatures(res.data.data);
+        console.log("done !");
+      })
+      .catch(err => console.log(err));
+    console.log("updating ... ");
+  };
   return (
     <AdminDashboardContext.Provider
       value={{
@@ -111,7 +162,11 @@ const AdminDashboardProvider = props => {
         handleAdminLogin,
         checkAuth,
         httpError,
-        handleLogout
+        handleLogout,
+        fetchCandidature,
+        candidaturesReady,
+        endpoint,
+        updateBackState
       }}
     >
       <Switch>{props.children}</Switch>

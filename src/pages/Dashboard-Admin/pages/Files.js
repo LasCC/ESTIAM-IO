@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import clsx from "clsx";
+import { AdminDashboardContext } from "../../../contexts/AdminDashboardContext";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -26,7 +27,8 @@ import {
   Button,
   InputLabel,
   MenuItem,
-  Grid
+  Grid,
+  CircularProgress
 } from "@material-ui/core";
 import Routes from "../../../Routes";
 import MaterialTable from "material-table";
@@ -140,90 +142,37 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
+  const {
+    handleLogout,
+    candidaturesReady,
+    fetchCandidature,
+    candidatures,
+    updateBackState
+  } = useContext(AdminDashboardContext);
   const { firstName, lastName } = JSON.parse(localStorage.getItem("user"));
   const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=fff&color=1875F0&bold=true`;
-
-  const [state, setState] = React.useState({
-    columns: [
-      {
-        title: "Photo d'identité",
-        field: "imageUrl",
-        render: rowData => (
-          <img
-            alt="imageProfile"
-            src={rowData.imageUrl}
-            style={{ borderRadius: 50, width: 50, height: 50 }}
-          />
-        )
-      },
-      { title: "Nom", field: "firstname" },
-      { title: "Prénom", field: "lastname" },
-      { title: "Campus", field: "choice_1" },
-      {
-        title: "Pays",
-        field: "country"
-      },
-      {
-        title: "Avancement du dossier",
-        field: "avancement"
-      }
-    ],
-
-    data: [
-      {
-        imageUrl: "https://picsum.photos/200/300",
-        firstname: "Mehmet",
-        lastname: "Baran",
-        country: "France",
-        adress: "12 rue des fleures 75001 Paris",
-        tel: "0603310775",
-        formation: "Etudiant",
-        name_formation: "BAC S",
-        class_formation: "Terminale",
-        name_school: "Lycée Gustave Eiffel",
-        country_school: "Pairs",
-        number_adress_school: "2",
-        adress_school: "Rue du maine",
-        department_school: "Seine-Saint-Denis",
-        city_school: "Sevran",
-        class_whises: "1ère année",
-        spe_whises: "Pas disponible",
-        cursus_whisies: "Pas disponible",
-        choice_1: "Paris 75e",
-        choice_2: "Saint-Denis 93",
-        choice_3: "Lyon 69",
-        avancement: "Dossier incomplet"
-      },
-      {
-        imageUrl: "https://picsum.photos/200/300",
-        firstname: "Boubi",
-        lastname: "Bouba",
-        country: "France",
-        adress: "12 rue des fleures 75001 Paris",
-        tel: "0603310775",
-        formation: "Etudiant",
-        name_formation: "BAC S",
-        class_formation: "Terminale",
-        name_school: "Lycée Gustave Eiffel",
-        country_school: "Pairs",
-        number_adress_school: "2",
-        adress_school: "Rue du maine",
-        department_school: "Seine-Saint-Denis",
-        city_school: "Sevran",
-        class_whises: "1ère année",
-        spe_whises: "Pas disponible",
-        cursus_whisies: "Pas disponible",
-        choice_1: "Saint-Denis 93",
-        choice_2: "Lyon 69",
-        choice_3: "Paris 75",
-        avancement: "Dossier validé"
-      }
-    ]
-  });
-
+  const [state, setState] = React.useState({});
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [specificUser, setSpecificUser] = React.useState({});
+  useEffect(() => fetchCandidature(), []);
+
+  // Loader chargement des données
+  // if (candidaturesReady)
+  //   return (
+  //     <Box
+  //       display="flex"
+  //       alignItems="center"
+  //       justifyContent="center"
+  //       style={{ height: "90vh" }}
+  //     >
+  //       <CircularProgress style={{ marginRight: 15, color: "#2979ff" }} />
+  //       <Typography color="textSecondary">
+  //         Chargement des données en cours...
+  //       </Typography>
+  //     </Box>
+  //   );
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -249,7 +198,8 @@ export default props => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-  console.log(values);
+  // console.log(values);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -293,7 +243,7 @@ export default props => {
           </Box>
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
             <Tooltip title="Déconnexion">
-              <IconButton>
+              <IconButton onClick={handleLogout}>
                 <PowerSettingsNewIcon style={{ color: "white" }} />
               </IconButton>
             </Tooltip>
@@ -380,21 +330,52 @@ export default props => {
         <Divider style={{ marginTop: 20, marginBottom: 20 }} />
 
         <MaterialTable
-          title="Dossiers des utilisateurs inscrits"
-          columns={state.columns}
-          data={state.data}
-          detailPanel={rowData => {
+          title="Dossiers complet des utilisateurs inscrits"
+          columns={[
+            {
+              title: "Avatar",
+              field: "avatar",
+              render: query => (
+                <img
+                  style={{ height: 60, width: 60, borderRadius: "50%" }}
+                  src={`data:image;base64, ${query.candidat.photo_identitee}`}
+                  alt="avatar"
+                />
+              )
+            },
+            { title: "Nom", field: "candidat.nom" },
+            { title: "Prénom", field: "candidat.prenom" },
+            {
+              title: "Classe demandée",
+              field: "candidat.voeux.annee_demandee"
+            },
+            {
+              title: "Campus demandée",
+              field: "candidat.voeux.campus_choix_1"
+            },
+            { title: "Pays", field: "candidat.informations.pays" },
+            { title: "Avancement du dossier", field: "nameAdministrationStep" }
+          ]}
+          data={candidatures}
+          // onClick on row >
+          detailPanel={query => {
             return (
               <div style={{ padding: 50 }}>
                 <Grid container spacing={2}>
                   <Grid item xs lg={6} md={6} sm={12}>
                     <Typography variant="h5" style={{ fontWeight: "bold" }}>
-                      Etat Civil de {rowData.firstname}{" "}
-                      {rowData.lastname.toUpperCase()}
-                      <Box display="flex" justifyContent="flex-start">
+                      Etat Civil de{" "}
+                      {`${query.candidat.nom} ${query.candidat.prenom}`}
+                      <Box
+                        display="flex"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                      >
                         <Box display={{ xs: "none", lg: "block", md: "block" }}>
                           <Avatar
-                            src="https://picsum.photos/200/300"
+                            src={`data:image;base64, ${
+                              query.candidat.photo_identitee
+                            }`}
                             style={{
                               borderRadius: 2,
                               height: 150,
@@ -404,17 +385,32 @@ export default props => {
                           />
                         </Box>
                         <Box display="inline" style={{ marginTop: 15 }}>
-                          <Typography style={{ marginLeft: 10 }}>
-                            {rowData.firstname} {rowData.lastname.toUpperCase()}
+                          <Typography
+                            variant="body1"
+                            style={{ marginLeft: 10 }}
+                          >
+                            Pays de naissance :{" "}
+                            {query.candidat.informations.pays_naissance}
                           </Typography>
-                          <Typography style={{ marginLeft: 10 }}>
-                            Pays de naissance : {rowData.country}
+                          <Typography
+                            variant="body1"
+                            style={{ marginLeft: 10 }}
+                          >
+                            Adresse :{" "}
+                            {`${query.candidat.informations.numero_rue} ${
+                              query.candidat.informations.adresse
+                            } ${query.candidat.informations.code_postale} ${
+                              query.candidat.informations.ville
+                            }`}
                           </Typography>
-                          <Typography style={{ marginLeft: 10 }}>
-                            Adresse : {rowData.adress}
-                          </Typography>
-                          <Typography style={{ marginLeft: 10 }}>
-                            N° de téléphone : {rowData.tel}
+                          <Typography
+                            variant="body1"
+                            style={{ marginLeft: 10 }}
+                          >
+                            N° de téléphone :{" "}
+                            <strong>
+                              {query.candidat.informations.numero_tel}
+                            </strong>
                           </Typography>
                         </Box>
                       </Box>
@@ -429,21 +425,23 @@ export default props => {
                         marginBottom: 15
                       }}
                     >
-                      Situation actuelle de {rowData.firstname}{" "}
-                      {rowData.lastname.toUpperCase()}
+                      Situation actuelle de{" "}
+                      {`${query.candidat.nom} ${query.candidat.prenom}`}
                     </Typography>
-                    <Typography>
-                      Intitulé de votre formation : {rowData.formation}
+                    <Typography variant="body1">
+                      Intitulé de votre formation :{" "}
+                      {query.candidat.situation.choix}
                     </Typography>
-                    <Typography>
-                      Nom de votre formation : {rowData.name_formation}
+                    <Typography variant="body1">
+                      Nom de votre formation :{" "}
+                      {query.candidat.situation.nom_formation}
                     </Typography>
-                    <Typography>
-                      Classe de votre formation : {rowData.class_formation}
+                    <Typography variant="body1">
+                      Formation : {query.candidat.situation.formation}
                     </Typography>
                   </Grid>
                 </Grid>
-                <Divider style={{ marginTop: 10, marginBottom: 10 }} />
+                <Divider style={{ marginTop: 20, marginBottom: 10 }} />
                 <Grid container spacing={2}>
                   <Grid lg={6} sm={12} md={6}>
                     <Typography
@@ -454,23 +452,31 @@ export default props => {
                         marginBottom: 15
                       }}
                     >
-                      Etablissement de {rowData.firstname}{" "}
-                      {rowData.lastname.toUpperCase()}
+                      Établissement scolaire fréquenté de{" "}
+                      {`${query.candidat.nom} ${query.candidat.prenom}`}
                     </Typography>
-                    <Typography>
-                      Nom de l'établissement : {rowData.name_school}
+                    <Typography variant="body1">
+                      Nom de l'établissement :{" "}
+                      {query.candidat.situation.nom_etablissement}
                     </Typography>
-                    <Typography>
-                      Pays de l'établissement : {rowData.country_school}
+                    <Typography variant="body1">
+                      Pays de l'établissement :{" "}
+                      {query.candidat.situation.pays_etablissement}
                     </Typography>
-                    <Typography>
-                      N° de rue : {rowData.number_adress_school}
+                    <Typography variant="body1">
+                      N° de rue :{" "}
+                      {query.candidat.situation.numero_rue_etablissement}
                     </Typography>
-                    <Typography>Adresse : {rowData.adress_school}</Typography>
-                    <Typography>
-                      Département : {rowData.department_school}
+                    <Typography variant="body1">
+                      Adresse : {query.candidat.situation.adresse_etablissement}
                     </Typography>
-                    <Typography>Ville : {rowData.city_school}</Typography>
+                    <Typography variant="body1">
+                      Département :{" "}
+                      {query.candidat.situation.departement_etablissement}
+                    </Typography>
+                    <Typography variant="body1">
+                      Ville : {query.candidat.situation.ville_etablissement}
+                    </Typography>
                   </Grid>
                   <Grid lg={6} md={6} sm={12}>
                     <Typography
@@ -481,65 +487,75 @@ export default props => {
                         marginBottom: 15
                       }}
                     >
-                      Voeux de formation de {rowData.firstname}{" "}
-                      {rowData.lastname.toUpperCase()}
+                      Voeux de formation de{" "}
+                      {`${query.candidat.nom} ${query.candidat.prenom}`}
                     </Typography>
-                    <Typography>
-                      Classe demandée : {rowData.class_whises}
+                    <Typography variant="body1">
+                      Classe demandée : {query.candidat.voeux.annee_demandee}
                     </Typography>
-                    <Typography>
-                      Spécialisation : {rowData.spe_whises}
+                    <Typography variant="body1">
+                      Spécialisation :{" "}
+                      {query.candidat.voeux.specialisation || "N/A"}
                     </Typography>
-                    <Typography>Cursus : {rowData.cursus_whisies}</Typography>
-                    <Typography>
-                      Choix campus n°1 : {rowData.choice_1}
+                    <Typography variant="body1">
+                      Cursus : {query.candidat.voeux.cursus_formation || "N/A"}
                     </Typography>
-                    <Typography>
-                      Choix campus n°2 : {rowData.choice_2}
+                    <Typography variant="body1">
+                      Choix campus n°1 : {query.candidat.voeux.campus_choix_1}
                     </Typography>
-                    <Typography>
-                      Choix campus n°3 : {rowData.choice_3}
+                    <Typography variant="body1">
+                      Choix campus n°2 :{" "}
+                      {query.candidat.voeux.campus_choix_2 || "N/A"}
+                    </Typography>
+                    <Typography variant="body1">
+                      Choix campus n°3 :{" "}
+                      {query.candidat.voeux.campus_choix_3 || "N/A"}
                     </Typography>
                   </Grid>
                 </Grid>
               </div>
             );
           }}
-          onRowClick={(event, rowData, togglePanel) => togglePanel()}
+          onRowClick={(event, query, togglePanel) => togglePanel()}
           actions={[
             {
               icon: "check",
               tooltip: "Validé l'inscription",
-              onClick: (event, rowData) =>
+              onClick: (event, query) => {
+                updateBackState({ id: query._id, step: 4 });
                 alert(
-                  "Vous avez validé l'utilisateur " +
-                    rowData.firstname +
+                  "Vous avez validé l'inscription de " +
+                    query.candidat.nom +
                     " " +
-                    rowData.lastname
-                )
+                    query.candidat.prenom
+                );
+              }
             },
             {
               icon: "clear",
               tooltip: "Désapprouver l'inscription",
-              onClick: (event, rowData) =>
+              onClick: (event, query) => {
+                updateBackState({ id: query._id, step: 3 });
                 alert(
                   "Vous venez de désapprouver l'inscription de " +
-                    rowData.firstname +
+                    query.candidat.nom +
                     " " +
-                    rowData.lastname
-                )
+                    query.candidat.prenom
+                );
+              }
             },
             {
               icon: "dashboardicon",
               tooltip: "Mettre à jour l'utilisateur",
-              onClick: (event, rowData) => {
+              onClick: (event, query) => {
                 handleClickOpen();
+                setSpecificUser(query);
                 console.log(
                   "Utilisateur sélectionné" +
                     " " +
-                    rowData.firstname +
+                    query.candidat.nom +
                     " " +
-                    rowData.lastname
+                    query.candidat.prenom
                 );
               }
             }
@@ -548,7 +564,7 @@ export default props => {
             body: {
               deleteTooltip: "Supprimer",
               editTooltip: "Edit",
-              emptyDataSourceMessage: "Aucun utilisateurs trouvé",
+              emptyDataSourceMessage: "Aucun utilisateur trouvé",
               editRow: {
                 deleteText: "Êtes-vous sur de bien vouloir faire ça ?",
                 cancelTooltip: "Annuler",
@@ -563,7 +579,7 @@ export default props => {
             },
             pagination: {
               labelRowsSelect: "rangées",
-              labelDisplayedRows: "{from}-{to} of {count}",
+              labelDisplayedRows: "{from}-{to} sur {count}",
               firstTooltip: "Première page",
               previousTooltip: "Précédent",
               nextTooltip: "Suivant",
@@ -599,17 +615,11 @@ export default props => {
                     name: "step_update"
                   }}
                 >
-                  <MenuItem value={"Dossier incomplet"}>
-                    Dossier incomplet
-                  </MenuItem>
-                  <MenuItem value={"En cours de traitement"}>
-                    En cours de traitement
-                  </MenuItem>
-                  <MenuItem value={"Rendez-vous planifié"}>
-                    Rendez-vous planifié
-                  </MenuItem>
-                  <MenuItem value={"Dossier rejeté"}>Dossier rejeté</MenuItem>
-                  <MenuItem value={"Dossier validé"}>Dossier validé</MenuItem>
+                  <MenuItem value={0}>En cours de traitement</MenuItem>
+                  <MenuItem value={1}>Dossier incomplet</MenuItem>
+                  <MenuItem value={2}>Rendez-vous planifié</MenuItem>
+                  <MenuItem value={3}>Dossier rejeté</MenuItem>
+                  <MenuItem value={4}>Dossier validé</MenuItem>
                 </Select>
               </FormControl>
             </form>
@@ -618,7 +628,17 @@ export default props => {
             <Button onClick={handleClose} color="primary">
               Annuler
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button
+              onClick={() => {
+                updateBackState({
+                  id: specificUser._id,
+                  step: values.step_update
+                });
+                console.log(specificUser);
+                handleClose();
+              }}
+              color="primary"
+            >
               Confirmer
             </Button>
           </DialogActions>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import clsx from "clsx";
+import { AdminDashboardContext } from "../../../contexts/AdminDashboardContext";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -132,6 +133,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
+  const { handleLogout } = useContext(AdminDashboardContext);
   const { firstName, lastName } = JSON.parse(localStorage.getItem("user"));
   const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=fff&color=1875F0&bold=true`;
 
@@ -191,7 +193,7 @@ export default props => {
           <Box display={{ xs: "none", lg: "block", sm: "block" }}>
             <Link to={Routes.ADMIN_DASHBOARD_LOGIN}>
               <Tooltip title="Déconnexion">
-                <IconButton>
+                <IconButton onClick={handleLogout}>
                   <PowerSettingsNewIcon style={{ color: "white" }} />
                 </IconButton>
               </Tooltip>

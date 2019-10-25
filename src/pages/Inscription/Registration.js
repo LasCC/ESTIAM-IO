@@ -88,8 +88,12 @@ export default props => {
     setValues({ ...values, submitted: true });
     if (errors) return;
     handleRegistration({
-      lastName: values.lastname.trim(),
-      firstName: values.firstname.trim(),
+      lastName: values.lastname.trim().toUpperCase(),
+      firstName:
+        values.firstname
+          .trim()
+          .toUpperCase()
+          .charAt(0) + values.firstname.toLowerCase().trim(),
       email: values.email.trim(),
       password: values.password
     });

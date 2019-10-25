@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
+import jwtdecode from "jwt-decode";
 import { Paper, Typography, Divider, Button, Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Routes from "../../Routes";
 import { Candidature } from "../../contexts/CandidatureContext";
 
 export default props => {
+  const { firstName } = jwtdecode(localStorage.getItem("token"));
   const { dossier } = useContext(Candidature);
   console.log(dossier.step);
   const uncompletedStep = 4 - dossier.step.filter(step => step.done).length;
@@ -53,7 +55,7 @@ export default props => {
           children
           style={{
             padding: 25,
-            backgroundColor: "#2196f3",
+            backgroundColor: "#2979ff",
             borderRadius: 10,
             boxShadow: "0px 10px 18px -2px rgba(0,0,0,0.18)"
           }}
@@ -98,10 +100,14 @@ export default props => {
                 color: "white"
               }}
             >
-              Bravo tu as tout fini
+              {`${firstName}`}, vous avez terminé inscription !
             </Typography>
             <Typography style={{ color: "white", marginTop: 10 }}>
-              ok
+              Vous pouvez dès à présent regarder le récapitulatif de votre
+              dossier d'admission et en profité pour regarder l'avancement de
+              votre dossier. <br />
+              Nous vous enverrons un mail une fois que votre dossier est
+              accepté.
             </Typography>
             <a href={Routes.RECAPITULATION} style={{ textDecoration: "none" }}>
               <Button

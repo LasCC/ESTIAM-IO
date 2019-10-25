@@ -119,7 +119,8 @@ export default props => {
                   <Box display="flex" justifyContent="flex-start">
                     <Box display={{ xs: "none", lg: "block", md: "block" }}>
                       <Avatar
-                        src="https://picsum.photos/200/300"
+                        src={`data:image;base64, ${candidat.photo_identitee}`}
+                        alt="photoIdentité"
                         style={{ borderRadius: 2, height: 100, width: 100 }}
                       />
                     </Box>
@@ -152,7 +153,7 @@ export default props => {
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
                       >
-                        Numéro de téléphone :{candidat.informations.numero_tel}
+                        Numéro de téléphone : {candidat.informations.numero_tel}
                       </Typography>
                     </Box>
                   </Box>

@@ -31,7 +31,10 @@ export default props => {
         dossier d'admission.
       </Typography>
       <Link to={Routes.DASHBOARD_TASKS} style={{ textDecoration: "none" }}>
-        <Button variant="outlined" style={{ color: "white", marginTop: 15 }}>
+        <Button
+          variant="outlined"
+          style={{ color: "white", marginTop: 15, borderColor: "white" }}
+        >
           Accéder aux formulaires
         </Button>
       </Link>

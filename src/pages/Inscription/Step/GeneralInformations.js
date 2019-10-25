@@ -72,7 +72,7 @@ export default props => {
 
   const handleChangeTextField = name => event => {
     if (name === "code_postale") {
-      const pattern = new RegExp(/^$|^[0-9]{1,7}$/);
+      const pattern = new RegExp(/^$|^([a-zA-Z0-9_-]){1,10}$/);
       const isWellformated = pattern.test(event.target.value);
       if (!isWellformated) return;
     } else if (name === "ville") {

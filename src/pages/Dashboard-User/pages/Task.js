@@ -9,13 +9,20 @@ export default props => {
       style={{
         borderRadius: 10,
         padding: 20,
-        margin: 15,
-        boxShadow: "0px 29px 28px -16px rgba(0,0,0,0.12)"
+        margin: 25,
+        boxShadow: "0px 29px 28px -16px rgba(0,0,0,0.07)"
       }}
     >
       <Box display="flex" alignItems="center">
         {!props.completed ? (
           <Box
+            display={{
+              sm: "none",
+              xs: "none",
+              lg: "block",
+              xl: "block",
+              md: "block"
+            }}
             style={{
               padding: 10,
               backgroundColor: "#f44336",
@@ -31,6 +38,13 @@ export default props => {
           </Box>
         ) : (
           <Box
+            display={{
+              sm: "none",
+              xs: "none",
+              lg: "block",
+              xl: "block",
+              md: "block"
+            }}
             style={{
               padding: 10,
               backgroundColor: "rgb(24, 117, 240)",

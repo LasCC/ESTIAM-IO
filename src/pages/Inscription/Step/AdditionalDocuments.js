@@ -497,20 +497,15 @@ export default props => {
                     </Link>
                   </Box>
                   <Box>
-                    <Link
-                      to={Routes.RECAPITULATION}
-                      style={{ textDecoration: "none" }}
+                    <Button
+                      variant="contained"
+                      onClick={onSubmit}
+                      type="submit"
+                      component="label"
+                      style={{ color: "white", backgroundColor: "#004080" }}
                     >
-                      <Button
-                        variant="contained"
-                        onClick={onSubmit}
-                        type="submit"
-                        component="label"
-                        style={{ color: "white", backgroundColor: "#004080" }}
-                      >
-                        Envoyer
-                      </Button>
-                    </Link>
+                      Envoyer
+                    </Button>
                   </Box>
                 </Box>
               </div>

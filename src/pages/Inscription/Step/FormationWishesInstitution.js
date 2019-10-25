@@ -202,35 +202,35 @@ export default props => {
                 >
                   <FormControlLabel
                     disabled={disabledLogic}
-                    value="finance"
+                    value="Finance"
                     control={<Radio color="primary" />}
                     label="Finance"
                     labelPlacement="end"
                   />
                   <FormControlLabel
                     disabled={disabledLogic}
-                    value="e_industries"
+                    value="E-Industries"
                     control={<Radio color="primary" />}
                     label="E-Industries"
                     labelPlacement="end"
                   />
                   <FormControlLabel
                     disabled={disabledLogic}
-                    value="digital_medias"
+                    value="Digital Médias"
                     control={<Radio color="primary" />}
                     label="Digital Médias"
                     labelPlacement="end"
                   />
                   <FormControlLabel
                     disabled={disabledLogic}
-                    value="mobile_management"
+                    value="Entreprise Mobile Management"
                     control={<Radio color="primary" />}
                     label="Entreprise Mobile Management"
                     labelPlacement="end"
                   />
                   <FormControlLabel
                     disabled={disabledLogic}
-                    value="retail"
+                    value="Retail"
                     control={<Radio color="primary" />}
                     label="Retail"
                     labelPlacement="end"

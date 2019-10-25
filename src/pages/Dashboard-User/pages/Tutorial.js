@@ -94,16 +94,16 @@ export default props => {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <Typography component="h4">
-                  Que se passe-t-il après avoir renvoyé ce formulaire pour
-                  constituer votre demande d'inscription ? <br />
-                  <ul>
+                  Que se passe-t-il après avoir envoyé votre dossier d'admission
+                  ? <br />
+                  <ul style={{ padding: 25 }}>
                     <li>
                       Votre demande passe en commission d’admission (elle se
                       réunit au minimum tous les lundis).
                     </li>
                     <li>
                       Si votre dossier est accepté, nous vous faisons passer des
-                      tests techniques (sauf pour une admission en 1re année).
+                      tests techniques (sauf pour une admission en 1ère année).
                     </li>
                     <li>
                       Ensuite, un entretien d’orientation professionnelle sera
@@ -200,9 +200,9 @@ export default props => {
                   l'inscription, en effet, cette dernière permet de d'afficher
                   les dernières étapes non complétées. <br />
                   <br />
-                  Pour compléter les tâches, veuillez cliquer sur le bouton mis
-                  à disposition, pour voir tous les différentes tâches que vous
-                  devez accomplir veuillez vous rendre sur
+                  Veuillez cliquer sur le bouton mis à disposition, pour voir
+                  toutes les différentes tâches que vous devez accomplir,
+                  veuillez vous rendre sur
                   <Link href={Routes.DASHBOARD_TASKS} style={{ marginLeft: 5 }}>
                     cette page.
                   </Link>
