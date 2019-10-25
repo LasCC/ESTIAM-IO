@@ -32,11 +32,12 @@ export default props => {
   const [diplomename, setDiplomeName] = useState("");
 
   const [filesent, setFilesent] = useState(false);
-  const { endpoint } = useContext(LoginContext);
+  const { endpoint, updateDossier } = useContext(LoginContext);
   console.log(endpoint);
   const onChangeBulletinInput = evt => {
     try {
       console.log(evt.target.files[0].name);
+      if (bulletins.length > 3) return;
       setBulletins([...bulletins, evt.target.files[0]]);
       setBulletinsname([...bulletinsname, evt.target.files[0].name]);
       console.log(bulletins, bulletinsname);
@@ -157,6 +158,7 @@ export default props => {
     formData.append("lettre_motivation", lettremv);
     formData.append("photo", photo);
     formData.append("diplome", diplome);
+    let dossier = JSON.parse(localStorage.getItem("dossier"));
 
     console.log("actual formdata after looped", formData, formData.length);
     http
@@ -173,7 +175,13 @@ export default props => {
       .then(res => {
         console.log(res);
         setFilesent(true);
-      });
+        dossier.step[3].done = true;
+        localStorage.setItem("dossier", JSON.stringify(dossier));
+        console.log(dossier);
+      })
+      .catch(ex => console.log(ex));
+    updateDossier({ candidat: dossier.candidat, step: dossier.step }, null);
+    window.location.replace(Routes.DASHBOARD);
   };
 
   return (

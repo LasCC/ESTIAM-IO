@@ -544,6 +544,19 @@ export default props => {
                 );
               }
             },
+            // {
+            //   icon: "todayIcon",
+            //   tooltip: "Planifié un rendez-vous",
+            //   onClick: (event, query) => {
+            //     updateBackState({ id: query._id, step: 2 });
+            //     alert(
+            //       "Vous venez de planifié un rendez-vous de " +
+            //         query.candidat.nom +
+            //         " " +
+            //         query.candidat.prenom
+            //     );
+            //   }
+            // },
             {
               icon: "dashboardicon",
               tooltip: "Mettre à jour l'utilisateur",
