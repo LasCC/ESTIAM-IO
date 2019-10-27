@@ -78,22 +78,8 @@ export default props => {
   }, []);
 
   const handleChangeTextField = name => event => {
-    if (name === "nom_etablissement") {
-      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
-      const isWellformated = pattern.test(event.target.value);
-      if (!isWellformated) return;
-    } else if (name === "numero_rue_etablissement") {
+    if (name === "numero_rue_etablissement") {
       const pattern = new RegExp(/^[0-9]*$/gm);
-      const isWellformated = pattern.test(event.target.value);
-      console.log(!isWellformated);
-      if (!isWellformated) return;
-    } else if (name === "adresse_etablissement") {
-      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
-      const isWellformated = pattern.test(event.target.value);
-      console.log(!isWellformated);
-      if (!isWellformated) return;
-    } else if (name === "ville_etablissement") {
-      const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
       const isWellformated = pattern.test(event.target.value);
       console.log(!isWellformated);
       if (!isWellformated) return;
@@ -206,6 +192,7 @@ export default props => {
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
+                    value={values.nom_etablissement}
                     onChange={handleChangeTextField("nom_etablissement")}
                     label="Nom de l'établissement"
                     error={
@@ -255,6 +242,7 @@ export default props => {
                     variant="outlined"
                     onChange={handleChangeTextField("numero_rue_etablissement")}
                     label="Numéro de rue"
+                    value={values.numero_rue_etablissement}
                     error={
                       values.submitted &&
                       errors.hasOwnProperty("numero_rue_etablissement")
@@ -270,6 +258,7 @@ export default props => {
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
+                    value={values.adresse_etablissement}
                     onChange={handleChangeTextField("adresse_etablissement")}
                     label="Adresse"
                     error={
@@ -316,6 +305,7 @@ export default props => {
                   <TextField
                     style={{ marginRight: 15 }}
                     variant="outlined"
+                    value={values.ville_etablissement}
                     error={
                       values.submitted &&
                       errors.hasOwnProperty("ville_etablissement")

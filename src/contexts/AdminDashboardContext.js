@@ -2,12 +2,13 @@ import React, { createContext, useState } from "react";
 import http from "../services/httpService";
 import { Switch } from "react-router-dom";
 import jwtdecode from "jwt-decode";
-import { withRouter } from "react-router-dom";
 export const AdminDashboardContext = createContext();
 
 const AdminDashboardProvider = props => {
   const [data, setData] = useState({});
   const [loginState, setLoginState] = useState({});
+  const [stat, setStat] = useState({});
+  const [statReady, setStatReady] = useState(false);
   const [candidatures, setCandidatures] = useState([]);
   const [candidaturesReady, setCandidaturesReady] = useState(false);
   const [httpError, setHttpError] = useState({
@@ -15,6 +16,7 @@ const AdminDashboardProvider = props => {
     serverError: false
   });
   const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
+
   const handleAdminLogin = async (data, path) => {
     let res;
     console.log(data);
@@ -23,13 +25,8 @@ const AdminDashboardProvider = props => {
       res = await http.post(endpoint + "/admin/login", data);
       console.log(res);
     } catch (ex) {
-      console.log("*****************", ex);
-      console.log("ERR DATA*****************", ex.response);
-      // if(ex.response)
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
-      console.dir(expectedError);
-
       setHttpError({
         serverError: !expectedError,
         clientError: expectedError
@@ -61,7 +58,6 @@ const AdminDashboardProvider = props => {
       throw ex;
     }
   };
-
   const handleLogout = () => {
     console.log("logged out .....");
     localStorage.removeItem("admintoken");
@@ -71,13 +67,10 @@ const AdminDashboardProvider = props => {
     console.log("checking...");
 
     const token = localStorage.getItem("admintoken");
-    // in proddatadatadata
+
     if (!token) {
       return false;
     }
-
-    // in TEST
-    // return loginState.isLogged;
 
     try {
       const { exp, isAdmin } = jwtdecode(token);
@@ -104,7 +97,6 @@ const AdminDashboardProvider = props => {
 
     return true;
   };
-
   const fetchCandidature = () => {
     const token = localStorage.getItem("admintoken");
     http
@@ -133,8 +125,17 @@ const AdminDashboardProvider = props => {
       .catch(err => console.log(err));
   };
   const updateBackState = data => {
+    const token = localStorage.getItem("admintoken");
     http
-      .put(endpoint + `/api/candidature/step/${data.id}`, { step: data.step })
+      .put(
+        endpoint + `/api/candidature/step/${data.id}`,
+        { step: data.step },
+        {
+          headers: {
+            "x-auth-token": token
+          }
+        }
+      )
       .then(res => {
         const administrationStepsName = [
           "En cours de traitement",
@@ -154,6 +155,21 @@ const AdminDashboardProvider = props => {
       .catch(err => console.log(err));
     console.log("updating ... ");
   };
+  const fetchStat = () => {
+    const token = localStorage.getItem("admintoken");
+    http
+      .get(endpoint + "/api/candidature/stat/", {
+        headers: {
+          "x-auth-token": token
+        }
+      })
+      .then(res => {
+        setStat(res.data.data);
+        console.log(res);
+        setStatReady(true);
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <AdminDashboardContext.Provider
       value={{
@@ -166,7 +182,10 @@ const AdminDashboardProvider = props => {
         fetchCandidature,
         candidaturesReady,
         endpoint,
-        updateBackState
+        updateBackState,
+        fetchStat,
+        stat,
+        statReady
       }}
     >
       <Switch>{props.children}</Switch>

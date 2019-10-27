@@ -27,7 +27,20 @@ import InfoIcon from "@material-ui/icons/Info";
 import ApartmentIcon from "@material-ui/icons/Apartment";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import Routes from "../../Routes";
-
+const getAge = birthday => {
+  var today = new Date();
+  var thisYear = 0;
+  if (today.getMonth() < birthday.getMonth()) {
+    thisYear = 1;
+  } else if (
+    today.getMonth() == birthday.getMonth() &&
+    today.getDate() < birthday.getDate()
+  ) {
+    thisYear = 1;
+  }
+  var age = today.getFullYear() - birthday.getFullYear() - thisYear;
+  return age;
+};
 export default props => {
   const { candidat } = JSON.parse(localStorage.getItem("dossier"));
   console.log(candidat);
@@ -153,7 +166,19 @@ export default props => {
                         variant="subtitle2"
                         style={{ fontSize: 15, marginLeft: 10 }}
                       >
-                        Numéro de téléphone : {candidat.informations.numero_tel}
+                        Numéro de téléphone :{" "}
+                        {candidat.informations.numero_tel || "N/A"}
+                      </Typography>
+                      <Typography
+                        variant="subtitle2"
+                        style={{ fontSize: 15, marginLeft: 10 }}
+                      >
+                        Date de naissance :{" "}
+                        {`${new Date(
+                          candidat.informations.date_naissance
+                        ).toLocaleDateString("fr-EU")} -  ( ${getAge(
+                          new Date(candidat.informations.date_naissance)
+                        )} ans )` || "N/A"}
                       </Typography>
                     </Box>
                   </Box>
@@ -185,18 +210,19 @@ export default props => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Intitulé de votre formation : {candidat.situation.choix}
+                        Intitulé de votre formation :{" "}
+                        {candidat.situation.choix || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
                         Nom de votre formation :{" "}
-                        {candidat.situation.nom_formation}
+                        {candidat.situation.nom_formation || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Formation : {candidat.situation.formation}
+                        Formation : {candidat.situation.formation || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
@@ -230,35 +256,37 @@ export default props => {
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
                         Nom de l'établissement :{" "}
-                        {candidat.situation.nom_etablissement}
+                        {candidat.situation.nom_etablissement || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
                         Pays de l'établissement :{" "}
-                        {candidat.situation.pays_etablissement}
+                        {candidat.situation.pays_etablissement || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
                         N° de rue :{" "}
-                        {candidat.situation.numero_rue_etablissement}
+                        {candidat.situation.numero_rue_etablissement || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Adresse : {candidat.situation.adresse_etablissement}
+                        Adresse :{" "}
+                        {candidat.situation.adresse_etablissement || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
                         Département :{" "}
-                        {candidat.situation.departement_etablissement}
+                        {candidat.situation.departement_etablissement || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                       <Typography variant="subtitle2">
-                        Ville : {candidat.situation.ville_etablissement}
+                        Ville :{" "}
+                        {candidat.situation.ville_etablissement || "N/A"}
                       </Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>

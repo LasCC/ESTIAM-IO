@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import clsx from "clsx";
 import { AdminDashboardContext } from "../../../contexts/AdminDashboardContext";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -18,7 +18,8 @@ import {
   Box,
   Avatar,
   Badge,
-  Tooltip
+  Tooltip,
+  CircularProgress
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Routes from "../../../Routes";
@@ -39,6 +40,7 @@ import { withStyles } from "@material-ui/core/styles";
 import moment from "moment";
 import "moment/locale/fr";
 moment.locale("fr");
+
 document.body.style.backgroundColor = "white";
 
 const drawerWidth = 240;
@@ -133,10 +135,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default props => {
-  const { handleLogout } = useContext(AdminDashboardContext);
+  const { handleLogout, fetchStat, stat, statReady } = useContext(
+    AdminDashboardContext
+  );
   const { firstName, lastName } = JSON.parse(localStorage.getItem("user"));
   const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=fff&color=1875F0&bold=true`;
-
+  useEffect(() => fetchStat(), []);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -148,7 +152,20 @@ export default props => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  if (!statReady)
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        style={{ height: "90vh" }}
+      >
+        <CircularProgress style={{ marginRight: 15, color: "#2979ff" }} />
+        <Typography color="textSecondary">
+          Chargement des données en cours...
+        </Typography>
+      </Box>
+    );
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -308,7 +325,7 @@ export default props => {
                   variant="h5"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
-                  7541
+                  {stat.allStepDone}
                 </Typography>
               </Box>
             </Box>
@@ -346,7 +363,7 @@ export default props => {
                   variant="h5"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
-                  7541
+                  {stat.firstStepDone}
                 </Typography>
               </Box>
             </Box>
@@ -379,7 +396,7 @@ export default props => {
                   variant="h5"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
-                  7541
+                  {stat.secondStepDone}
                 </Typography>
               </Box>
             </Box>
@@ -412,7 +429,7 @@ export default props => {
                   variant="h5"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
-                  7541
+                  {stat.thirdStepDone}
                 </Typography>
               </Box>
             </Box>

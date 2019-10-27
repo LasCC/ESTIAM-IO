@@ -45,7 +45,20 @@ import moment from "moment";
 import "moment/locale/fr";
 moment.locale("fr");
 document.body.style.backgroundColor = "white";
-
+const getAge = birthday => {
+  var today = new Date();
+  var thisYear = 0;
+  if (today.getMonth() < birthday.getMonth()) {
+    thisYear = 1;
+  } else if (
+    today.getMonth() == birthday.getMonth() &&
+    today.getDate() < birthday.getDate()
+  ) {
+    thisYear = 1;
+  }
+  var age = today.getFullYear() - birthday.getFullYear() - thisYear;
+  return age;
+};
 const drawerWidth = 240;
 const StyledBadge2 = withStyles(theme => ({
   badge: {
@@ -158,22 +171,6 @@ export default props => {
   const [specificUser, setSpecificUser] = React.useState({});
   useEffect(() => fetchCandidature(), []);
 
-  // Loader chargement des données
-  // if (candidaturesReady)
-  //   return (
-  //     <Box
-  //       display="flex"
-  //       alignItems="center"
-  //       justifyContent="center"
-  //       style={{ height: "90vh" }}
-  //     >
-  //       <CircularProgress style={{ marginRight: 15, color: "#2979ff" }} />
-  //       <Typography color="textSecondary">
-  //         Chargement des données en cours...
-  //       </Typography>
-  //     </Box>
-  //   );
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -198,8 +195,20 @@ export default props => {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-  // console.log(values);
-
+  if (!candidaturesReady)
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        style={{ height: "90vh" }}
+      >
+        <CircularProgress style={{ marginRight: 15, color: "#2979ff" }} />
+        <Typography color="textSecondary">
+          Chargement des données en cours...
+        </Typography>
+      </Box>
+    );
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -410,6 +419,21 @@ export default props => {
                             N° de téléphone :{" "}
                             <strong>
                               {query.candidat.informations.numero_tel}
+                            </strong>
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            style={{ marginLeft: 10 }}
+                          >
+                            Date de naissance :{" "}
+                            <strong>
+                              {`${new Date(
+                                query.candidat.informations.date_naissance
+                              ).toLocaleDateString("fr-EU")} - ( ${getAge(
+                                new Date(
+                                  query.candidat.informations.date_naissance
+                                )
+                              )} ans ) `}
                             </strong>
                           </Typography>
                         </Box>
