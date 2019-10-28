@@ -1,4 +1,4 @@
-window.fbAsyncInit = function() {
+window.fbAsyncInit = function(FB) {
   FB.init({
     xfbml: true,
     version: "v4.0"
