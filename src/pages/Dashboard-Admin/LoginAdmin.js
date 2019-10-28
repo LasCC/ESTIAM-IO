@@ -20,6 +20,12 @@ import Joi from "joi-browser";
 document.body.style.backgroundColor = "#fafafa";
 
 const LoginAdmin = props => {
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+    submitted: false
+  });
   const { handleAdminLogin, httpError, checkAuth } = useContext(
     AdminDashboardContext
   );
@@ -34,12 +40,6 @@ const LoginAdmin = props => {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
-  const [errors, setErrors] = useState({});
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-    submitted: false
-  });
   const schema = {
     email: Joi.string().required(),
     password: Joi.string().required(),
