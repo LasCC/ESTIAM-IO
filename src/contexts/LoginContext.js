@@ -22,7 +22,8 @@ const LoginProvider = props => {
     clientError: false,
     serverError: false
   });
-  const endpoint = "http://localhost:5000";
+  const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
+  //const endpoint = "http://localhost:5000";
   // const endpoint = "https://oriri.serveo.net";
   const handleLogin = async data => {
     //console.log("login request ....", data);
