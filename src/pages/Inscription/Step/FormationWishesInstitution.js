@@ -51,7 +51,7 @@ export default props => {
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -61,7 +61,7 @@ export default props => {
   };
   const handleNextStep = e => {
     const errors = validate();
-    console.log(errors);
+    //console.log(errors);
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
     if (errors) return;
@@ -72,7 +72,7 @@ export default props => {
     };
     dossier.step[2].done = true;
     localStorage.setItem("dossier", JSON.stringify(dossier));
-    console.log(dossier);
+    //console.log(dossier);
     updateDossier(
       { candidat: dossier.candidat, step: dossier.step },
       Routes.WISHES_END
@@ -84,8 +84,8 @@ export default props => {
       [event.target.name]: event.target.value
     }));
   };
-  console.log(values);
-  console.log(props);
+  //console.log(values);
+  //console.log(props);
   let campusList = [
     <MenuItem value={"Paris 75 (Porte de Lilas)"}>
       Paris 75 (Porte de Lilas)
@@ -111,7 +111,7 @@ export default props => {
       .annee_demandee !== "4ème MBA Data Solution Architect & NWoW" &&
     JSON.parse(localStorage.getItem("dossier")).candidat.voeux
       .annee_demandee !== "4ème année Master of Science";
-  console.log(disabledLogic);
+  //console.log(disabledLogic);
 
   return (
     <Container maxWidth="lg">

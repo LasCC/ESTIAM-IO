@@ -34,7 +34,7 @@ export default props => {
   const classes = useStyles();
   const [completed] = React.useState({});
   const { dossier } = useContext(Candidature);
-  console.log(dossier);
+  //console.log(dossier);
   const steps = getSteps();
   return (
     <div className={classes.root}>

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 export default props => {
   const { loginState } = useContext(LoginContext);
   const { firstName } = jwtdecode(localStorage.getItem("token"));
-  console.log("dashboard", loginState);
+  //console.log("dashboard", loginState);
   return (
     <Paper
       style={{

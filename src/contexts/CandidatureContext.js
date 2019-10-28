@@ -15,14 +15,14 @@ const CandidatureProvider = props => {
     : "";
 
   function fetchDossier() {
-    console.log("fetching the candidature", tokendata.dossierID);
-    console.log(tokendata);
+    //console.log("fetching the candidature", tokendata.dossierID);
+    //console.log(tokendata);
     http
       .get(endpoint + `/api/candidature/${tokendata.candidatureID}`, dossier, {
         headers: { "x-auth-token": localStorage.getItem("token") }
       })
       .then(res => {
-        console.log(res);
+        //console.log(res);
         setDossier(res.data.data);
         setDataLoaded(true);
         localStorage.setItem("dossier", JSON.stringify(res.data.data));
@@ -30,14 +30,14 @@ const CandidatureProvider = props => {
       .catch(ex => console.log(ex));
   }
   function updateDossier(dossier, path) {
-    console.log("update the candidature with the current dossier");
+    //console.log("update the candidature with the current dossier");
     setDataLoaded(false);
     http
       .put(endpoint + `/api/candidature/${tokendata.candidatureID}`, dossier, {
         headers: { "x-auth-token": localStorage.getItem("token") }
       })
       .then(res => {
-        console.log(res);
+        //console.log(res);
         setDossier(res.data.data);
         setDataLoaded(true);
         localStorage.setItem("dossier", JSON.stringify(res.data.data));

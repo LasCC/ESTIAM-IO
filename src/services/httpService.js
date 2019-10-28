@@ -5,13 +5,13 @@ axios.interceptors.response.use(null, error => {
     error.response &&
     error.response.status >= 400 &&
     error.response.status < 500;
-  console.log(error.response);
+  //console.log(error.response);
   if (expectedError) {
-    console.log("Expected Client Error", error);
+    //console.log("Expected Client Error", error);
     // alert("BAD LOGIN !");
   }
   if (!expectedError) {
-    console.log("Unexpected error : Logging The Error", error);
+    //console.log("Unexpected error : Logging The Error", error);
     // alert("An unexpected Error occurred !");
   }
   return Promise.reject(error);

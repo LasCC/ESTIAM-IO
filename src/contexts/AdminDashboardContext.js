@@ -15,15 +15,15 @@ const AdminDashboardProvider = props => {
     clientError: false,
     serverError: false
   });
-  const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
+  const endpoint = "http://localhost:5000";
 
   const handleAdminLogin = async (data, path) => {
     let res;
-    console.log(data);
+    //console.log(data);
     try {
-      console.log("login try ");
+      //console.log("login try ");
       res = await http.post(endpoint + "/admin/login", data);
-      console.log(res);
+      //console.log(res);
     } catch (ex) {
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
@@ -51,20 +51,20 @@ const AdminDashboardProvider = props => {
         })
       );
       setHttpError({ serverError: false, clientError: false });
-      console.log("######firsttime logged : ", tokendata.firstLogged);
+      //console.log("######firsttime logged : ", tokendata.firstLogged);
       props.history.push(path);
     } catch (ex) {
-      console.log("invalid Token", ex);
+      //console.log("invalid Token", ex);
       throw ex;
     }
   };
   const handleLogout = () => {
-    console.log("logged out .....");
+    //console.log("logged out .....");
     localStorage.removeItem("admintoken");
     window.location.replace("/connexion/administration");
   };
   const checkAuth = () => {
-    console.log("checking...");
+    //console.log("checking...");
 
     const token = localStorage.getItem("admintoken");
 
@@ -84,14 +84,14 @@ const AdminDashboardProvider = props => {
         dateExp.getMinutes() -
         dateNow.getHours() * 60 -
         dateNow.getMinutes();
-      console.log("isexp", exp < now, dayRelativeDifference, "mn");
+      //console.log("isexp", exp < now, dayRelativeDifference, "mn");
       if (exp < now) {
-        console.log("TOKEN expired !");
+        //console.log("TOKEN expired !");
         handleLogout();
         return false;
       }
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
       return false;
     }
 
@@ -106,7 +106,7 @@ const AdminDashboardProvider = props => {
         }
       })
       .then(res => {
-        console.log(res);
+        //console.log(res);
         const administrationStepsName = [
           "En cours de traitement",
           "Dossier Incomplet",
@@ -150,10 +150,10 @@ const AdminDashboardProvider = props => {
               administrationStepsName[c.administrationStep])
         );
         setCandidatures(res.data.data);
-        console.log("done !");
+        //console.log("done !");
       })
       .catch(err => console.log(err));
-    console.log("updating ... ");
+    //console.log("updating ... ");
   };
   const fetchStat = () => {
     const token = localStorage.getItem("admintoken");
@@ -165,7 +165,7 @@ const AdminDashboardProvider = props => {
       })
       .then(res => {
         setStat(res.data.data);
-        console.log(res);
+        //console.log(res);
         setStatReady(true);
       })
       .catch(err => console.log(err));

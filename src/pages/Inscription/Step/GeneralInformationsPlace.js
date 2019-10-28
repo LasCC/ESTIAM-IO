@@ -83,7 +83,7 @@ export default props => {
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -93,8 +93,9 @@ export default props => {
   };
 
   const handleSubmit = e => {
+    e.preventDefault();
     const errors = validate();
-    console.log(errors);
+    //console.log(errors);
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
     if (errors) return;
@@ -105,7 +106,7 @@ export default props => {
     };
     dossier.step[0].done = true;
     localStorage.setItem("dossier", JSON.stringify(dossier));
-    console.log(dossier);
+    //console.log(dossier);
     updateDossier(
       { candidat: dossier.candidat, step: dossier.step },
       Routes.END_INFO

@@ -8,9 +8,9 @@ import { Candidature } from "../../contexts/CandidatureContext";
 export default props => {
   const { firstName } = jwtdecode(localStorage.getItem("token"));
   const { dossier } = useContext(Candidature);
-  console.log(dossier.step);
+  //console.log(dossier.step);
   const uncompletedStep = 4 - dossier.step.filter(step => step.done).length;
-  console.log(uncompletedStep);
+  //console.log(uncompletedStep);
 
   return (
     <div style={{ height: "100%", marginTop: 15 }}>

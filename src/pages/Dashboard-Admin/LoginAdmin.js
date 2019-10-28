@@ -48,7 +48,7 @@ const LoginAdmin = props => {
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -65,7 +65,7 @@ const LoginAdmin = props => {
     const errors = validate();
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
-    console.log(errors);
+    //console.log(errors);
     if (errors) return;
     handleAdminLogin(
       { email: values.email, password: values.password },
@@ -82,9 +82,9 @@ const LoginAdmin = props => {
       Identifiant ou mot de passe incorrect
     </Typography>
   );
-  console.log(values);
+  //console.log(values);
 
-  console.log("isAuth : ", checkAuth());
+  //console.log("isAuth : ", checkAuth());
   return (
     <Container maxWidth="lg">
       <Box

@@ -41,7 +41,7 @@ export default props => {
     } else if (name === "formation") {
       const pattern = new RegExp(/^$|^[a-zA-Z ]+$/);
       const isWellformated = pattern.test(event.target.value);
-      console.log(!isWellformated);
+      //console.log(!isWellformated);
       if (!isWellformated) return;
     }
     setValues({ ...values, [name]: event.target.value });
@@ -60,7 +60,7 @@ export default props => {
 
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -70,17 +70,17 @@ export default props => {
   };
   const handleNextStep = e => {
     const errors = validate();
-    console.log(errors);
+    //console.log(errors);
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
     if (errors) return;
     let dossier = JSON.parse(localStorage.getItem("dossier"));
-    console.log("dossier", dossier);
+    //console.log("dossier", dossier);
     dossier.candidat.situation = values;
     localStorage.setItem("dossier", JSON.stringify(dossier));
     return props.history.push(Routes.CURRENT_SITUATION_PREV_SCHOOL);
   };
-  console.log(values);
+  //console.log(values);
   return (
     <Container maxWidth="lg">
       <RegistedUserNav />

@@ -11,7 +11,7 @@ moment.locale("fr");
 
 export default props => {
   const { loginState } = useContext(LoginContext);
-  console.log("dashboard", loginState);
+  //console.log("dashboard", loginState);
   return (
     <div style={{ width: "100%" }}>
       <Box display="flex" p={2} alignItems="center">

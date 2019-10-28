@@ -55,7 +55,7 @@ const Confirm = props => {
   );
   // if ((loginState.isActive && loginState.isLogged) || !loginState.hasRegistred)
   //   return props.history.push("/");
-  console.log(checkAuth());
+  //console.log(checkAuth());
   const InvalidCodeErrorComponent = (
     <Typography variant="subtitle1" color="error" className="shake-horizontal">
       Code invalide
@@ -69,15 +69,15 @@ const Confirm = props => {
   });
   const [errors, setErrors] = useState({});
   const handleSubmit = () => {
-    console.log("submitted ...");
+    //console.log("submitted ...");
     const error = validate();
     setErrors(error || {});
     setValues({ ...values, submitted: true });
-    console.log(error);
+    //console.log(error);
     if (error) return;
     mailChecking({ secretCode: values.secretCode });
   };
-  console.log(values);
+  //console.log(values);
   return (
     <Container maxWidth="lg">
       <NavBar />

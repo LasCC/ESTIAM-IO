@@ -37,58 +37,58 @@ export default props => {
 
   const onChangeBulletinInput = evt => {
     try {
-      console.log(evt.target.files[0].name);
-      if (bulletins.length > 3) return;
+      //console.log(evt.target.files[0].name);
       setBulletins([...bulletins, evt.target.files[0]]);
       setBulletinsname([...bulletinsname, evt.target.files[0].name]);
-      console.log(bulletins, bulletinsname);
+      bulletins.length = 3;
+      //console.log(bulletins, bulletinsname);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
     }
   };
   const onChangePieceIdentiteinput = evt => {
-    console.log(evt.target.files[0].name);
+    //console.log(evt.target.files[0].name);
     try {
       setCni(evt.target.files[0]);
       setCniName(evt.target.files[0].name);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
     }
   };
   const onChangeDiplomeinput = evt => {
-    console.log(evt.target.files[0].name);
+    //console.log(evt.target.files[0].name);
     try {
       setDiplome(evt.target.files[0]);
       setDiplomeName(evt.target.files[0].name);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
     }
   };
   const onChangePhotoinput = evt => {
-    console.log(evt.target.files[0].name);
+    //console.log(evt.target.files[0].name);
     try {
       setPhoto(evt.target.files[0]);
       setPhotoName(evt.target.files[0].name);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
     }
   };
   const onChangeCVinput = evt => {
-    console.log(evt.target.files[0].name);
+    //console.log(evt.target.files[0].name);
     try {
       setCv(evt.target.files[0]);
       setCvName(evt.target.files[0].name);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
     }
   };
   const onChangeLettreMVinput = evt => {
-    console.log(evt.target.files[0].name);
+    //console.log(evt.target.files[0].name);
     try {
       setLettremv(evt.target.files[0]);
       setLettremvName(evt.target.files[0].name);
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
     }
   };
   const handleremoveFile = evt => {
@@ -102,7 +102,7 @@ export default props => {
     setBulletinsname(prevFilenames =>
       prevFilenames.filter(names => names !== filename)
     );
-    console.log(index, filename);
+    //console.log(index, filename);
   };
   const CniRemove = evt => {
     const filename =
@@ -110,7 +110,7 @@ export default props => {
         .innerText;
     setCni();
     setCniName("");
-    console.log(filename);
+    //console.log(filename);
   };
   const LettreMvRemove = evt => {
     const filename =
@@ -118,7 +118,7 @@ export default props => {
         .innerText;
     setLettremv();
     setLettremvName("");
-    console.log(filename);
+    //console.log(filename);
   };
   const PhotoRemove = evt => {
     const filename =
@@ -126,7 +126,7 @@ export default props => {
         .innerText;
     setPhoto();
     setPhotoName("");
-    console.log(filename);
+    //console.log(filename);
   };
   const DiplomeRemove = evt => {
     const filename =
@@ -134,7 +134,7 @@ export default props => {
         .innerText;
     setDiplome();
     setDiplomeName("");
-    console.log(filename);
+    //console.log(filename);
   };
   const CvRemove = evt => {
     const filename =
@@ -142,15 +142,15 @@ export default props => {
         .innerText;
     setCv();
     setCvName("");
-    console.log(filename);
+    //console.log(filename);
   };
 
   const onSubmit = evt => {
     evt.preventDefault();
-    console.log("actual files in state:", bulletins);
+    //console.log("actual files in state:", bulletins);
     const formData = new FormData();
     for (const file of bulletins) {
-      console.log("loop file :", file);
+      //console.log("loop file :", file);
       formData.append("bulletins", file);
     }
     //2eme loop ici pour cv et les autres ...
@@ -160,7 +160,7 @@ export default props => {
     formData.append("photo", photo);
     formData.append("diplome", diplome);
 
-    console.log("actual formdata after looped", formData, formData.length);
+    //console.log("actual formdata after looped", formData, formData.length);
     http
       .post(endpoint + `/api/candidature/sendfile`, formData, {
         headers: {
@@ -173,7 +173,7 @@ export default props => {
           )
       })
       .then(res => {
-        console.log(res);
+        //console.log(res);
         setFilesent(true);
         let dossier = JSON.parse(localStorage.getItem("dossier"));
         dossier.step[3].done = true;
@@ -182,7 +182,7 @@ export default props => {
           { candidat: dossier.candidat, step: dossier.step },
           Routes.DASHBOARD
         );
-        console.log(dossier);
+        //console.log(dossier);
       })
       .catch(ex => console.log(ex));
   };

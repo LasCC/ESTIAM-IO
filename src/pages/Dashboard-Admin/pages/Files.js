@@ -342,7 +342,7 @@ export default props => {
           title="Dossiers complet des utilisateurs inscrits"
           columns={[
             {
-              title: "Avatar",
+              title: "Photo d'identité",
               field: "avatar",
               render: query => (
                 <img

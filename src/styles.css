@@ -483,3 +483,13 @@ ul {
   margin-inline-end: 0px;
   padding-inline-start: 0;
 }
+
+.MuiPaper-rounded {
+  border-radius: 10px !important;
+}
+
+.MuiPaper-elevation2 {
+  -webkit-box-shadow: 0px 25px 29px -1px rgba(0, 0, 0, 0.1) !important;
+  -moz-box-shadow: 0px 25px 29px -1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0px 25px 29px -1px rgba(0, 0, 0, 0.1) !important;
+}

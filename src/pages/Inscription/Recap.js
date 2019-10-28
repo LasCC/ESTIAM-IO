@@ -43,7 +43,7 @@ const getAge = birthday => {
 };
 export default props => {
   const { candidat } = JSON.parse(localStorage.getItem("dossier"));
-  console.log(candidat);
+  //console.log(candidat);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

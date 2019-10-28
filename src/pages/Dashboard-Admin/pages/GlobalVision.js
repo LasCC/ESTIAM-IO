@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Routes from "../../../Routes";
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import OtherData1 from "../OtherData1";
 import OtherData2 from "../OtherData2";
 import OtherData3 from "../OtherData3";
@@ -31,7 +32,6 @@ import LooksOneIcon from "@material-ui/icons/LooksOne";
 import LooksTwoIcon from "@material-ui/icons/LooksTwo";
 import Looks3Icon from "@material-ui/icons/Looks3";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -308,7 +308,7 @@ export default props => {
                 variant="h5"
                 style={{ fontWeight: "bold", color: "white" }}
               >
-                Utilisateurs inscrits ayant complété l'inscription
+                Utilisateurs ayant terminé leurs dossiers d'admission
               </Typography>
               <Divider style={{ marginTop: 15, marginBottom: 20 }} />
               <Box display="flex" justifyContent="center">
@@ -322,7 +322,7 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
                   {stat.allStepDone}
@@ -360,7 +360,7 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
                   {stat.firstStepDone}
@@ -393,7 +393,7 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
                   {stat.secondStepDone}
@@ -426,7 +426,7 @@ export default props => {
                 style={{ marginTop: 15 }}
               >
                 <Typography
-                  variant="h5"
+                  variant="h4"
                   style={{ color: "white", fontWeight: "bold" }}
                 >
                   {stat.thirdStepDone}

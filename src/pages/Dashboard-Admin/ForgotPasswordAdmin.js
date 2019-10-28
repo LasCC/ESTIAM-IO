@@ -22,7 +22,7 @@ export default props => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  console.log(values);
+  //console.log(values);
   return (
     <Container maxWidth="lg">
       <Box

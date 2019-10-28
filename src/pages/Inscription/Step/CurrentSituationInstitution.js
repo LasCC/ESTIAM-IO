@@ -39,7 +39,7 @@ export default props => {
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -49,7 +49,7 @@ export default props => {
   };
   const handleNextStep = e => {
     const errors = validate();
-    console.log(errors);
+    //console.log(errors);
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
     if (errors) return;
@@ -60,7 +60,7 @@ export default props => {
     };
     dossier.step[1].done = true;
     localStorage.setItem("dossier", JSON.stringify(dossier));
-    console.log(dossier);
+    //console.log(dossier);
     updateDossier(
       { candidat: dossier.candidat, step: dossier.step },
       Routes.CURRENT_SITUATION_END
@@ -81,7 +81,7 @@ export default props => {
     if (name === "numero_rue_etablissement") {
       const pattern = new RegExp(/^[0-9]*$/gm);
       const isWellformated = pattern.test(event.target.value);
-      console.log(!isWellformated);
+      //console.log(!isWellformated);
       if (!isWellformated) return;
     }
     setValues({ ...values, [name]: event.target.value });
@@ -92,7 +92,7 @@ export default props => {
       [event.target.name]: event.target.value
     }));
   };
-  console.log(values);
+  //console.log(values);
   return (
     <Container maxWidth="lg">
       <RegistedUserNav />

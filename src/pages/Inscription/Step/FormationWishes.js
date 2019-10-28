@@ -34,7 +34,7 @@ export default props => {
   };
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -44,15 +44,15 @@ export default props => {
   };
   const handleNextStep = e => {
     const errors = validate();
-    console.log(errors);
+    //console.log(errors);
 
     let dossier = JSON.parse(localStorage.getItem("dossier"));
-    console.log("dossier", dossier);
+    //console.log("dossier", dossier);
     dossier.candidat.voeux = values;
     localStorage.setItem("dossier", JSON.stringify(dossier));
     return props.history.push(Routes.WISHES_CAMPUS);
   };
-  console.log(values);
+  //console.log(values);
   const radiologic =
     values.annee_demandee === "1ère année" ||
     values.annee_demandee === "2ème année" ||

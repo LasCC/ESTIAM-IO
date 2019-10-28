@@ -38,7 +38,7 @@ export default props => {
   const [values, setValues] = React.useState({
     adresse_mail: ""
   });
-  console.log(values);
+  //console.log(values);
   return (
     <Container maxWidth="lg">
       <NavBar />

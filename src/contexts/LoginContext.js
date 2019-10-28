@@ -25,16 +25,16 @@ const LoginProvider = props => {
   const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
   // const endpoint = "https://oriri.serveo.net";
   const handleLogin = async data => {
-    console.log("login request ....", data);
+    //console.log("login request ....", data);
 
     let res;
     try {
-      console.log("login try ");
+      //console.log("login try ");
       res = await http.post(endpoint + "/auth/login", data);
-      console.log(res);
+      //console.log(res);
     } catch (ex) {
-      console.log("*****************", ex);
-      console.log("ERR DATA*****************", ex.response);
+      //console.log("*****************", ex);
+      //console.log("ERR DATA*****************", ex.response);
       // if(ex.response)
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
@@ -51,7 +51,7 @@ const LoginProvider = props => {
     const { token } = res.data;
     try {
       const tokendata = await jwtdecode(token);
-      console.log(tokendata);
+      //console.log(tokendata);
       localStorage.setItem("token", token);
       await setLoginState({
         name: tokendata.firstName,
@@ -64,24 +64,24 @@ const LoginProvider = props => {
         isActive: tokendata.isActive
       });
       setHttpError({ serverError: false, clientError: false });
-      console.log("######firsttime logged : ", tokendata.firstLogged);
+      //console.log("######firsttime logged : ", tokendata.firstLogged);
       if (!tokendata.isActive) return props.history.push("/confirmation");
       if (tokendata.firstLogged)
         return window.location.replace("/renseignement");
       return props.history.push("/dashboard");
     } catch (ex) {
       toast.error("Error Notification !");
-      console.log("invalid Token", ex);
+      //console.log("invalid Token", ex);
       throw ex;
     }
   };
   const handleRegistration = async data => {
-    console.log("register request ...", data);
+    //console.log("register request ...", data);
     let res;
     try {
       res = await http.post(endpoint + "/auth/register", data);
     } catch (ex) {
-      console.log(ex.response.status);
+      //console.log(ex.response.status);
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
@@ -103,12 +103,12 @@ const LoginProvider = props => {
     return props.history.push("/confirmation");
   };
   const mailChecking = async data => {
-    console.log("mail verification + login request ", data);
+    //console.log("mail verification + login request ", data);
     let res;
     try {
       res = await http.post(endpoint + "/auth/verifymail", data);
     } catch (ex) {
-      console.log(res);
+      //console.log(res);
       const expectedError =
         ex.response && ex.response.status >= 400 && ex.response.status < 500;
       return setHttpError({
@@ -122,21 +122,21 @@ const LoginProvider = props => {
       return props.history.push("/connexion");
     } catch (ex) {
       // toast.error("Error Notification !");
-      console.log("invalid Token", ex);
+      //console.log("invalid Token", ex);
       throw ex;
     }
 
     // props.history.push("/dashboard");
   };
   const resendMail = async () => {
-    console.log("Envoi de mail....");
+    //console.log("Envoi de mail....");
     const res = await http.post(endpoint + "/auth/mailresent", {
       email: loginState.email
     });
-    console.log(res);
+    //console.log(res);
   };
   const handleLogout = () => {
-    console.log("logged out .....");
+    //console.log("logged out .....");
     localStorage.removeItem("token");
     setLoginState({
       name: "",
@@ -151,7 +151,7 @@ const LoginProvider = props => {
     window.location.replace("/");
   };
   const checkAuth = () => {
-    console.log("checking...");
+    //console.log("checking...");
 
     const token = localStorage.getItem("token");
     // in proddatadatadata
@@ -174,14 +174,14 @@ const LoginProvider = props => {
         dateExp.getMinutes() -
         dateNow.getHours() * 60 -
         dateNow.getMinutes();
-      console.log("isexp", exp < now, dayRelativeDifference, "mn");
+      //console.log("isexp", exp < now, dayRelativeDifference, "mn");
       if (exp < now) {
-        console.log("TOKEN expired !");
+        //console.log("TOKEN expired !");
         handleLogout();
         return false;
       }
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
       return false;
     }
 

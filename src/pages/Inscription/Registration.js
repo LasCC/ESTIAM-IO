@@ -29,7 +29,7 @@ export default props => {
       if (!isWellFormated) return;
     }
     setErrors(validate() || {});
-    console.log(errors);
+    //console.log(errors);
     setValues({ ...values, [name]: event.target.value });
   };
   const handleClickShowPassword = () => {
@@ -50,7 +50,7 @@ export default props => {
   const { handleRegistration, loginState, httpError } = useContext(
     LoginContext
   );
-  console.log(httpError);
+  //console.log(httpError);
 
   const schema = {
     lastname: Joi.string()
@@ -72,7 +72,7 @@ export default props => {
 
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -80,10 +80,10 @@ export default props => {
     }
     return errors;
   };
-  console.log(errors);
+  //console.log(errors);
   const handleSubmit = () => {
     const errors = validate();
-    console.log(errors);
+    //console.log(errors);
     setErrors(errors || {});
     setValues({ ...values, submitted: true });
     if (errors) return;

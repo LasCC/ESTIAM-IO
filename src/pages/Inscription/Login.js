@@ -50,10 +50,10 @@ export default props => {
     passwordTouched: Joi.boolean(),
     showPassword: Joi.boolean()
   };
-  console.log(loginState);
+  //console.log(loginState);
   const validate = () => {
     const result = Joi.validate(values, schema, { abortEarly: false });
-    console.log(result);
+    //console.log(result);
     if (!result.error) return null;
     const errors = {};
     for (let item of result.error.details) {
@@ -76,12 +76,12 @@ export default props => {
     const errors = validate();
     setValues({ ...values, submitted: true });
     setErrors(errors || {});
-    console.log(errors);
+    //console.log(errors);
     if (errors) return;
     handleLogin({ email: values.email, password: values.password });
     handleReset();
   };
-  console.log(values);
+  //console.log(values);
   const emailerror =
     httpError.clientError ||
     (errors.hasOwnProperty("email") && values.submitted)

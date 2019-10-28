@@ -67,7 +67,7 @@ export default function TemporaryDrawer() {
     localStorage.getItem("token")
   );
   const avatarUrl = `https://eu.ui-avatars.com/api/?name=${firstName}+${lastName}&background=1875F0&color=fff`;
-  console.log(firstName, lastName);
+  //console.log(firstName, lastName);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false
