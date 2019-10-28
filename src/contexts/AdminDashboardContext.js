@@ -15,7 +15,8 @@ const AdminDashboardProvider = props => {
     clientError: false,
     serverError: false
   });
-  const endpoint = "http://localhost:5000";
+   const endpoint = "https://test-estiam-io-x-app.herokuapp.com";
+  //const endpoint = "http://localhost:5000";
 
   const handleAdminLogin = async (data, path) => {
     let res;
