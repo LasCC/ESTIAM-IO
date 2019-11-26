@@ -1,5 +1,6 @@
 # ESTIAM-IO
-School Project (Dashboard) - Full stack app created build with React
+Création d’une plateforme d’inscription en React pour l’école ESTIAM. 
+Technologie utilisée : React, MangoDB, ExpressJS
 
 If you want to try this in your local environment please use the following command `npm install` or `yarn install` then use `npm start` or `yarn start` 
 
