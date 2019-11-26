@@ -1,6 +1,5 @@
 # ESTIAM-IO
-Création d’une plateforme d’inscription en React pour l’école ESTIAM. 
-Technologie utilisée : React, MangoDB, ExpressJS
+School project, Full stack app for the student of ESTIAM Paris built with `React`, `MangoDB`, `ExpressJS`, `JWT Token`
 
 If you want to try this in your local environment please use the following command `npm install` or `yarn install` then use `npm start` or `yarn start` 
 
@@ -9,4 +8,4 @@ If you want to try this in your local environment please use the following comma
 ![alt text](https://i.imgur.com/nxf6L8b.png "Login")
 https://codesandbox.io/s/github/LasCC/ESTIAM-IO
 
-@ Project realised with my friend blluetomato
+@ Project realized with my friend blluetomato
