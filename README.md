@@ -6,6 +6,12 @@ If you want to try this in your local environment please use the following comma
 ![alt text](https://i.imgur.com/CcUxrmS.png "Homepage")
 ![alt text](https://i.imgur.com/M3PRM5j.png "Register")
 ![alt text](https://i.imgur.com/nxf6L8b.png "Login")
+
+![alt text](https://i.imgur.com/IuZ14Ra.png "dashboard")
+![alt text](https://i.imgur.com/svrrOrG.png "dashboard-student")
+![alt text](https://i.imgur.com/tNSzUHo.png "dashboard-student-numbers")
+
+
 https://codesandbox.io/s/github/LasCC/ESTIAM-IO
 
 @ Project realized with my friend blluetomato
